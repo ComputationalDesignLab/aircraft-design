@@ -1,0 +1,13 @@
+title: "Aircraft Design DBF"
+author: "Leifur Leifsson (leifur[at]purdue.edu)"
+copyright: "2024"
+
+execute:
+  execute_notebooks: "off"
+
+repository:
+  url: "https://github.com/ComputationalDesignLab/aircraft-design-dbf"
+  path_to_book: "book"
+
+launch_buttons:
+  notebook_interface: "jupyterlab"
