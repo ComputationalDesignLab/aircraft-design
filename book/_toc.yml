@@ -1,4 +1,9 @@
 format: jb-book
 root: intro
 chapters:
-  - file: constraint_analysis
+  - file: setup
+  - file: python_basics/intro
+    sections:
+      - file: python_basics/python_basics
+      - file: python_basics/plotting
+      - file: python_basics/resources
