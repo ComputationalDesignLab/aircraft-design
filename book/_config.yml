@@ -1,12 +1,12 @@
 title: "Aircraft Design"
 author: "Leifur Leifsson (leifur[at]purdue.edu)"
-copyright: "2024"
+copyright: "2025"
 
 execute:
   execute_notebooks: "off"
 
 repository:
-  url: "https://github.com/ComputationalDesignLab/aircraft-design-dbf"
+  url: "https://github.com/ComputationalDesignLab/aircraft-design"
   path_to_book: "book"
 
 launch_buttons:
