@@ -4,6 +4,11 @@ as part of AAE 451 Aircraft Design course taught by **Prof. Leifur Leifsson** at
 and maintained by the [**Computational Design (CODE) Laboratory**](https://www.computationaldesignlab.org/). After going
 through this jupyter-book, the reader will be able to perform several conceptual aircraft design tasks in Python.
 
+<div style="width:80%; margin: auto;">
+
+![logos](images/cover.png)
+</div>
+
 ## Prerequisites
 - Knowledge of undergraduate level aerodynamics, structures, propulsion, stability and control
 - Basic python programming and ability to work with numpy, scipy, and matplotlib
@@ -14,7 +19,8 @@ Following is a list of some of the aircraft design books:
 - *Fundamentals of Aircraft and Airship Design: Volume 1 - Aircraft Design* by Leland Nicolai and Grant Carichner
 - *Airplane Design (Volumes I-VIII)* by Jan Roskam
 - *General Aviation Aircraft Design: Applied Methods and Procedures* by Snorri Gudmundsson
-- *Commercial Airplane Design Principles* by Pasquale Sforza 
+- *Commercial Airplane Design Principles* by Pasquale Sforza
+- *Synthesis of Subsonic Airplane Design* by Egbert Torenbeek
 
 <!-- ## Expected learning outcomes
 After going through this jupyter-book, the reader will:
