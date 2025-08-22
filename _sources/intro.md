@@ -9,7 +9,7 @@ through this jupyter-book, the reader will be able to perform several conceptual
 ![logos](images/cover.png)
 </div>
 
-## Prerequisites
+<!-- ## Prerequisites
 - Knowledge of undergraduate level aerodynamics, structures, propulsion, stability and control
 - Basic python programming and ability to work with numpy, scipy, and matplotlib
 
@@ -20,7 +20,7 @@ Following is a list of some of the aircraft design books:
 - *Airplane Design (Volumes I-VIII)* by Jan Roskam
 - *General Aviation Aircraft Design: Applied Methods and Procedures* by Snorri Gudmundsson
 - *Commercial Airplane Design Principles* by Pasquale Sforza
-- *Synthesis of Subsonic Airplane Design* by Egbert Torenbeek
+- *Synthesis of Subsonic Airplane Design* by Egbert Torenbeek -->
 
 <!-- ## Expected learning outcomes
 After going through this jupyter-book, the reader will:
