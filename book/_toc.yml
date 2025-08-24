@@ -8,3 +8,4 @@ chapters:
       - file: python_basics/plotting
       - file: python_basics/resources
   - file: example_aircraft
+  - file: initial_sizing
