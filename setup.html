@@ -187,6 +187,7 @@
 <li class="toctree-l2"><a class="reference internal" href="python_basics/resources.html">Python and Jupyter notebook resources</a></li>
 </ul>
 </details></li>
+<li class="toctree-l1"><a class="reference internal" href="example_aircraft.html">Example Aircraft</a></li>
 </ul>
 
     </div>
@@ -394,14 +395,14 @@ when opening Anaconda Prompt. You will see a black screen with a command prompt.
 You will also see <code class="docutils literal notranslate"><span class="pre">(base)</span></code> written before the command prompt. When you installed
 anaconda, it created a base environment in which it installed several packages. By default,
 the base environment is activated when Anaconda is launched.</p>
-<p><img alt="Entry screen" src="images/entry.png" /></p>
+<p><img alt="Entry screen" src="_images/entry.png" /></p>
 </li>
 <li><p>Type <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">list</span></code> and press enter to run this command. You will see the list of packages
 installed in the base environment.</p>
-<p><img alt="Conda list" src="images/conda_list.png" /></p>
+<p><img alt="Conda list" src="_images/conda_list.png" /></p>
 <p>It is recommended to create a new environment for each project to avoid package
 dependency issues. To check the existing environments, you can run: <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">env</span> <span class="pre">list</span></code>.</p>
-<p><img alt="Conda env list" src="images/conda_env_list.png" /></p>
+<p><img alt="Conda env list" src="_images/conda_env_list.png" /></p>
 <p>It will show the list of environments and the active environment will have a “*” mark in
 front of it. If you just installed anaconda or never created an environment, then there will
 only be one environment called <code class="docutils literal notranslate"><span class="pre">base</span></code>.</p>
@@ -410,18 +411,18 @@ only be one environment called <code class="docutils literal notranslate"><span 
 ENVNAME with whatever name you want to give to the new environment. The
 <code class="docutils literal notranslate"><span class="pre">python=3.11</span></code> after the environment name tells conda what version of python to install.
 We will be using python version 3.11 in this book.</p>
-<p><img alt="Conda create" src="images/conda_create.png" /></p>
+<p><img alt="Conda create" src="_images/conda_create.png" /></p>
 <p>Once the environment is successfully created, you will see the following in the command
 prompt on your screen.</p>
-<p><img alt="Conda create success" src="images/conda_create_success.png" /></p>
+<p><img alt="Conda create success" src="_images/conda_create_success.png" /></p>
 <p>You can run conda env list again and see that your newly created environment is there. For the
 example shown below, the name of the environment was set to surrogate_methods.</p>
-<p><img alt="Conda create env list" src="images/conda_create_env_list.png" /></p>
+<p><img alt="Conda create env list" src="_images/conda_create_env_list.png" /></p>
 </li>
 <li><p>To activate the newly created environment, run <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">activate</span> <span class="pre">ENVNAME</span></code>. Replace ENVNAME with
 your environment name. You will see that the <code class="docutils literal notranslate"><span class="pre">(base)</span></code> before the command
 prompt will change to the <code class="docutils literal notranslate"><span class="pre">ENVNAME</span></code>.</p>
-<p><img alt="Conda activate" src="images/conda_activate.png" /></p>
+<p><img alt="Conda activate" src="_images/conda_activate.png" /></p>
 <p>If you run <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">list</span></code> now, then it will show the list of installed packages in the newly
 created environment. Note that the number of packages will be very less when compared
 to the <code class="docutils literal notranslate"><span class="pre">base</span></code> environment. You will have to install the packages as and when needed.</p>
@@ -442,7 +443,7 @@ conda to install any package. conda is just used as an environment manager.</p>
 </div></blockquote>
 <p>After activating the environment, you can run <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">list</span></code> to see the packages installed using
 pip within the activated environment.</p>
-<p><img alt="Pip list" src="images/pip_list.png" /></p>
+<p><img alt="Pip list" src="_images/pip_list.png" /></p>
 <blockquote>
 <div><p><strong><em>NOTE:</em></strong> It is okay if your list is not exactly same as above.</p>
 </div></blockquote>
