@@ -57,9 +57,12 @@
     <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'example_aircraft';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Initial Sizing" href="initial_sizing.html" />
     <link rel="prev" title="Python and Jupyter notebook resources" href="python_basics/resources.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -187,6 +190,7 @@
 </ul>
 </details></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Example Aircraft</a></li>
+<li class="toctree-l1"><a class="reference internal" href="initial_sizing.html">Initial Sizing</a></li>
 </ul>
 
     </div>
@@ -362,7 +366,7 @@ may be introduced in later sections.</p>
 <td class="text-center"><p>5 passengers (200 lbs each, including baggage)</p></td>
 </tr>
 <tr class="row-even"><td><p>Takeoff and Landing</p></td>
-<td class="text-center"><p>Maximum 2000 ft (sealevel, standard conditions)</p></td>
+<td class="text-center"><p><span class="math notranslate nohighlight">\(\leq\)</span> 2000 ft over 50’ obstacle (sealevel, standard conditions)</p></td>
 </tr>
 <tr class="row-odd"><td><p>Powerplant</p></td>
 <td class="text-center"><p>Twin piston engines with propellers</p></td>
@@ -380,15 +384,14 @@ may be introduced in later sections.</p>
 <td class="text-center"><p>8,000 ft</p></td>
 </tr>
 <tr class="row-even"><td><p>Cruise speed</p></td>
-<td class="text-center"><p>250 KTAS</p></td>
+<td class="text-center"><p><span class="math notranslate nohighlight">\(\geq\)</span> 200 KTAS</p></td>
 </tr>
 </tbody>
 </table>
 </div>
 </div>
 <p><strong>Mission Profile</strong>:</p>
-<p>Below image depicts the mission profile created using some of the above requirements. Note that
-it also includes a reserve mission (red lines) to account for additional fuel according to 14 CFR Part 23.</p>
+<p>Below image depicts the mission profile created using some of the above requirements. Note that it also includes a reserve mission (red lines) to account for additional fuel according to CFR <a class="reference external" href="https://www.ecfr.gov/current/title-14/chapter-I/subchapter-F/part-91#91.151">Part 91.151</a> and <a class="reference external" href="https://www.ecfr.gov/current/title-14/chapter-I/subchapter-F/part-91#91.167">Part 91.167</a>.</p>
 <div style="width:70%; margin: auto;">
 <p><img alt="logos" src="_images/mission_profile.png" /></p>
 </div>
@@ -436,6 +439,15 @@ instructional purposes and should not be interpreted as a Request for Proposal (
         <p class="prev-next-subtitle">previous</p>
         <p class="prev-next-title">Python and Jupyter notebook resources</p>
       </div>
+    </a>
+    <a class="right-next"
+       href="initial_sizing.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Initial Sizing</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
     </a>
 </div>
                 </footer>

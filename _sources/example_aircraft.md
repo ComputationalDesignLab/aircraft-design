@@ -15,19 +15,18 @@ Requirement | Specification
 ------- | :-------:
 Crew | 1 pilot (200 lbs)                              
 Payload | 5 passengers (200 lbs each, including baggage) 
-Takeoff and Landing | Maximum 2000 ft (sealevel, standard conditions)
+Takeoff and Landing | $\leq$ 2000 ft over 50' obstacle (sealevel, standard conditions)
 Powerplant | Twin piston engines with propellers
 Pressurization | None
 Certification | 14 CFR Part 23
 Range | 1200 nautical miles
 Cruise altitude | 8,000 ft
-Cruise speed | 250 KTAS
+Cruise speed | $\geq$ 200 KTAS
 </div>
 
 **Mission Profile**:
 
-Below image depicts the mission profile created using some of the above requirements. Note that
-it also includes a reserve mission (red lines) to account for additional fuel according to 14 CFR Part 23.
+Below image depicts the mission profile created using some of the above requirements. Note that it also includes a reserve mission (red lines) to account for additional fuel according to CFR [Part 91.151](https://www.ecfr.gov/current/title-14/chapter-I/subchapter-F/part-91#91.151) and [Part 91.167](https://www.ecfr.gov/current/title-14/chapter-I/subchapter-F/part-91#91.167).
 
 <div style="width:70%; margin: auto;">
 
