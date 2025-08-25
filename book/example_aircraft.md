@@ -26,8 +26,7 @@ Cruise speed | $\geq$ 200 KTAS
 
 **Mission Profile**:
 
-Below image depicts the mission profile created using some of the above requirements. Note that
-it also includes a reserve mission (red lines) to account for additional fuel according to 14 CFR Part 23.
+Below image depicts the mission profile created using some of the above requirements. Note that it also includes a reserve mission (red lines) to account for additional fuel according to CFR [Part 91.151](https://www.ecfr.gov/current/title-14/chapter-I/subchapter-F/part-91#91.151) and [Part 91.167](https://www.ecfr.gov/current/title-14/chapter-I/subchapter-F/part-91#91.167).
 
 <div style="width:70%; margin: auto;">
 
