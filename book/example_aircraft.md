@@ -15,7 +15,7 @@ Requirement | Specification
 ------- | :-------:
 Crew | 1 pilot (200 lbs)                              
 Payload | 5 passengers (200 lbs each, including baggage) 
-Takeoff and Landing | $\leq$ 2500 ft over 50' obstacle (sealevel, standard conditions)
+Takeoff and Landing | $\leq$ 1500 ft groundrun (sealevel, standard conditions)
 Powerplant | Twin piston engines with propellers
 Pressurization | None
 Certification | 14 CFR Part 23, Level 2, Low speed
