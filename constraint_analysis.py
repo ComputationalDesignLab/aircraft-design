@@ -1,0 +1,57 @@
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Varibles
+CL_max = 1.5
+CL_max_to = 1.8
+CL_max_l = 2.2
+rho_sea_level = 0.002387 # slugs/cu. ft
+
+# Takeoff
+s_to = 2500 # ft
+
+a = 0.0149
+b = 8.134
+c = -s_to
+
+top_23_1 = (-b + np.sqrt(b**2 - 4*a*c)) / 2 / a
+top_23_2 = (-b - np.sqrt(b**2 - 4*a*c)) / 2 / a
+top_23 = top_23_1
+
+# Landing
+s_land = 2500 # ft
+
+v_sl = (2500/0.5136)**0.5 # in knots
+v_sl = v_sl * 1.68781 # in ft/s
+
+# Plotting
+fs = 14
+num_pts = 15
+wing_loading = np.linspace(10, 60, num_pts) # lb/ft^2
+power_loading = np.linspace(5, 20, num_pts) # lb/hp
+
+X, Y = np.meshgrid(wing_loading, power_loading)
+
+takeoff_data = X * Y / CL_max_to - top_23 # takeoff
+
+landing_data = X * 2 / rho_sea_level / CL_max_l - v_sl**2
+
+fig, ax = plt.subplots(figsize=(8,6))
+
+cs = ax.contour(wing_loading, power_loading, takeoff_data)#, levels=[-1e-2,1e-2], label="Take-off")
+
+ax.clabel(cs)
+
+cs = ax.contour(wing_loading, power_loading, landing_data)#, levels=[-1e-2,1e-2], label="Take-off")
+
+ax.clabel(cs)
+
+ax.set_xlabel("Wing Loading ($W/S$) [lbs/$ft^2$]")
+
+ax.set_ylabel("Power Loading ($W/P$) [lbs/hp]")
+
+ax.legend(fontsize=fs)
+
+plt.tight_layout()
+
+plt.show()
