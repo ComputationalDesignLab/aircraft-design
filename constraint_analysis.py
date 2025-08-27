@@ -28,7 +28,7 @@ top_23 = top_23_1
 
 ######## Landing
 
-s_land = 3000 # ft
+s_land = 2500 # ft
 
 v_sl = (s_land/0.5136)**0.5 # in knots
 v_sl = v_sl * 1.68781 # in ft/s
@@ -76,7 +76,7 @@ cgrp_bl = ( cgr + L_by_D**(-1) ) / CL_climb**0.5
 ######## Plotting
 
 fs = 14
-num_pts = 15
+num_pts = 100
 wing_loading = np.linspace(5, 50, num_pts) # lb/ft^2
 power_loading = np.linspace(5, 30, num_pts) # lb/hp
 
@@ -92,37 +92,47 @@ cgr_oei_data = Y * X**0.5 - 18.97 * n_p * rho_5000 / rho_sea_level / cgrp_oei # 
 
 cgr_bl_data = Y * X**0.5 - 18.97 * n_p / cgrp_bl # climb bl
 
-cruise_speed_data = Y * 3.856 - X # cruise speed
+cruise_speed_data = Y * 2.15 - X # cruise speed
 
 fig, ax = plt.subplots(figsize=(8,6))
 
 cs = ax.contour(wing_loading, power_loading, takeoff_data, colors="k", levels=[0])#, levels=[-1e-2,1e-2], label="Take-off")
 
-ax.clabel(cs, fmt="Takeoff", fontsize=fs-2)
+ax.clabel(cs, fmt="Takeoff", fontsize=fs-2, manual=[(25,15)])
 
-cs = ax.contour(wing_loading, power_loading, landing_data, colors="r", levels=[0])#, levels=[-1e-2,1e-2], label="Take-off")
+cs = ax.contour(wing_loading, power_loading, landing_data, colors="k", levels=[0])#, levels=[-1e-2,1e-2], label="Take-off")
 
 ax.clabel(cs, fmt="Landing", fontsize=fs-2)
 
-cs = ax.contour(wing_loading, power_loading, cgr_aeo_data, colors="g", levels=[0])#, levels=[-1e-2,1e-2], label="Take-off")
+cs = ax.contour(wing_loading, power_loading, cgr_aeo_data, colors="k", levels=[0])#, levels=[-1e-2,1e-2], label="Take-off")
 
 ax.clabel(cs, fmt="Climb AEO", fontsize=fs-2)
 
-cs = ax.contour(wing_loading, power_loading, cgr_oei_data, colors="b", levels=[0])#, levels=[-1e-2,1e-2], label="Take-off")
+cs = ax.contour(wing_loading, power_loading, cgr_oei_data, colors="k", levels=[0])#, levels=[-1e-2,1e-2], label="Take-off")
 
 ax.clabel(cs, fmt="Climb OEI", fontsize=fs-2)
 
-cs = ax.contour(wing_loading, power_loading, cgr_bl_data, colors="c", levels=[0])#, levels=[-1e-2,1e-2], label="Take-off")
+cs = ax.contour(wing_loading, power_loading, cgr_bl_data, colors="k", levels=[0])#, levels=[-1e-2,1e-2], label="Take-off")
 
 ax.clabel(cs, fmt="Climb BL", fontsize=fs-2)
 
-cs = ax.contour(wing_loading, power_loading, cruise_speed_data, colors="c", levels=[0])#, levels=[-1e-2,1e-2], label="Take-off")
+cs = ax.contour(wing_loading, power_loading, cruise_speed_data, colors="k", levels=[0])#, levels=[-1e-2,1e-2], label="Take-off")
 
 ax.clabel(cs, fmt="Cruise Speed", fontsize=fs-2)
 
-ax.set_xlabel("Wing Loading ($W/S$) [lbs/$ft^2$]")
+feasible_region = np.logical_and(takeoff_data <= 0, landing_data <= 0)
 
-ax.set_ylabel("Power Loading ($W/P$) [lbs/hp]")
+feasible_region = np.logical_and(feasible_region, cruise_speed_data <= 0)
+
+ax.contourf(wing_loading, power_loading, feasible_region, colors="r", levels=[0.5,1], alpha=0.5)
+
+ax.annotate("Feasible", (28,7), fontsize=14, va="center", ha="center")
+
+ax.set_xlabel("Wing Loading ($W/S$) [lbs/$ft^2$]", fontsize=fs)
+
+ax.set_ylabel("Power Loading ($W/P$) [lbs/hp]", fontsize=fs)
+
+ax.tick_params(axis='both', labelsize=fs-2)
 
 ax.legend(fontsize=fs)
 
