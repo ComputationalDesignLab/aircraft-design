@@ -62,6 +62,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'constraint_analysis/takeoff';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Landing Distance" href="landing.html" />
     <link rel="prev" title="Constraint Analysis" href="intro.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -192,6 +193,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../initial_weight_estimation.html">Initial Weight Estimation</a></li>
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="intro.html">Constraint Analysis</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">Takeoff Distance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="landing.html">Landing Distance</a></li>
 </ul>
 </details></li>
 </ul>
@@ -349,7 +351,7 @@ document.write(`
 <p>Typically, at this stage of design, the <span class="math notranslate nohighlight">\(W/S\)</span> and <span class="math notranslate nohighlight">\(W/P\)</span> required for a certain takeoff distance is determined using the takeoff parameter (TOP), which is defined as</p>
 <div class="math notranslate nohighlight">
 \[
-    \text{TOP} = \frac{ \bigg( \dfrac{W}{S} \bigg)_{TO} \bigg( \dfrac{W}{P} \bigg)_{TO} }{ \sigma C_{L_{TO}} },
+    \text{TOP} = \frac{ \bigg( \dfrac{W}{S} \bigg)_{TO} \bigg( \dfrac{W}{P} \bigg)_{TO} }{ \sigma C_{L_{max_{TO}}} },
 \]</div>
 <p>where <span class="math notranslate nohighlight">\(\sigma\)</span> is the ratio of the density at the takeoff altitude to the sea-level. Most aircraft design books will provide a relation between <span class="math notranslate nohighlight">\(\text{TOP}\)</span> and takeoff ground roll or takeoff distance requried to clear an obstacle based on historical data.</p>
 <p>According to <a class="reference internal" href="../example_aircraft.html"><span class="std std-doc">mission specifications</span></a>, the example aircraft needs to takeoff within 1500 ft of ground roll. Additionally, it should also be able to climb to a distance of 50’ above takeoff surface according to CFR <a class="reference external" href="https://www.ecfr.gov/current/title-14/chapter-I/subchapter-C/part-23/subpart-B/subject-group-ECFR0f27e01839859ea/section-23.2115">Part 23.2115</a>. Schematically, it can be represented as</p>
@@ -370,7 +372,7 @@ document.write(`
 \[
     \frac{ \bigg( \dfrac{W}{S} \bigg)_{TO} \bigg( \dfrac{W}{P} \bigg)_{TO} }{ \sigma C_{L_{max_{TO}}} } \leq \text{TOP}_{23}.
 \]</div>
-<p>This inequality relation can be used to determine various combinations of <span class="math notranslate nohighlight">\(W/S\)</span> and <span class="math notranslate nohighlight">\(W/P\)</span> that satisfy the takeoff ground roll requirement for FAR 23 airplanes. Note that <span class="math notranslate nohighlight">\(C_{L_{TO}}\)</span> is usually a 1/1.21 factor of <span class="math notranslate nohighlight">\(C_{L_{max_{TO}}}\)</span> to account for suddent gust. But in the above equation this factor is not present since it is already adjusted in the provided relation between <span class="math notranslate nohighlight">\(S_{TGR}\)</span> and <span class="math notranslate nohighlight">\(\text{TOP}_{23}\)</span>.</p>
+<p>This inequality relation can be used to determine various combinations of <span class="math notranslate nohighlight">\(W/S\)</span> and <span class="math notranslate nohighlight">\(W/P\)</span> that satisfy the takeoff ground roll requirement for FAR 23 airplanes.</p>
 <p>Below code plots the takeoff requirement for the example aircraft and highlights the feasible region:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -457,6 +459,15 @@ document.write(`
         <p class="prev-next-subtitle">previous</p>
         <p class="prev-next-title">Constraint Analysis</p>
       </div>
+    </a>
+    <a class="right-next"
+       href="landing.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Landing Distance</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
     </a>
 </div>
                 </footer>
