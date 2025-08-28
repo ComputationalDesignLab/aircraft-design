@@ -1,0 +1,800 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Initial Weight Estimation &#8212; Aircraft Design</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'initial_weight_estimation';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Constraint Analysis" href="constraint_analysis/intro.html" />
+    <link rel="prev" title="Example Aircraft" href="example_aircraft.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Aircraft Design</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Introduction
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="setup.html">Computing environment setup</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="python_basics/intro.html">Basics of Python Programming</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="python_basics/python_basics.html">Basic programming in Python and Jupyter Notebooks</a></li>
+
+
+
+
+
+
+<li class="toctree-l2"><a class="reference internal" href="python_basics/plotting.html">Basic plotting in Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python_basics/resources.html">Python and Jupyter notebook resources</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="example_aircraft.html">Example Aircraft</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Initial Weight Estimation</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="constraint_analysis/intro.html">Constraint Analysis</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="constraint_analysis/takeoff.html">Takeoff Distance</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/initial_weight_estimation.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Initial Weight Estimation</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#empty-weight-fraction">Empty Weight Fraction</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fuel-fraction">Fuel Fraction</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mtow-estimation">MTOW Estimation</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="initial-weight-estimation">
+<h1>Initial Weight Estimation<a class="headerlink" href="#initial-weight-estimation" title="Link to this heading">#</a></h1>
+<p>This section describes initial weight estimation method and demonstrates it on the example aircraft. The maximum takeoff weight (<span class="math notranslate nohighlight">\(W_{TO}\)</span>) can be divied into four components for this initial estimation: crew weight (<span class="math notranslate nohighlight">\(W_c\)</span>), payload weight (<span class="math notranslate nohighlight">\(W_p\)</span>), empty weight (<span class="math notranslate nohighlight">\(W_e\)</span>), and fuel weight (<span class="math notranslate nohighlight">\(W_f\)</span>). Mathematically,
+it can be written as</p>
+<div class="math notranslate nohighlight">
+\[
+    W_{TO} = W_c + W_p + W_e + W_f.
+\]</div>
+<p>Note that <span class="math notranslate nohighlight">\(W_p\)</span> includes both passenger and baggage weight. The <span class="math notranslate nohighlight">\(W_c\)</span> and <span class="math notranslate nohighlight">\(W_p\)</span> are usually provided in the RFP. Following subsections outline methods for
+computing <span class="math notranslate nohighlight">\(W_e\)</span>, <span class="math notranslate nohighlight">\(W_f\)</span> and <span class="math notranslate nohighlight">\(W_{TO}\)</span>.</p>
+<p>Below code snippet imports required python packages:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="empty-weight-fraction">
+<h2>Empty Weight Fraction<a class="headerlink" href="#empty-weight-fraction" title="Link to this heading">#</a></h2>
+<p>During the intial phase of design, the empty weight is usually computed based on the historical data for similar type of aircraft.
+Most aircraft design books will provide some sort of empirical formula to compute <span class="math notranslate nohighlight">\(W_e\)</span> or empty weight fraction (<span class="math notranslate nohighlight">\(W_e/W_{TO}\)</span>). For the example airplane, empty weight trend provided in Nicolai and Carichner’s book for light propeller airplane (Pg. 763) is used. The empty weight is computed using</p>
+<div class="math notranslate nohighlight">
+\[
+    W_e = 0.911 \times W_{TO}^{0.947}.
+\]</div>
+<blockquote>
+<div><p><strong><em>NOTE:</em></strong> In the above formula, <span class="math notranslate nohighlight">\(W_{TO}\)</span> should be in pounds (lbs)</p>
+</div></blockquote>
+<p>Following code defines a simple python function for computing <span class="math notranslate nohighlight">\(W_e\)</span> based on a given <span class="math notranslate nohighlight">\(W_{TO}\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">compute_empty_weight</span><span class="p">(</span><span class="n">wto</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Function to compute empty weight</span>
+
+<span class="sd">        Note: wto should be in pounds (lbs)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="c1"># empty weight fraction (from Nicolai and Carichner, Pg. 763)</span>
+    <span class="n">we</span> <span class="o">=</span> <span class="mf">0.911</span> <span class="o">*</span> <span class="n">wto</span> <span class="o">**</span> <span class="mf">0.947</span>
+    
+    <span class="k">return</span> <span class="n">we</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="fuel-fraction">
+<h2>Fuel Fraction<a class="headerlink" href="#fuel-fraction" title="Link to this heading">#</a></h2>
+<p>The fuel fraction is computed using the mission segment weight fraction method. In this method, weight fractions are computed for each segment of the mission profile and are multiplied to obtain the ratio of final weight (<span class="math notranslate nohighlight">\(W_{final}\)</span>) to initial weight i.e. maximum takeoff weight (<span class="math notranslate nohighlight">\(W_{TO}\)</span>). Mathematically, it can be written as</p>
+<div class="math notranslate nohighlight">
+\[
+    \frac{W_{final}}{W_{TO}} = \prod_{i=1}^{n} \frac{W_{i}}{W_{i-1}},
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(W_{i-1}\)</span> and <span class="math notranslate nohighlight">\(W_{i}\)</span> are the weights at the start and end of mission segment <span class="math notranslate nohighlight">\(i\)</span>, respectively, and <span class="math notranslate nohighlight">\(n\)</span> is the total number of mission segments. Note that <span class="math notranslate nohighlight">\(W_0\)</span> denotes maximum takeoff weight. The weight fractions can be computed using either historical data or simple analytical formulas, most aircraft design books will provide these details. Once final weight fraction is obtained, one can compute fuel fraction using</p>
+<div class="math notranslate nohighlight">
+\[
+    \frac{W_f}{W_{TO}} = 1.06 * \Big ( 1 - \frac{W_{final}}{W_{TO}} \Big) 
+\]</div>
+<p>Note that a <span class="math notranslate nohighlight">\(6\%\)</span> factor is multiplied to account for trapped and unusable fuel based on the recommendations provided in Raymer’s book.</p>
+<p>This method is now used for computing fuel weight fraction for the example airplane. Based on the <a class="reference internal" href="example_aircraft.html"><span class="std std-doc">mission profile</span></a>, there are 8 mission segments in total. The value of weight fractions for most mission segments is based on historical data, except for cruise and loiter mission. The cruise and loiter weight fractions are computed using following equations, refer to lecture notes or any of the aircraft design books for more details.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{aligned}
+    \text{cruise weight fraction:} \quad &amp; \frac{W_3}{W_2} = \exp \Bigg[ - \frac{ RC_{{bhp}_{cr}} }{ 375\eta_{p_{cr}} (L/D)_{cr} } \Bigg] \\
+    \text{loiter weight fraction:} \quad &amp; \frac{W_6}{W_5} = \exp \Bigg[ - \frac{ E V_{lo} C_{{bhp}_{lo}} }{ 375 \eta_{p_{lo}} (L/D)_{lo} } \Bigg]
+\end{aligned}
+\end{split}\]</div>
+<blockquote>
+<div><p><strong><em>NOTE:</em></strong> The above cruise and loiter equations are valid for propeller-driven airplanes only</p>
+</div></blockquote>
+<p>The R and E are the range and endurance time, respectively. Note that range should be in miles and endurance should be in hour. The C_bhp denotes brake specific fuel consumption for the piston-engine which is the pounds of fuel per hour to produce one horsepower at propeller shaft. The factor of 375 is used to ensure consistency of units across all the terms. The <span class="math notranslate nohighlight">\(\eta\)</span> denotes propeller efficiency while <span class="math notranslate nohighlight">\(V\)</span> is the speed of the airplane in mph. The subscript <span class="math notranslate nohighlight">\(cr\)</span> and <span class="math notranslate nohighlight">\(lo\)</span> denotes cruise and loiter, respectively. For a propeller-driven airplane, the cruise and loiter <span class="math notranslate nohighlight">\(L/D\)</span> can be approximated as <span class="math notranslate nohighlight">\(L/D_{max}\)</span> and <span class="math notranslate nohighlight">\(0.866 \times L/D_{max}\)</span>, respectively. The maximum <span class="math notranslate nohighlight">\(L/D\)</span> for a subsonic airplane can be computed following formula provided Nicolai and Carichner.</p>
+<div class="math notranslate nohighlight">
+\[
+    \bigg(\frac{L}{D}\bigg)_{max} = \frac{1}{2\sqrt{C_{D_0}K}}
+\]</div>
+<p>Here, <span class="math notranslate nohighlight">\(C_{D_0}\)</span> is the zero-lift drag coefficient and <span class="math notranslate nohighlight">\(K\)</span> is induced drag factor given by</p>
+<div class="math notranslate nohighlight">
+\[
+    K = \frac{1}{\pi Ae}.
+\]</div>
+<p>The <span class="math notranslate nohighlight">\(A\)</span> is the aspect ratio and <span class="math notranslate nohighlight">\(e\)</span> is oswald efficiency factor which is computed based on a statistical estimation provided in Raymer. The value of <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(C_{D_0}\)</span> is assumed based on similar type of aircraft at this stage of design. Below table summarizes various fixed values used in fuel fraction computation.</p>
+<div style="width:100%; margin: auto;">
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter</p></th>
+<th class="head text-center"><p>Value</p></th>
+<th class="head text-center"><p>Source</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Aspect ratio, <span class="math notranslate nohighlight">\(A\)</span></p></td>
+<td class="text-center"><p>8</p></td>
+<td class="text-center"><p>Assumed using similar aircraft</p></td>
+</tr>
+<tr class="row-odd"><td><p>Zero-lift drag coeff, <span class="math notranslate nohighlight">\(C_{D_0}\)</span></p></td>
+<td class="text-center"><p>0.028</p></td>
+<td class="text-center"><p>Nicolai and Carichner, Table 5.2</p></td>
+</tr>
+<tr class="row-even"><td><p>Cruise propeller efficiency, <span class="math notranslate nohighlight">\(\eta_{p_{cr}}\)</span></p></td>
+<td class="text-center"><p>0.82</p></td>
+<td class="text-center"><p>Roskam Part 1, Table 2.2</p></td>
+</tr>
+<tr class="row-odd"><td><p>Cruise brake specific fuel consumption, <span class="math notranslate nohighlight">\(C_{{bhp}_{cr}}\)</span></p></td>
+<td class="text-center"><p>0.4 lb/hr/bhp</p></td>
+<td class="text-center"><p>Raymer, Table 3.4</p></td>
+</tr>
+<tr class="row-even"><td><p>Loiter propeller efficiency, <span class="math notranslate nohighlight">\(\eta_{p_{lo}}\)</span></p></td>
+<td class="text-center"><p>0.72</p></td>
+<td class="text-center"><p>Roskam Part 1, Table 2.2</p></td>
+</tr>
+<tr class="row-odd"><td><p>Loiter brake specific fuel consumption, <span class="math notranslate nohighlight">\(C_{{bhp}_{lo}}\)</span></p></td>
+<td class="text-center"><p>0.4 lb/hr/bhp</p></td>
+<td class="text-center"><p>Raymer, Table 3.4</p></td>
+</tr>
+<tr class="row-even"><td><p>Loiter velocity, <span class="math notranslate nohighlight">\(V_{lo}\)</span></p></td>
+<td class="text-center"><p>120 knots</p></td>
+<td class="text-center"><p>Assumed</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Using the above equation and data, fuel fraction is computed for each segment of the mission profile for the example airplane and outlined in the below table. The historical data for segments other than cruise and loiter is obtained from Roskam Part 1 Table 2.2 (Pg 12).</p>
+<div style="width:60%; margin: auto;">
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Mission segment</p></th>
+<th class="head text-center"><p>Weight fraction</p></th>
+<th class="head text-center"><p>Value</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Warmup, taxi, takeoff</p></td>
+<td class="text-center"><p><span class="math notranslate nohighlight">\(W_1/W_0\)</span></p></td>
+<td class="text-center"><p>0.984</p></td>
+</tr>
+<tr class="row-odd"><td><p>Climb</p></td>
+<td class="text-center"><p><span class="math notranslate nohighlight">\(W_2/W_1\)</span></p></td>
+<td class="text-center"><p>0.990</p></td>
+</tr>
+<tr class="row-even"><td><p>Cruise</p></td>
+<td class="text-center"><p><span class="math notranslate nohighlight">\(W_3/W_2\)</span></p></td>
+<td class="text-center"><p>0.880</p></td>
+</tr>
+<tr class="row-odd"><td><p>Descent</p></td>
+<td class="text-center"><p><span class="math notranslate nohighlight">\(W_4/W_3\)</span></p></td>
+<td class="text-center"><p>0.992</p></td>
+</tr>
+<tr class="row-even"><td><p>Climb</p></td>
+<td class="text-center"><p><span class="math notranslate nohighlight">\(W_5/W_4\)</span></p></td>
+<td class="text-center"><p>0.990</p></td>
+</tr>
+<tr class="row-odd"><td><p>Loiter</p></td>
+<td class="text-center"><p><span class="math notranslate nohighlight">\(W_6/W_5\)</span></p></td>
+<td class="text-center"><p>0.988</p></td>
+</tr>
+<tr class="row-even"><td><p>Descent</p></td>
+<td class="text-center"><p><span class="math notranslate nohighlight">\(W_7/W_6\)</span></p></td>
+<td class="text-center"><p>0.992</p></td>
+</tr>
+<tr class="row-odd"><td><p>Land, taxi, shutdown</p></td>
+<td class="text-center"><p><span class="math notranslate nohighlight">\(W_8/W_7\)</span></p></td>
+<td class="text-center"><p>0.992</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Below code block defines function for computing fuel weight based on a given <span class="math notranslate nohighlight">\(W_{TO}\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">compute_fuel_weight</span><span class="p">(</span><span class="n">wto</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Function to compute fuel weight</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1">######### define and compute variables</span>
+
+    <span class="c1"># Range</span>
+    <span class="nb">range</span> <span class="o">=</span> <span class="mi">1200</span> <span class="c1"># nmi</span>
+    <span class="nb">range</span> <span class="o">=</span> <span class="nb">range</span> <span class="o">*</span> <span class="mf">1.15077945</span> <span class="c1"># miles</span>
+
+    <span class="c1"># Endurance</span>
+    <span class="n">E</span> <span class="o">=</span> <span class="mi">45</span><span class="o">/</span><span class="mi">60</span> <span class="c1"># in hour</span>
+
+    <span class="c1"># Loiter speed</span>
+    <span class="n">V_lo</span> <span class="o">=</span> <span class="mi">120</span> <span class="c1"># knots, assumed</span>
+    <span class="n">V_lo</span> <span class="o">=</span> <span class="n">V_lo</span> <span class="o">*</span> <span class="mf">1.15077945</span> <span class="c1"># in mph</span>
+
+    <span class="n">aspect_ratio</span> <span class="o">=</span> <span class="mi">8</span> <span class="c1"># assumed</span>
+
+    <span class="c1"># Propeller efficieny</span>
+    <span class="n">np_cr</span> <span class="o">=</span> <span class="mf">0.82</span>
+    <span class="n">np_lo</span> <span class="o">=</span> <span class="mf">0.72</span>
+
+    <span class="c1"># C_bhp</span>
+    <span class="n">C_bhp_cr</span> <span class="o">=</span> <span class="mf">0.4</span>
+    <span class="n">C_bhp_lo</span> <span class="o">=</span> <span class="mf">0.4</span>
+
+    <span class="n">e</span> <span class="o">=</span> <span class="mf">1.78</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="mf">0.045</span><span class="o">*</span><span class="n">aspect_ratio</span><span class="o">**</span><span class="mf">0.68</span><span class="p">)</span> <span class="o">-</span> <span class="mf">0.64</span> <span class="c1"># oswald efficiency, Raymer equation 12.48</span>
+
+    <span class="n">K</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="n">aspect_ratio</span> <span class="o">/</span> <span class="n">e</span> <span class="c1"># induced drag factor</span>
+
+    <span class="n">zero_lift_drag_coeff</span> <span class="o">=</span> <span class="mf">0.028</span>
+
+    <span class="n">L_by_D_max</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">/</span> <span class="p">(</span><span class="n">zero_lift_drag_coeff</span><span class="o">*</span><span class="n">K</span><span class="p">)</span><span class="o">**</span><span class="mf">0.5</span> <span class="c1"># maximum L_by_D</span>
+
+    <span class="n">L_by_D_cr</span> <span class="o">=</span> <span class="n">L_by_D_max</span>
+
+    <span class="n">L_by_D_lo</span> <span class="o">=</span> <span class="mf">0.866</span><span class="o">*</span><span class="n">L_by_D_max</span>
+
+    <span class="c1">######### Mission segment weight fractions</span>
+
+    <span class="n">w1_by_wto</span> <span class="o">=</span> <span class="mf">0.984</span> <span class="c1"># warmup, taxi, takeoff</span>
+
+    <span class="n">w2_by_w1</span> <span class="o">=</span> <span class="mf">0.99</span> <span class="c1"># climb</span>
+
+    <span class="n">w3_by_w2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="nb">range</span><span class="o">*</span><span class="n">C_bhp_cr</span><span class="o">/</span><span class="mi">375</span><span class="o">/</span><span class="n">np_cr</span><span class="o">/</span><span class="n">L_by_D_cr</span><span class="p">)</span> <span class="c1"># cruise</span>
+
+    <span class="n">w4_by_w3</span> <span class="o">=</span> <span class="mf">0.992</span> <span class="c1"># descent</span>
+
+    <span class="n">w5_by_w4</span> <span class="o">=</span> <span class="mf">0.99</span> <span class="c1"># climb</span>
+
+    <span class="n">w6_by_w5</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">E</span><span class="o">*</span><span class="n">V_lo</span><span class="o">*</span><span class="n">C_bhp_lo</span><span class="o">/</span><span class="mi">375</span><span class="o">/</span><span class="n">np_lo</span><span class="o">/</span><span class="n">L_by_D_lo</span><span class="p">)</span> <span class="c1"># loiter</span>
+
+    <span class="n">w7_by_w6</span> <span class="o">=</span> <span class="mf">0.992</span> <span class="c1"># descent</span>
+
+    <span class="n">w8_by_w7</span> <span class="o">=</span> <span class="mf">0.992</span> <span class="c1"># land, taxi, shutdown</span>
+
+    <span class="n">w8_by_wto</span> <span class="o">=</span> <span class="n">w1_by_wto</span> <span class="o">*</span> <span class="n">w2_by_w1</span> <span class="o">*</span> <span class="n">w3_by_w2</span> <span class="o">*</span> <span class="n">w4_by_w3</span> \
+                <span class="o">*</span> <span class="n">w5_by_w4</span> <span class="o">*</span> <span class="n">w6_by_w5</span> <span class="o">*</span> <span class="n">w7_by_w6</span> <span class="o">*</span> <span class="n">w8_by_w7</span>
+
+    <span class="n">wf_by_wto</span> <span class="o">=</span> <span class="mf">1.06</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">w8_by_wto</span><span class="p">)</span> <span class="c1"># 6% is for trapped unusable fuel</span>
+
+    <span class="k">return</span> <span class="n">wf_by_wto</span> <span class="o">*</span> <span class="n">wto</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="mtow-estimation">
+<h2>MTOW Estimation<a class="headerlink" href="#mtow-estimation" title="Link to this heading">#</a></h2>
+<p>Once empty weight fraction and fuel weight fraction are computed, one can follow a simple iterative procedure to compute <span class="math notranslate nohighlight">\(W_{TO}\)</span>. The procedure starts by guessing a value of <span class="math notranslate nohighlight">\(W_{TO}\)</span> and computing the empty weight and fuel weight. The <span class="math notranslate nohighlight">\(W_e\)</span> and <span class="math notranslate nohighlight">\(W_p\)</span>, along with <span class="math notranslate nohighlight">\(W_c\)</span> and <span class="math notranslate nohighlight">\(W_p\)</span>, can be used to compute <span class="math notranslate nohighlight">\(W_{TO}\)</span>. Then, the error between the guessed and estimated <span class="math notranslate nohighlight">\(W_{TO}\)</span> can be computed. If this error is more than a desired tolerance, then this process is repeated again. The computed <span class="math notranslate nohighlight">\(W_{TO}\)</span> can be used as the guess value for <span class="math notranslate nohighlight">\(W_{TO}\)</span> in next iteration.</p>
+<p>Below code block performs this iterative procedure for the example aircraft and prints the value of <span class="math notranslate nohighlight">\(W_{TO}\)</span>, <span class="math notranslate nohighlight">\(W_e\)</span>, and <span class="math notranslate nohighlight">\(W_f\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Variables</span>
+<span class="n">wto_guess</span> <span class="o">=</span> <span class="mi">5000</span>
+<span class="n">error</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span>
+<span class="n">tolerance</span> <span class="o">=</span> <span class="mf">0.01</span>
+
+<span class="c1"># Crew weight and payload weight - from req.</span>
+<span class="n">wc</span> <span class="o">=</span> <span class="mi">200</span> <span class="c1"># lbs</span>
+<span class="n">wp</span> <span class="o">=</span> <span class="mi">1000</span> <span class="c1"># lbs</span>
+
+<span class="k">while</span> <span class="n">error</span> <span class="o">&gt;</span> <span class="n">tolerance</span><span class="p">:</span>
+
+    <span class="n">wto</span> <span class="o">=</span> <span class="n">wc</span> <span class="o">+</span> <span class="n">wp</span> <span class="o">+</span> <span class="n">compute_empty_weight</span><span class="p">(</span><span class="n">wto_guess</span><span class="p">)</span> <span class="o">+</span> <span class="n">compute_fuel_weight</span><span class="p">(</span><span class="n">wto_guess</span><span class="p">)</span>
+
+    <span class="n">error</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">wto</span> <span class="o">-</span> <span class="n">wto_guess</span><span class="p">)</span>
+
+    <span class="n">wto_guess</span> <span class="o">=</span> <span class="n">wto</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Maximum takeoff weight: </span><span class="si">{</span><span class="n">wto</span><span class="si">}</span><span class="s2"> lbs&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Empty weight: </span><span class="si">{</span><span class="n">compute_empty_weight</span><span class="p">(</span><span class="n">wto</span><span class="p">)</span><span class="si">}</span><span class="s2"> lbs&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Fuel weight: </span><span class="si">{</span><span class="n">compute_fuel_weight</span><span class="p">(</span><span class="n">wto</span><span class="p">)</span><span class="si">}</span><span class="s2"> lbs&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Maximum takeoff weight: 5353.848970299187 lbs
+Empty weight: 3094.3197451478054 lbs
+Fuel weight: 1059.5366475387418 lbs
+</pre></div>
+</div>
+</div>
+</div>
+<p>Following table summarizes the results for the initial weight estimation.</p>
+<div style="width:50%; margin: auto;">
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter</p></th>
+<th class="head text-center"><p>Value</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Maximum takeoff weight</p></td>
+<td class="text-center"><p>5354 lbs</p></td>
+</tr>
+<tr class="row-odd"><td><p>Empty weight</p></td>
+<td class="text-center"><p>3094 lbs</p></td>
+</tr>
+<tr class="row-even"><td><p>Fuel weight</p></td>
+<td class="text-center"><p>1060 lbs</p></td>
+</tr>
+<tr class="row-odd"><td><p>Payload weight</p></td>
+<td class="text-center"><p>1000 lbs</p></td>
+</tr>
+<tr class="row-even"><td><p>Crew weight</p></td>
+<td class="text-center"><p>200 lbs</p></td>
+</tr>
+<tr class="row-odd"><td><p>Empty weight fraction</p></td>
+<td class="text-center"><p>0.578</p></td>
+</tr>
+<tr class="row-even"><td><p>Fuel weight fraction</p></td>
+<td class="text-center"><p>0.198</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<blockquote>
+<div><p><strong><em>NOTE</em>:</strong> The estimated weight values should be rounded to the nearest integer.</p>
+</div></blockquote>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="example_aircraft.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Example Aircraft</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="constraint_analysis/intro.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Constraint Analysis</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#empty-weight-fraction">Empty Weight Fraction</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fuel-fraction">Fuel Fraction</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mtow-estimation">MTOW Estimation</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Leifur Leifsson (leifur[at]purdue.edu)
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

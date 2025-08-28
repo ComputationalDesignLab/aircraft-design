@@ -5,7 +5,7 @@ to demonstrate various aircraft design concepts. This section summarizes prelimi
 specifications for this notional aircraft.
 
 > **_NOTE:_** The requirements listed here are not exhaustive. Additional requirements 
-> may be introduced in later sections.
+may be introduced in later sections.
 
 **Requirements**:
 
@@ -15,10 +15,10 @@ Requirement | Specification
 ------- | :-------:
 Crew | 1 pilot (200 lbs)                              
 Payload | 5 passengers (200 lbs each, including baggage) 
-Takeoff and Landing | $\leq$ 2000 ft over 50' obstacle (sealevel, standard conditions)
+Takeoff and Landing | $\leq$ 1500 ft groundrun (sealevel, standard conditions)
 Powerplant | Twin piston engines with propellers
 Pressurization | None
-Certification | 14 CFR Part 23
+Certification | 14 CFR Part 23, Level 2, Low speed
 Range | 1200 nautical miles
 Cruise altitude | 8,000 ft
 Cruise speed | $\geq$ 200 KTAS
