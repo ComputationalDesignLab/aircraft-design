@@ -9,6 +9,6 @@ chapters:
       - file: python_basics/resources
   - file: example_aircraft
   - file: initial_weight_estimation
-  # - file: constraint_analysis/intro
-  #   sections:
-  #     - file: constraint_analysis/takeoff
+  - file: constraint_analysis/intro
+    sections:
+      - file: constraint_analysis/takeoff
