@@ -194,6 +194,7 @@
 <li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">Constraint Analysis</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="takeoff.html">Takeoff Distance</a></li>
 <li class="toctree-l2"><a class="reference internal" href="landing.html">Landing Distance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="climb.html">Climb Gradient</a></li>
 </ul>
 </details></li>
 </ul>
@@ -348,11 +349,15 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="constraint-analysis">
 <h1>Constraint Analysis<a class="headerlink" href="#constraint-analysis" title="Link to this heading">#</a></h1>
-<p>For any airplane, the wing loading (<span class="math notranslate nohighlight">\(W/S\)</span>) and power loading (<span class="math notranslate nohighlight">\(W/P\)</span>) (or thrust loading (<span class="math notranslate nohighlight">\(T/W\)</span>) in case of jet airplanes) are important parameters that determine its performance. This section demonstrates constraint analysis method for estimating <span class="math notranslate nohighlight">\(W/S\)</span> and <span class="math notranslate nohighlight">\(W/P\)</span>. Note that <span class="math notranslate nohighlight">\(W/P\)</span> is used in this section instead of <span class="math notranslate nohighlight">\(T/W\)</span> since the example aircraft is propeller driven. The constraint analysis method involves identifying feasible region in the <span class="math notranslate nohighlight">\(W/S\)</span> and <span class="math notranslate nohighlight">\(W/P\)</span> design space under various performance constraints, and then selecting appropriate values for wing and power loading in the feasible region. Refer to the lecture notes for more details. In this section, constraint analysis is demonstrated using the example aircraft. Following performance requirements are used within constraint analysis:</p>
+<p>For any airplane, the wing loading (<span class="math notranslate nohighlight">\(W/S\)</span>) and power loading (<span class="math notranslate nohighlight">\(W/P\)</span>) (or thrust loading (<span class="math notranslate nohighlight">\(T/W\)</span>) in case of jet airplanes) are important parameters that determine its performance. This section demonstrates constraint analysis method for estimating <span class="math notranslate nohighlight">\(W/S\)</span> and <span class="math notranslate nohighlight">\(W/P\)</span>. Note that <span class="math notranslate nohighlight">\(W/P\)</span> is used in this section instead of <span class="math notranslate nohighlight">\(T/W\)</span> since the example aircraft is propeller driven. The constraint analysis method involves identifying feasible region in the <span class="math notranslate nohighlight">\(W/S\)</span> and <span class="math notranslate nohighlight">\(W/P\)</span> design space under various performance constraints, and then selecting appropriate values for wing and power loading in the feasible region. Refer to the lecture notes for more details.</p>
+<blockquote>
+<div><p><strong><em>NOTE</em>:</strong> The weight <span class="math notranslate nohighlight">\(W\)</span> and power <span class="math notranslate nohighlight">\(P\)</span> are <span class="math notranslate nohighlight">\(W_{TO}\)</span> and <span class="math notranslate nohighlight">\(P_{TO}\)</span>, respectively.</p>
+</div></blockquote>
+<p>In this section, constraint analysis is demonstrated using the example aircraft. Following performance requirements are used within constraint analysis:</p>
 <ol class="arabic simple">
 <li><p><a class="reference internal" href="takeoff.html"><span class="std std-doc">Takeoff distance</span></a></p></li>
-<li><p>Landing distance</p></li>
-<li><p>Climb gradient</p></li>
+<li><p><a class="reference internal" href="landing.html"><span class="std std-doc">Landing distance</span></a></p></li>
+<li><p><a class="reference internal" href="climb.html"><span class="std std-doc">Climb gradient</span></a></p></li>
 <li><p>Cruise speed</p></li>
 </ol>
 <p>The takeoff distance, landing distance and cruise speed are mentioned in the <a class="reference internal" href="../example_aircraft.html"><span class="std std-doc">example aircraft specifications</span></a>, while the climb gradient is included to satisfy 14 CFR Part 23 requirements. If desired or required by RFP, other requirements such as service ceiling and turn rates can also be included, refer to lecture notes or any of the aircraft design books for more details.</p>
@@ -360,6 +365,8 @@ document.write(`
 <div><p><strong><em>NOTE</em>:</strong> There is no stall speed requirement according to the latest 14 CFR Part 23, one has to only determine the value of stall speed. Additionally, there is no rate of climb requirement.</p>
 </div></blockquote>
 <p>Before computing feasible region for any of the performance constraints, additional data is required which can be obtained from historical data for similar aircraft. Following table outlines this data:</p>
+<div style="width:80%; margin: auto;">
+<p><a id="values"></a></p>
 <div class="pst-scrollable-table-container"><table class="table">
 <thead>
 <tr class="row-odd"><th class="head"><p>Parameter</p></th>
@@ -398,6 +405,7 @@ document.write(`
 </tr>
 </tbody>
 </table>
+</div>
 </div>
 <div class="toctree-wrapper compound">
 </div>
