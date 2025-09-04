@@ -14,3 +14,4 @@ chapters:
       - file: constraint_analysis/takeoff
       - file: constraint_analysis/landing
       - file: constraint_analysis/climb
+      - file: constraint_analysis/cruise
