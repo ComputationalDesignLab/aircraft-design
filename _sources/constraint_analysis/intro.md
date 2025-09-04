@@ -9,7 +9,7 @@ In this section, constraint analysis is demonstrated using the example aircraft.
 1. [Takeoff distance](takeoff.ipynb)
 2. [Landing distance](landing.ipynb)
 3. [Climb gradient](climb.ipynb)
-4. Cruise speed
+4. [Cruise speed](cruise.ipynb)
 
 The takeoff distance, landing distance and cruise speed are mentioned in the [example aircraft specifications](../example_aircraft.md), while the climb gradient is included to satisfy 14 CFR Part 23 requirements. If desired or required by RFP, other requirements such as service ceiling and turn rates can also be included, refer to lecture notes or any of the aircraft design books for more details. 
 
