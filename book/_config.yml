@@ -9,5 +9,8 @@ repository:
   url: "https://github.com/ComputationalDesignLab/aircraft-design"
   path_to_book: "book"
 
+html:
+  use_repository_button: true
+
 launch_buttons:
   notebook_interface: "jupyterlab"
