@@ -2,7 +2,7 @@
 
 For any airplane, the wing loading ($W/S$) and power loading ($W/P$) (or thrust loading ($T/W$) in case of jet airplanes) are important parameters that determine its performance. This section demonstrates constraint analysis method for estimating $W/S$ and $W/P$. Note that $W/P$ is used in this section instead of $T/W$ since the example aircraft is propeller driven. The constraint analysis method involves identifying feasible region in the $W/S$ and $W/P$ design space under various performance constraints, and then selecting appropriate values for wing and power loading in the feasible region. Refer to the lecture notes for more details. 
 
-> **_NOTE_:** The weight $W$ and power $P$ are $W_{TO}$ and $P_{TO}$, respectively.
+> **_NOTE_:** The wing and power loading should be in takeoff conditions when performing constraint analysis. If a requirement limits either wing or power loading at different condition, then convert those values to takeoff conditions before comparing with other requirements.
 
 In this section, constraint analysis is demonstrated using the example aircraft. Following performance requirements are used within constraint analysis:
 
