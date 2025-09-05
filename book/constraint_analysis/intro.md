@@ -30,3 +30,5 @@ Maximum lift coeff. with landing flaps, $C_{L_{max_{L}}}$ | 2.2 | Roskam Part 1,
 Oswald efficiency factor with no flaps, $e$ | 0.81 | From initial sizing section
 Zero-lift drag coeff., $C_{D_0}$ | 0.028 | From initial sizing section
 </div>
+
+> **_NOTE_**: The constraint analysis process described in this section is sensitive to the values of $A$, $C_{L_{max}}$, $C_{L_{max_{TO}}}$, and $C_{L_{max_L}}$. It is recommended to tweak these values and see its effects on the feasible region in the $W/S$ and $W/P$ space.
