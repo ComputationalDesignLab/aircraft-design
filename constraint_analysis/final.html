@@ -62,6 +62,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'constraint_analysis/final';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Cruise Speed" href="cruise.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -124,8 +125,6 @@
       
       
       
-        
-      
       <div class="bd-sidebar-primary bd-sidebar">
         
 
@@ -175,7 +174,7 @@
                 </a>
             </li>
         </ul>
-        <ul class="nav bd-sidenav">
+        <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../setup.html">Computing environment setup</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../python_basics/intro.html">Basics of Python Programming</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../python_basics/python_basics.html">Basic programming in Python and Jupyter Notebooks</a></li>
@@ -191,11 +190,12 @@
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="../example_aircraft.html">Example Aircraft</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../initial_weight_estimation.html">Initial Weight Estimation</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="intro.html">Constraint Analysis</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="intro.html">Constraint Analysis</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="takeoff.html">Takeoff Distance</a></li>
 <li class="toctree-l2"><a class="reference internal" href="landing.html">Landing Distance</a></li>
 <li class="toctree-l2"><a class="reference internal" href="climb.html">Climb Gradient</a></li>
 <li class="toctree-l2"><a class="reference internal" href="cruise.html">Cruise Speed</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Combining all requirements</a></li>
 </ul>
 </details></li>
 </ul>
@@ -348,7 +348,7 @@ document.write(`
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#takeoff-distance">Takeoff distance</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#landing-distance">Landing distance</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#climg-gradient">Climg Gradient</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#climb-gradient">Climb Gradient</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cruise-speed">Cruise Speed</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#final-plot">Final plot</a></li>
 </ul>
@@ -364,15 +364,15 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="combining-all-requirements">
 <h1>Combining all requirements<a class="headerlink" href="#combining-all-requirements" title="Link to this heading">#</a></h1>
-<p>This section combines all the requirements and plots them on a single plot. The feasible region under all the constraints is also highlighted. The final value of <span class="math notranslate nohighlight">\(P_{TO}\)</span> and surface area <span class="math notranslate nohighlight">\(S\)</span> is computed.</p>
-<p>Below code snippet imports required packages:</p>
+<p>This section combines all the requirements and plots them on a single plot. The feasible region under all the constraints is also highlighted. An initial estimate of wing and power loading is also provided towards the end of this section.</p>
+<p>Below code snippet imports required packages and creates a grid of <span class="math notranslate nohighlight">\(W/S\)</span> and <span class="math notranslate nohighlight">\(W/P\)</span> values for computing various constraints:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">mpl</span>
 
-<span class="c1"># W/S amd W/P values - sealevel at takeoff power</span>
+<span class="c1"># W/S and W/P values - sealevel at takeoff power</span>
 <span class="n">num_pts</span> <span class="o">=</span> <span class="mi">500</span>
 <span class="n">wing_loading</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="n">num_pts</span><span class="p">)</span> <span class="c1"># lb/ft^2</span>
 <span class="n">power_loading</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="n">num_pts</span><span class="p">)</span> <span class="c1"># lb/hp</span>
@@ -383,6 +383,7 @@ document.write(`
 </div>
 <section id="takeoff-distance">
 <h2>Takeoff distance<a class="headerlink" href="#takeoff-distance" title="Link to this heading">#</a></h2>
+<p>Below code block computes takeoff distance requirement, refer <a class="reference internal" href="takeoff.html"><span class="std std-doc">here</span></a> for further details.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">s_tgr</span> <span class="o">=</span> <span class="mi">1500</span> <span class="c1"># ft</span>
@@ -405,6 +406,7 @@ document.write(`
 </section>
 <section id="landing-distance">
 <h2>Landing distance<a class="headerlink" href="#landing-distance" title="Link to this heading">#</a></h2>
+<p>Below code snippet computes landing distance requirement, refer <a class="reference internal" href="landing.html"><span class="std std-doc">here</span></a> for further details.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">s_lgr</span> <span class="o">=</span> <span class="mi">1500</span> <span class="c1"># ft</span>
@@ -422,9 +424,9 @@ document.write(`
 </div>
 </div>
 </section>
-<section id="climg-gradient">
-<h2>Climg Gradient<a class="headerlink" href="#climg-gradient" title="Link to this heading">#</a></h2>
-<p>Only OEI scenario is included</p>
+<section id="climb-gradient">
+<h2>Climb Gradient<a class="headerlink" href="#climb-gradient" title="Link to this heading">#</a></h2>
+<p>Below code computes climb gradient requirement, refer <a class="reference internal" href="climb.html"><span class="std std-doc">here</span></a> for further details. Note that only OEI scenario is included since it is the driving constraint among all the climb requirements.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Variables</span>
@@ -450,6 +452,7 @@ document.write(`
 </section>
 <section id="cruise-speed">
 <h2>Cruise Speed<a class="headerlink" href="#cruise-speed" title="Link to this heading">#</a></h2>
+<p>Below code block computes cruise speed requirement, refer <a class="reference internal" href="cruise.html"><span class="std std-doc">here</span></a> for further details.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Variables</span>
@@ -457,7 +460,7 @@ document.write(`
 <span class="n">sigma</span> <span class="o">=</span> <span class="mf">0.786</span>
 <span class="n">p8000_by_pTO</span> <span class="o">=</span> <span class="mf">0.758</span>
 
-<span class="n">cruise_speed_req</span> <span class="o">=</span> <span class="n">sigma</span> <span class="o">*</span> <span class="mf">1.4</span><span class="o">**</span><span class="mi">3</span> <span class="o">*</span> <span class="n">Y</span> <span class="o">/</span> <span class="n">p8000_by_pTO</span> <span class="o">/</span> <span class="mf">0.8</span> <span class="o">-</span> <span class="n">X</span> <span class="c1"># 0.8 is for 80% power setting adjustment</span>
+<span class="n">cruise_speed_req</span> <span class="o">=</span> <span class="n">sigma</span> <span class="o">*</span> <span class="n">ip</span><span class="o">**</span><span class="mi">3</span> <span class="o">*</span> <span class="n">Y</span> <span class="o">/</span> <span class="n">p8000_by_pTO</span> <span class="o">/</span> <span class="mf">0.8</span> <span class="o">-</span> <span class="n">X</span> <span class="c1"># 0.8 is for 80% power setting adjustment</span>
 </pre></div>
 </div>
 </div>
@@ -465,6 +468,7 @@ document.write(`
 </section>
 <section id="final-plot">
 <h2>Final plot<a class="headerlink" href="#final-plot" title="Link to this heading">#</a></h2>
+<p>Below code block plots all the requirements together and highlights the feasible region:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Plotting</span>
@@ -495,10 +499,16 @@ document.write(`
 <span class="n">ax</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">wing_loading</span><span class="p">,</span> <span class="n">power_loading</span><span class="p">,</span> <span class="n">feasbile_region</span><span class="p">,</span> <span class="n">colors</span><span class="o">=</span><span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="p">[</span><span class="mf">0.5</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s2">&quot;Feasible&quot;</span><span class="p">,</span> <span class="p">(</span><span class="mi">35</span><span class="p">,</span><span class="mi">7</span><span class="p">),</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">)</span>
 
+<span class="c1"># Annotation</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s2">&quot;Takeoff&quot;</span><span class="p">,</span> <span class="p">(</span><span class="mi">22</span><span class="p">,</span><span class="mf">7.5</span><span class="p">),</span> <span class="n">ha</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">fs</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s2">&quot;Landing&quot;</span><span class="p">,</span> <span class="p">(</span><span class="mi">46</span><span class="p">,</span><span class="mi">17</span><span class="p">),</span> <span class="n">ha</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">fs</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s2">&quot;Climb OEI&quot;</span><span class="p">,</span> <span class="p">(</span><span class="mi">22</span><span class="p">,</span><span class="mi">13</span><span class="p">),</span> <span class="n">ha</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">fs</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s2">&quot;Cruise speed&quot;</span><span class="p">,</span> <span class="p">(</span><span class="mi">31</span><span class="p">,</span><span class="mi">15</span><span class="p">),</span> <span class="n">ha</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">fs</span><span class="p">)</span>
+
 <span class="c1"># Design point</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="mi">40</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;*&quot;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="mi">40</span><span class="p">,</span> <span class="mf">9.25</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;*&quot;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Final Design point&quot;</span><span class="p">)</span>
 
-
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="n">fs</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;upper center&quot;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Wing Loading ($W/S$) [lbs/$ft^2$]&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">fs</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Power Loading ($W/P$) [lbs/hp]&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">fs</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Constraint analysis for example airplane&quot;</span><span class="p">)</span>
@@ -508,10 +518,10 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/8ffda642a3701944da9c56b40feb858d38c4a482e36b9290a10653eb07c76d89.png" src="../_images/8ffda642a3701944da9c56b40feb858d38c4a482e36b9290a10653eb07c76d89.png" />
+<img alt="../_images/311558f95788092efc30ca0628f8053ec813ce78538674954ba095264d7ad630.png" src="../_images/311558f95788092efc30ca0628f8053ec813ce78538674954ba095264d7ad630.png" />
 </div>
 </div>
-<p>Note about sensitivity of values such aas CLmax, CLmaxTO, CLmaxL, A</p>
+<p>Based on the above plot, the initial estimates for <span class="math notranslate nohighlight">\(W/S\)</span> and <span class="math notranslate nohighlight">\(W/P\)</span> are selected as 40 lbs/<span class="math notranslate nohighlight">\(\text{ft}^2\)</span> and 9.25 lbs/hp, respectively. Typically, the airplane turns out to be over-weight and under-powered as the design process evolves. Hence, larger values of <span class="math notranslate nohighlight">\(W/S\)</span> and <span class="math notranslate nohighlight">\(W/P\)</span> are desired within the feasible region. Refer to the lecture notes for more details.</p>
 </section>
 </section>
 
@@ -545,6 +555,15 @@ document.write(`
                 <footer class="prev-next-footer d-print-none">
                   
 <div class="prev-next-area">
+    <a class="left-prev"
+       href="cruise.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Cruise Speed</p>
+      </div>
+    </a>
 </div>
                 </footer>
               
@@ -563,7 +582,7 @@ document.write(`
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#takeoff-distance">Takeoff distance</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#landing-distance">Landing distance</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#climg-gradient">Climg Gradient</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#climb-gradient">Climb Gradient</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cruise-speed">Cruise Speed</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#final-plot">Final plot</a></li>
 </ul>

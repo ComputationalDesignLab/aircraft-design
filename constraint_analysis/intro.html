@@ -196,6 +196,7 @@
 <li class="toctree-l2"><a class="reference internal" href="landing.html">Landing Distance</a></li>
 <li class="toctree-l2"><a class="reference internal" href="climb.html">Climb Gradient</a></li>
 <li class="toctree-l2"><a class="reference internal" href="cruise.html">Cruise Speed</a></li>
+<li class="toctree-l2"><a class="reference internal" href="final.html">Combining all requirements</a></li>
 </ul>
 </details></li>
 </ul>
@@ -352,7 +353,7 @@ document.write(`
 <h1>Constraint Analysis<a class="headerlink" href="#constraint-analysis" title="Link to this heading">#</a></h1>
 <p>For any airplane, the wing loading (<span class="math notranslate nohighlight">\(W/S\)</span>) and power loading (<span class="math notranslate nohighlight">\(W/P\)</span>) (or thrust loading (<span class="math notranslate nohighlight">\(T/W\)</span>) in case of jet airplanes) are important parameters that determine its performance. This section demonstrates constraint analysis method for estimating <span class="math notranslate nohighlight">\(W/S\)</span> and <span class="math notranslate nohighlight">\(W/P\)</span>. Note that <span class="math notranslate nohighlight">\(W/P\)</span> is used in this section instead of <span class="math notranslate nohighlight">\(T/W\)</span> since the example aircraft is propeller driven. The constraint analysis method involves identifying feasible region in the <span class="math notranslate nohighlight">\(W/S\)</span> and <span class="math notranslate nohighlight">\(W/P\)</span> design space under various performance constraints, and then selecting appropriate values for wing and power loading in the feasible region. Refer to the lecture notes for more details.</p>
 <blockquote>
-<div><p><strong><em>NOTE</em>:</strong> The weight <span class="math notranslate nohighlight">\(W\)</span> and power <span class="math notranslate nohighlight">\(P\)</span> are <span class="math notranslate nohighlight">\(W_{TO}\)</span> and <span class="math notranslate nohighlight">\(P_{TO}\)</span>, respectively.</p>
+<div><p><strong><em>NOTE</em>:</strong> The wing and power loading should be in takeoff conditions when performing constraint analysis. If a requirement limits either wing or power loading at different condition, then convert those values to takeoff conditions before comparing with other requirements.</p>
 </div></blockquote>
 <p>In this section, constraint analysis is demonstrated using the example aircraft. Following performance requirements are used within constraint analysis:</p>
 <ol class="arabic simple">
@@ -408,6 +409,9 @@ document.write(`
 </table>
 </div>
 </div>
+<blockquote>
+<div><p><strong><em>NOTE</em></strong>: The constraint analysis process described in this section is sensitive to the values of <span class="math notranslate nohighlight">\(A\)</span>, <span class="math notranslate nohighlight">\(C_{L_{max}}\)</span>, <span class="math notranslate nohighlight">\(C_{L_{max_{TO}}}\)</span>, and <span class="math notranslate nohighlight">\(C_{L_{max_L}}\)</span>. It is recommended to tweak these values and see its effects on the feasible region in the <span class="math notranslate nohighlight">\(W/S\)</span> and <span class="math notranslate nohighlight">\(W/P\)</span> space.</p>
+</div></blockquote>
 <div class="toctree-wrapper compound">
 </div>
 </section>
