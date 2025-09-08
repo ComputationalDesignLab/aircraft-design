@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Combining all requirements &#8212; Aircraft Design</title>
+    <title>Matching process &#8212; Aircraft Design</title>
   
   
   
@@ -62,6 +62,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'constraint_analysis/final';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Initial design summary" href="../baseline.html" />
     <link rel="prev" title="Cruise Speed" href="cruise.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -195,9 +196,10 @@
 <li class="toctree-l2"><a class="reference internal" href="landing.html">Landing Distance</a></li>
 <li class="toctree-l2"><a class="reference internal" href="climb.html">Climb Gradient</a></li>
 <li class="toctree-l2"><a class="reference internal" href="cruise.html">Cruise Speed</a></li>
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">Combining all requirements</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Matching process</a></li>
 </ul>
 </details></li>
+<li class="toctree-l1"><a class="reference internal" href="../baseline.html">Initial design summary</a></li>
 </ul>
 
     </div>
@@ -351,7 +353,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Combining all requirements</h1>
+    <h1>Matching process</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -377,8 +379,8 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="combining-all-requirements">
-<h1>Combining all requirements<a class="headerlink" href="#combining-all-requirements" title="Link to this heading">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="matching-process">
+<h1>Matching process<a class="headerlink" href="#matching-process" title="Link to this heading">#</a></h1>
 <p>This section combines all the requirements and plots them on a single plot. The feasible region under all the constraints is also highlighted. An initial estimate of wing and power loading is also provided towards the end of this section.</p>
 <p>Below code snippet imports required packages and creates a grid of <span class="math notranslate nohighlight">\(W/S\)</span> and <span class="math notranslate nohighlight">\(W/P\)</span> values for computing various constraints:</p>
 <div class="cell docutils container">
@@ -521,22 +523,22 @@ document.write(`
 <span class="n">ax</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s2">&quot;Cruise speed&quot;</span><span class="p">,</span> <span class="p">(</span><span class="mi">31</span><span class="p">,</span><span class="mi">15</span><span class="p">),</span> <span class="n">ha</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">fs</span><span class="p">)</span>
 
 <span class="c1"># Design point</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="mi">40</span><span class="p">,</span> <span class="mf">9.25</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;*&quot;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Final Design point&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="mi">40</span><span class="p">,</span> <span class="mf">9.25</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;*&quot;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Initial design point&quot;</span><span class="p">)</span>
 
 <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="n">fs</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;upper center&quot;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Wing Loading ($W/S$) [lbs/$ft^2$]&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">fs</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Power Loading ($W/P$) [lbs/hp]&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">fs</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Constraint analysis for example airplane&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Matching process for the example airplane&quot;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;both&#39;</span><span class="p">,</span> <span class="n">labelsize</span><span class="o">=</span><span class="n">fs</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/311558f95788092efc30ca0628f8053ec813ce78538674954ba095264d7ad630.png" src="../_images/311558f95788092efc30ca0628f8053ec813ce78538674954ba095264d7ad630.png" />
+<img alt="../_images/a96a2adc13af8c7399971b5f2d8a4c12e6e1bd4b90e2c2be6e19592922deac9f.png" src="../_images/a96a2adc13af8c7399971b5f2d8a4c12e6e1bd4b90e2c2be6e19592922deac9f.png" />
 </div>
 </div>
-<p>Based on the above plot, the initial estimates for <span class="math notranslate nohighlight">\(W/S\)</span> and <span class="math notranslate nohighlight">\(W/P\)</span> are selected as 40 lbs/<span class="math notranslate nohighlight">\(\text{ft}^2\)</span> and 9.25 lbs/hp, respectively. Typically, the airplane turns out to be over-weight and under-powered as the design process evolves. Hence, larger values of <span class="math notranslate nohighlight">\(W/S\)</span> and <span class="math notranslate nohighlight">\(W/P\)</span> are desired within the feasible region. Refer to the lecture notes for more details.</p>
+<p>Based on the above plot, the initial estimates for <span class="math notranslate nohighlight">\(W/S\)</span> and <span class="math notranslate nohighlight">\(W/P\)</span> are selected as 40 lbs/<span class="math notranslate nohighlight">\(\text{ft}^2\)</span> and 9.25 lbs/hp, respectively. Refer to the lecture notes for more details about selecting initial design point.</p>
 </section>
 </section>
 
@@ -578,6 +580,15 @@ document.write(`
         <p class="prev-next-subtitle">previous</p>
         <p class="prev-next-title">Cruise Speed</p>
       </div>
+    </a>
+    <a class="right-next"
+       href="../baseline.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Initial design summary</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
     </a>
 </div>
                 </footer>
