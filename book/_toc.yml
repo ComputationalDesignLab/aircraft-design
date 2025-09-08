@@ -16,3 +16,4 @@ chapters:
       - file: constraint_analysis/climb
       - file: constraint_analysis/cruise
       - file: constraint_analysis/final
+  - file: baseline
