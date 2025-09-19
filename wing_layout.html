@@ -1,0 +1,699 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Wing Planform Sizing &#8212; Aircraft Design</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'wing_layout';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Aircraft Configuration" href="configuration.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Aircraft Design</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Introduction
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="setup.html">Computing environment setup</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="python_basics/intro.html">Basics of Python Programming</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="python_basics/python_basics.html">Basic programming in Python and Jupyter Notebooks</a></li>
+
+
+
+
+
+
+<li class="toctree-l2"><a class="reference internal" href="python_basics/plotting.html">Basic plotting in Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python_basics/resources.html">Python and Jupyter notebook resources</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="example_aircraft.html">Example Aircraft</a></li>
+<li class="toctree-l1"><a class="reference internal" href="initial_weight_estimation.html">Initial Weight Estimation</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="constraint_analysis/intro.html">Constraint Analysis</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="constraint_analysis/takeoff.html">Takeoff Distance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="constraint_analysis/landing.html">Landing Distance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="constraint_analysis/climb.html">Climb Gradient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="constraint_analysis/cruise.html">Cruise Speed</a></li>
+<li class="toctree-l2"><a class="reference internal" href="constraint_analysis/final.html">Matching process</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="baseline.html">Initial Design Summary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configuration.html">Aircraft Configuration</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Wing Planform Sizing</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/ComputationalDesignLab/aircraft-design" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/wing_layout.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Wing Planform Sizing</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sweep">Sweep</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#taper-ratio">Taper Ratio</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#wing-fuel-volume">Wing Fuel Volume</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#other-variables">Other variables</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#airfoil">Airfoil</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="wing-planform-sizing">
+<h1>Wing Planform Sizing<a class="headerlink" href="#wing-planform-sizing" title="Link to this heading">#</a></h1>
+<p>This section performs preliminary estimation of various wing planform variables for the example airplane. These variables include: surface area, aspect ratio, sweep, taper ratio, dihedral angle, incidence angle, and twist angle. At this stage of the design, empirical methods are used for determining these variables but it is recommended to use carpet plots or numerical optimization to further refine these variables. Note that surface area and aspect ratio are already known from initial weight estimation and constraint analysis. Following sub-sections describes these variables, along with its value for the example aircraft. For a detailed discussion about each of these quantities, please refer to lecture notes.</p>
+<section id="sweep">
+<h2>Sweep<a class="headerlink" href="#sweep" title="Link to this heading">#</a></h2>
+<p>Sweep (<span class="math notranslate nohighlight">\(\Lambda\)</span>) is desired for high subsonic, transonic, and supersonic speeds where shock formation has adverse effects on the aerodynamic characteristics of the wing. However, it does increase wing weight and decreases the lift. Since the example airplane is going to fly at low speeds (<span class="math notranslate nohighlight">\(M \sim 0.3\)</span>), the quarter chord sweep is kept at <span class="math notranslate nohighlight">\(0^{\circ}\)</span>. This is corroborated from the historical data presented in Raymer (Figure 4.2) and Roskam Part 2 (Table 6.3). One can also make leading edge sweep equal to zero. The <span class="math notranslate nohighlight">\(n^{th}\)</span> and <span class="math notranslate nohighlight">\(m^{th}\)</span> fraction chord sweep angles can be linked using</p>
+<div class="math notranslate nohighlight">
+\[
+    \tan(\Lambda_n) = \tan(\Lambda_m) - \frac{4}{A} \bigg[ (n-m) \frac{1 - \lambda}{1 +\lambda} \bigg],
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(\lambda\)</span> is the taper ratio. So, if the aspect ratio and taper ratio are known, then sweep at a given chord fraction can be computed easily.</p>
+</section>
+<section id="taper-ratio">
+<h2>Taper Ratio<a class="headerlink" href="#taper-ratio" title="Link to this heading">#</a></h2>
+<p>Taper ratio (<span class="math notranslate nohighlight">\(\lambda\)</span>) is defined as</p>
+<div class="math notranslate nohighlight">
+\[
+    \lambda = \frac{C_{tip}}{C_{root}},
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(C_{tip}\)</span> and <span class="math notranslate nohighlight">\(C_{root}\)</span> are the tip and root chord, respectively. Taper ratio affects the spanwise lift distribution which governs the induced drag. It is shown that elliptical lift distribution results in lowest induced drag. This distribution can be generated using elliptical wings but it is difficult to manufacture. Hence, a simple trapezoidal wing with an appropriate taper ratio can be used for generating a lift distribution that is close to elliptical. As recommended in Section 4.3.3 in Raymer, wings with no sweep usually have a taper ratio of 0.4, which is close to the historical values reported in Table 6.3 of Roskam Part 2. Thus, the taper ratio of 0.4 is selected for the example aircraft. Once taper ratio is finalized, the root chord and tip chord can be computed as</p>
+<div class="math notranslate nohighlight">
+\[
+    C_{root} = \frac{2S}{b(1 + \lambda)} \quad \text{ and } \quad C_{tip} = \lambda C_{root},
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(b\)</span> is the span of the wing. The mean aerodynamic chord (MAC) can be computed as</p>
+<div class="math notranslate nohighlight">
+\[
+    \text{MAC} = \frac{2}{3}C_{root} \frac{1 + \lambda + \lambda^2}{1 + \lambda}.
+\]</div>
+<p>Furthermore, the spanwise location of the MAC can be calculated using</p>
+<div class="math notranslate nohighlight">
+\[
+    y_{\text{mac}} = \frac{b(1 + 2\lambda)}{6(1 + \lambda)}.
+\]</div>
+<p>The MAC and <span class="math notranslate nohighlight">\(y_{mac}\)</span> can be used to identify the location of mean aerodynamic center on the wing, which is used later in stability calculations.</p>
+<blockquote>
+<div><p><strong><em>NOTE:</em></strong> If the aspect ratio, surface area, span, and taper ratio are known for a tail surface, above equations for computing root chord, tip chord, mac, and <span class="math notranslate nohighlight">\(y_{mac}\)</span> can be used.</p>
+</div></blockquote>
+</section>
+<section id="wing-fuel-volume">
+<h2>Wing Fuel Volume<a class="headerlink" href="#wing-fuel-volume" title="Link to this heading">#</a></h2>
+<p>Once the wing planform variables are estimated, it is important to compute the amount of fuel wing can hold. Torenbeek provides an empirical equation for estimating wing fuel volume (<span class="math notranslate nohighlight">\(V_{wf}\)</span>). It is given as</p>
+<div class="math notranslate nohighlight">
+\[
+    V_{wf} = 0.54\frac{S^2}{b}\bigg(\frac{t}{c}\bigg)_{root}\frac{1+\lambda\sqrt{\tau}+\lambda^2\tau}{(1+\lambda)^2},
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(\tau\)</span> is <span class="math notranslate nohighlight">\((t/c)_{tip}/(t/c)_{root}\)</span> and <span class="math notranslate nohighlight">\(t/c\)</span> is the thickness ratio of the airfoil. The value obtained from the above equation should be compared to the required fuel determined in initial weight estimation. If there is a large discrepancy between the values (more than 15-20%), then some of the wing planform variables should be updated.</p>
+</section>
+<section id="other-variables">
+<h2>Other variables<a class="headerlink" href="#other-variables" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p><strong>Wing twist</strong> is primarily used for two things – preventing tip stall and to modify the spanwise lift distribution. Wing twist can be classified as geometric and aerodynamic twist. Geometric twist is the actual change in the local airfoil angle of attack, while the aerodynamic twist refers to the change in the zero-lift angle of attack as one moves along the span of the wing. A geometrical twist of <span class="math notranslate nohighlight">\(-3^{\circ}\)</span> (washout) can provide good stall characteristics, and hence, is used for the example airplane (Raymer Section 4.3.4). Plese refer to the lecture notes for more details.</p></li>
+<li><p><strong>Wing incidence</strong> can be defined as the pitch angle between the wing root and fuselage axis. This incidence can be determined for minimum drag during the cruise. Essentially, wing should be at the correct angle of attack to generate enough lift to balance the weight while fuselage is at minimum drag. For a passenger airplane, it is important that the fuselage floor is level during the cruise. For the example airplane, the incidence angle is set to <span class="math notranslate nohighlight">\(2^{\circ}\)</span> based on Section 4.3.5 in Raymer and the historical data reported in Table 6.3 in Roskam Part 2.</p></li>
+<li><p><strong>Wing dihedral</strong> is the angle made by the wing with respect to the horizontal axis when viewed from front. Dihedral needs to be carefully determined since it affects the rolling motion and the stability of the airplane. Wing sweep and wing position relatively to fuselage also has additive effects on dihedral. There is no simple way to determine the dihedral at this stage of the design. Based on Table 4.2 in Raymer and Table 6.3 in Roskam Part 2, a dihedral of <span class="math notranslate nohighlight">\(5^{\circ}\)</span> is selected for the example airplane.</p></li>
+</ol>
+</section>
+<section id="airfoil">
+<h2>Airfoil<a class="headerlink" href="#airfoil" title="Link to this heading">#</a></h2>
+<p>Airfoil needs to be determined carefully since it affects the overall aerodynamic efficiency during all phases of flight. Typically, five or six series airfoil is used for subsonic flight. It is recommended to perform airfoil analysis using XFOIL or XFLR5 across a range of appropriate Reynolds number. Note that the Reynolds number should be computed using mean aerodynamic chord determined using one of the above equations. The airfoils should be compared based on lift, drag, and pitching moment curves, along with drag polar and stall characteristics. Refer to lecture notes and Section 4.2 in Raymer for more details. For the example airplane, NACA 23018 and 23009 is used as the root and tip airfoil, respectively, based on Table 8.3 in Roskam Part 2.</p>
+</section>
+<section id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Link to this heading">#</a></h2>
+<p>Below block of code computes some of the variables described in this section:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="c1"># Define variables</span>
+<span class="n">A</span> <span class="o">=</span> <span class="mi">8</span>
+<span class="n">S</span> <span class="o">=</span> <span class="mi">134</span> <span class="c1"># sq ft</span>
+<span class="n">sweep_qc</span> <span class="o">=</span> <span class="mi">0</span> <span class="c1"># deg</span>
+<span class="n">taper_ratio</span> <span class="o">=</span> <span class="mf">0.4</span>
+<span class="n">thickness_ratio_root</span> <span class="o">=</span> <span class="mf">0.18</span>
+<span class="n">thickness_ratio_tip</span> <span class="o">=</span> <span class="mf">0.09</span>
+<span class="n">tau</span> <span class="o">=</span> <span class="n">thickness_ratio_tip</span> <span class="o">/</span> <span class="n">thickness_ratio_root</span>
+
+<span class="c1"># Span</span>
+<span class="n">b</span> <span class="o">=</span> <span class="p">(</span><span class="n">A</span><span class="o">*</span><span class="n">S</span><span class="p">)</span><span class="o">**</span><span class="mf">0.5</span> <span class="c1"># ft</span>
+
+<span class="c1"># LE Sweep</span>
+<span class="n">sweep_le</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">atan</span><span class="p">(</span> <span class="n">np</span><span class="o">.</span><span class="n">tan</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="mi">4</span> <span class="o">*</span> <span class="p">(</span><span class="mf">0.25</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">taper_ratio</span><span class="p">)</span> <span class="o">/</span> <span class="n">A</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">taper_ratio</span><span class="p">)</span> <span class="p">)</span> <span class="o">*</span> <span class="mi">180</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span>
+
+<span class="c1"># root chord</span>
+<span class="n">c_root</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">S</span><span class="o">/</span><span class="n">b</span><span class="o">/</span><span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">taper_ratio</span><span class="p">)</span> <span class="c1"># ft</span>
+
+<span class="c1"># tip chord</span>
+<span class="n">c_tip</span> <span class="o">=</span> <span class="n">taper_ratio</span> <span class="o">*</span> <span class="n">c_root</span> <span class="c1"># ft</span>
+
+<span class="c1"># MAC</span>
+<span class="n">mac</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">c_root</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">taper_ratio</span> <span class="o">+</span> <span class="n">taper_ratio</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="mi">3</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">taper_ratio</span><span class="p">)</span>
+
+<span class="c1"># y_mac</span>
+<span class="n">y_mac</span> <span class="o">=</span> <span class="n">b</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">taper_ratio</span><span class="p">)</span> <span class="o">/</span> <span class="mi">6</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">taper_ratio</span><span class="p">)</span>
+
+<span class="c1"># wing fuel capacity</span>
+<span class="n">wing_fuel_volume</span> <span class="o">=</span> <span class="mf">0.54</span> <span class="o">*</span> <span class="n">S</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="n">thickness_ratio_root</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">taper_ratio</span> <span class="o">*</span> <span class="n">tau</span><span class="o">**</span><span class="mf">0.5</span> <span class="o">+</span> <span class="n">tau</span> <span class="o">*</span> <span class="n">taper_ratio</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="n">b</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">taper_ratio</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+
+<span class="c1"># Print values</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Sweep leading edge: </span><span class="si">{</span><span class="n">sweep_le</span><span class="si">:</span><span class="s2">.2</span><span class="si">}</span><span class="s2"> deg&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Root chord: </span><span class="si">{</span><span class="n">c_root</span><span class="si">:</span><span class="s2">.2</span><span class="si">}</span><span class="s2"> ft&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Tip chord: </span><span class="si">{</span><span class="n">c_tip</span><span class="si">:</span><span class="s2">.2</span><span class="si">}</span><span class="s2"> ft&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;MAC: </span><span class="si">{</span><span class="n">mac</span><span class="si">:</span><span class="s2">.2</span><span class="si">}</span><span class="s2"> ft&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;y_mac: </span><span class="si">{</span><span class="n">y_mac</span><span class="si">:</span><span class="s2">.2</span><span class="si">}</span><span class="s2"> ft&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Wing fuel volume: </span><span class="si">{</span><span class="n">wing_fuel_volume</span><span class="si">:</span><span class="s2">.3</span><span class="si">}</span><span class="s2"> ft^3&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sweep leading edge: 3.1 deg
+Root chord: 5.8 ft
+Tip chord: 2.3 ft
+MAC: 4.3 ft
+y_mac: 7.0 ft
+Wing fuel volume: 37.1 ft^3
+</pre></div>
+</div>
+</div>
+</div>
+<p>Below table summarizes the output of wing planform sizing:</p>
+<div style="width:70%; margin: auto;">
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter</p></th>
+<th class="head text-center"><p>Value</p></th>
+<th class="head text-center"><p>Source</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Aspect ratio</p></td>
+<td class="text-center"><p>8</p></td>
+<td class="text-center"><p>initial weight estimation</p></td>
+</tr>
+<tr class="row-odd"><td><p>Surface area</p></td>
+<td class="text-center"><p>134 <span class="math notranslate nohighlight">\(\text{ft}^2\)</span></p></td>
+<td class="text-center"><p>constraint analysis</p></td>
+</tr>
+<tr class="row-even"><td><p>Span</p></td>
+<td class="text-center"><p>33 ft</p></td>
+<td class="text-center"><p>calculated</p></td>
+</tr>
+<tr class="row-odd"><td><p>Sweep leading edge</p></td>
+<td class="text-center"><p>3 degree</p></td>
+<td class="text-center"><p>calculated</p></td>
+</tr>
+<tr class="row-even"><td><p>Sweep quarter chord</p></td>
+<td class="text-center"><p>0 degree</p></td>
+<td class="text-center"><p>historical data &amp; flight regime</p></td>
+</tr>
+<tr class="row-odd"><td><p>Taper ratio</p></td>
+<td class="text-center"><p>0.4</p></td>
+<td class="text-center"><p>historical data</p></td>
+</tr>
+<tr class="row-even"><td><p>Root chord</p></td>
+<td class="text-center"><p>5.8 ft</p></td>
+<td class="text-center"><p>calculated</p></td>
+</tr>
+<tr class="row-odd"><td><p>Tip chord</p></td>
+<td class="text-center"><p>2.3 ft</p></td>
+<td class="text-center"><p>calculated</p></td>
+</tr>
+<tr class="row-even"><td><p>MAC</p></td>
+<td class="text-center"><p>4.3 ft</p></td>
+<td class="text-center"><p>calculated</p></td>
+</tr>
+<tr class="row-odd"><td><p>Span location of MAC</p></td>
+<td class="text-center"><p>7 ft</p></td>
+<td class="text-center"><p>calculated</p></td>
+</tr>
+<tr class="row-even"><td><p>Wing fuel volume</p></td>
+<td class="text-center"><p>37 cu ft</p></td>
+<td class="text-center"><p>calculated</p></td>
+</tr>
+<tr class="row-odd"><td><p>Wing twist</p></td>
+<td class="text-center"><p><span class="math notranslate nohighlight">\(-3^{\circ}\)</span></p></td>
+<td class="text-center"><p>historical data</p></td>
+</tr>
+<tr class="row-even"><td><p>Wing incidence</p></td>
+<td class="text-center"><p><span class="math notranslate nohighlight">\(2^{\circ}\)</span></p></td>
+<td class="text-center"><p>historical data</p></td>
+</tr>
+<tr class="row-odd"><td><p>Wing dihedral</p></td>
+<td class="text-center"><p><span class="math notranslate nohighlight">\(5^{\circ}\)</span></p></td>
+<td class="text-center"><p>historical data</p></td>
+</tr>
+<tr class="row-even"><td><p>Root airfoil</p></td>
+<td class="text-center"><p>NACA 23018</p></td>
+<td class="text-center"><p>historical data</p></td>
+</tr>
+<tr class="row-odd"><td><p>Tip airfoil</p></td>
+<td class="text-center"><p>NACA 23009</p></td>
+<td class="text-center"><p>historical data</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Based on the above table, the wing fuel capacity is 1770 lbs (computed using density of 100LL Avgas at low temperature) which is much higher than the <a class="reference internal" href="initial_weight_estimation.html#mtow-estimation"><span class="std std-ref">required fuel of 1060 lbs</span></a>. This concludes the wing planform sizing section. Note that many of these wing planform variables determine the aerodynamic efficiency and handling quality of the airplane, and hence, should be refined using carpet plots and/or numerical optimization in the later stages of design.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="configuration.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Aircraft Configuration</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sweep">Sweep</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#taper-ratio">Taper Ratio</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#wing-fuel-volume">Wing Fuel Volume</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#other-variables">Other variables</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#airfoil">Airfoil</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Leifur Leifsson (leifur[at]purdue.edu)
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

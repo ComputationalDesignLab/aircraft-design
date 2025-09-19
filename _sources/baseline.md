@@ -1,4 +1,4 @@
-# Initial design summary
+# Initial Design Summary
 
 Based on the results from initial weight estimation and constraint analysis, following table outlines some of the major important quantities for the example airplane:
 
