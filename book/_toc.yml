@@ -17,4 +17,5 @@ chapters:
       - file: constraint_analysis/cruise
       - file: constraint_analysis/final
   - file: baseline
+  - file: configuration
   - file: wing_layout
