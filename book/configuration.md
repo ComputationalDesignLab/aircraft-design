@@ -9,3 +9,10 @@ For the example airplane, following configuration is selected:
 * Wing mounted engines in tractor configuration
 * Conventional tail
 * Tricycle landing gear
+
+Below image shows this configuration in OpenVSP:
+
+<div style="width:80%; margin: auto;">
+
+![logos](images/conf.png)
+</div>
