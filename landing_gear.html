@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Fuselage and Landing Gear Sizing &#8212; Aircraft Design</title>
+    <title>Landing Gear Sizing &#8212; Aircraft Design</title>
   
   
   
@@ -59,9 +59,10 @@
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'fuselage_lg';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'landing_gear';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Fuselage Sizing" href="fuselage.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -124,8 +125,6 @@
       
       
       
-        
-      
       <div class="bd-sidebar-primary bd-sidebar">
         
 
@@ -175,7 +174,7 @@
                 </a>
             </li>
         </ul>
-        <ul class="nav bd-sidenav">
+        <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="setup.html">Computing environment setup</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="python_basics/intro.html">Basics of Python Programming</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="python_basics/python_basics.html">Basic programming in Python and Jupyter Notebooks</a></li>
@@ -204,6 +203,7 @@
 <li class="toctree-l1"><a class="reference internal" href="wing_layout.html">Wing Planform Sizing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tail_sizing.html">Tail Sizing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="fuselage.html">Fuselage Sizing</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Landing Gear Sizing</a></li>
 </ul>
 
     </div>
@@ -273,7 +273,7 @@
       
       
       
-      <li><a href="_sources/fuselage_lg.ipynb" target="_blank"
+      <li><a href="_sources/landing_gear.ipynb" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -344,9 +344,7 @@ document.write(`
   </button>
 `);
 </script>
-<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="fa-solid fa-list"></span>
-</button>
+
 </div></div>
       
     </div>
@@ -357,20 +355,11 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Fuselage and Landing Gear Sizing</h1>
+    <h1>Landing Gear Sizing</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
             
-            <div>
-                <h2> Contents </h2>
-            </div>
-            <nav aria-label="Page">
-                <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fuselage">Fuselage</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#landing-gear">Landing gear</a></li>
-</ul>
-            </nav>
         </div>
     </div>
 </div>
@@ -380,95 +369,81 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="fuselage-and-landing-gear-sizing">
-<h1>Fuselage and Landing Gear Sizing<a class="headerlink" href="#fuselage-and-landing-gear-sizing" title="Link to this heading">#</a></h1>
-<p>This section talks about the initial sizing of fuselage and landing gear for the example airplane.</p>
-<section id="fuselage">
-<h2>Fuselage<a class="headerlink" href="#fuselage" title="Link to this heading">#</a></h2>
-<p>Fuselage sizing consists of determining the fuselage length, diameter, cross-sectional shape, aft upsweep angle, and cabin layout details such as seat width, seat pitch, aisle height, aisle width, etc. If desired, structural layout of the fuselage can also be defined. At this stage of the design, these quantities can be determined by looking at what other manufacturers have done. Refer to Chapter 2 in Roskam Part 2, Chapter 3 in Roskam Part 3, and Chapter 8 in Nicolai &amp; Carichner for more details about fuselage sizing and historical data.</p>
-<p>Fuselage produces most amount of drag on an airplane and its shape should be determined to reduce its drag as much as possible. The fuselage fineness ratio is defined as the ratio of the fuselage length (<span class="math notranslate nohighlight">\(l_f\)</span>) to its diamter (<span class="math notranslate nohighlight">\(l_d\)</span>), which governs the fuselage friction drag. The profile drag for a fuselage is governed by the aft body fineness ratio which is defined as the ratio of the fuselage tail cone length (<span class="math notranslate nohighlight">\(l_{fc}\)</span>) to the fuselage diameter. The fuselage upsweep angle (<span class="math notranslate nohighlight">\(\theta_{fc}\)</span>) can also effect the profile drag. Refer to Section 3.1 Roskam Part 3 for a detailed discussion on the affects of various parameters on the fuselage drag. The value of these parameters can be determined so that fuselage’s drag decreases. Table 4.1 in Roskam Part 2 provides historical guidelines for determining these parameters.</p>
-<p>Fuselage width depends on the cabin arrangement. The example airplane will consists of two abreast seating - two cockpit seats and four cabin seats. Since the cabin does not have to be pressurized, the fuselage cross-section consists of two semi-circles which are connected by two small flat sections. The cabin height is set to 4.4 ft and the cabin width is 4.25 ft. With the recommended fuselage structural depth of 1.5 in, the final fuselage width and height are 4.5 ft and 5.5 ft, respectively. The seat dimensions are determined using the guidelines provides in Table 3.1 in Roskam Part 3.</p>
-<p>Following table outlines the value of various fusealge variables for the example airplane:</p>
-<div style="width:70%; margin: auto;">
+  <section class="tex2jax_ignore mathjax_ignore" id="landing-gear-sizing">
+<h1>Landing Gear Sizing<a class="headerlink" href="#landing-gear-sizing" title="Link to this heading">#</a></h1>
+<p>This section describes initial sizing process for landing gear (LG) and demonstrates it on the example aircraft. Specifically, the goal of this section is to deterine the type of LG, and the number and size of tyres. Moreover, the LG should satisfies the tip-over criteria and provide enough ground clearance. Additionally, one should also explore the retraction mechanism for the LG, and how it will be stored - within wings, fuselage, or wing-fuselage intersection.</p>
+<p>The initial sizing for landing gear is usually performed by estimating the loads on nose and main LG, and accordingly sizing them. However, these loads can only be known precisely once the weight and balance studies are performed. Moreover, the location of the LG should satisfy tip-over and ground clearance criteria. Hence, the LG sizing is an iterative process which will involve some back and forth with weight and balance studies. For landing gear sizing, refer to Chapter 11 in Raymer and Chapter 9 in Roskam Part 2.</p>
+<p>As mentionted in the configuration section, the example airplane will be using tricycle LG, one of the most widely employed LG arrangements. The nose LG will be retracted into the nose, while the main LG will be retracted into the wings. To compute the load on the LG, following equations (from Raymer Chapter 11) will be used:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{aligned}
+    \text{Max static load on nose LG:} \quad &amp; W \frac{l_m}{l_d} \\
+    \text{Max static load on main LG:} \quad &amp; W \frac{l_n}{l_d}
+\end{aligned}
+\end{split}\]</div>
+<p>Here, <span class="math notranslate nohighlight">\(W\)</span> is the maximum weight of the airplane (MTOW) and <span class="math notranslate nohighlight">\(l_d\)</span> is the distance between nose and main LG. The <span class="math notranslate nohighlight">\(l_n\)</span> denotes the distance between the most aft CG location and nose LG, while <span class="math notranslate nohighlight">\(l_m\)</span> refers to the distance between most forward CG and main LG. Since weight and balance studies are not performed, <span class="math notranslate nohighlight">\(l_n/l_d\)</span> and <span class="math notranslate nohighlight">\(l_m/l_d\)</span> are assumed to be 0.9 and 0.15, respectively. Once the loads are computed, LG can be sized. Below code block computes the loads on nose and main LG:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Variables</span>
+<span class="n">W</span> <span class="o">=</span> <span class="mi">5354</span> <span class="c1"># lbs</span>
+<span class="n">ln_by_ld</span> <span class="o">=</span> <span class="mf">0.95</span>
+<span class="n">lm_by_ld</span> <span class="o">=</span> <span class="mf">0.10</span>
+
+<span class="c1"># Loads</span>
+<span class="n">nose_lg_load</span> <span class="o">=</span> <span class="n">W</span> <span class="o">*</span> <span class="n">lm_by_ld</span> <span class="c1"># lb</span>
+<span class="n">main_lg_load</span> <span class="o">=</span> <span class="n">W</span> <span class="o">*</span> <span class="n">ln_by_ld</span> <span class="c1"># lb</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Max load on nose LG: </span><span class="si">{</span><span class="n">nose_lg_load</span><span class="si">}</span><span class="s2"> lbs&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Max load on main LG: </span><span class="si">{</span><span class="n">main_lg_load</span><span class="si">}</span><span class="s2"> lbs&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Max load on nose LG: 535.4 lbs
+Max load on each main LG strut: 5086.3 lbs
+</pre></div>
+</div>
+</div>
+</div>
+<p>For the example airplane, the nose LG will consists of one strut and one tire, while the main LG will contain two struts (one on each side) and one tire per struct. Hence, each main LG strut will carry 2543 lbs. Based on Table 11.2 in Raymer, tire size can be determined for the example airplane. Once weight and balance studies are performed and LG sizing is refined, one should use Tire manufacturer’s catalog to determine the exact tire dimensions. Below table outlines the tire details:</p>
+<div style="width:50%; margin: auto;">
 <div class="pst-scrollable-table-container"><table class="table">
 <thead>
 <tr class="row-odd"><th class="head"><p>Parameter</p></th>
-<th class="head text-center"><p>Value</p></th>
-<th class="head text-center"><p>Source</p></th>
+<th class="head text-center"><p>Nose LG tire</p></th>
+<th class="head text-center"><p>Main LG tire</p></th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>Fuselage fineness ratio</p></td>
-<td class="text-center"><p>7</p></td>
-<td class="text-center"><p>Table 4.1 Roskam Part 2</p></td>
+<tr class="row-even"><td><p>Tire type</p></td>
+<td class="text-center"><p>Type III</p></td>
+<td class="text-center"><p>Type III</p></td>
 </tr>
-<tr class="row-odd"><td><p>Aft body fineness ratio</p></td>
-<td class="text-center"><p>3</p></td>
-<td class="text-center"><p>Table 4.1 Roskam Part 2</p></td>
+<tr class="row-odd"><td><p>Max applied load, lbs</p></td>
+<td class="text-center"><p>535</p></td>
+<td class="text-center"><p>2543</p></td>
 </tr>
-<tr class="row-even"><td><p>Upsweep angle</p></td>
-<td class="text-center"><p><span class="math notranslate nohighlight">\(10^{\circ}\)</span></p></td>
-<td class="text-center"><p>Table 4.1 Roskam Part 2</p></td>
+<tr class="row-even"><td><p>Max allowed load, lbs</p></td>
+<td class="text-center"><p>1200</p></td>
+<td class="text-center"><p>3250</p></td>
 </tr>
-<tr class="row-odd"><td><p>Structural depth of fuselage</p></td>
-<td class="text-center"><p>1.5 in</p></td>
-<td class="text-center"><p>Section 4.1 Roskam Part 2</p></td>
+<tr class="row-odd"><td><p>Max tire width, in</p></td>
+<td class="text-center"><p>5.05</p></td>
+<td class="text-center"><p>9.05</p></td>
 </tr>
-<tr class="row-even"><td><p>Fuselage height</p></td>
-<td class="text-center"><p>5.5 ft</p></td>
-<td class="text-center"><p>Historical data</p></td>
+<tr class="row-even"><td><p>Max tire diameter, in</p></td>
+<td class="text-center"><p>13.25</p></td>
+<td class="text-center"><p>26.30</p></td>
 </tr>
-<tr class="row-odd"><td><p>Fuselage width</p></td>
-<td class="text-center"><p>4.75 ft</p></td>
-<td class="text-center"><p>Historical data</p></td>
-</tr>
-<tr class="row-even"><td><p>Fuselage length</p></td>
-<td class="text-center"><p>38.5 ft</p></td>
-<td class="text-center"><p>Calculated</p></td>
-</tr>
-<tr class="row-odd"><td><p>Fuselage cone length</p></td>
-<td class="text-center"><p>16.5</p></td>
-<td class="text-center"><p>Calculated</p></td>
-</tr>
-<tr class="row-even"><td><p>Seat pitch</p></td>
-<td class="text-center"><p>3 ft</p></td>
-<td class="text-center"><p>Other manufacturers</p></td>
-</tr>
-<tr class="row-odd"><td><p>Seat height</p></td>
-<td class="text-center"><p>3.5 ft</p></td>
-<td class="text-center"><p>Other manufacturers</p></td>
-</tr>
-<tr class="row-even"><td><p>Seat width</p></td>
-<td class="text-center"><p>1.75 ft</p></td>
-<td class="text-center"><p>Other manufacturers</p></td>
+<tr class="row-odd"><td><p>Rolling radius, in</p></td>
+<td class="text-center"><p>5.2</p></td>
+<td class="text-center"><p>10.4</p></td>
 </tr>
 </tbody>
 </table>
 </div>
 </div>
-<p>Table 4.1</p>
-<p>Chapter 4 - Roskam 2</p>
-<p>Chapter 3 in Roskam Part 3</p>
-<p>Fig 3.1</p>
-<p>Fig 3.19</p>
-<p>Seating - section 3.3.2</p>
-<p>Fig 3.28 - Seat dimensions</p>
-<p>Table 3.1</p>
-<p>Fig 3.51</p>
-<p>Section 3.5</p>
-<!-- seat pitch is set to 35 inches 
-
-seat height is 42 inches
-
-seating height is 17 inches
-
-seat depth is 18 inches
-
-seat width is 21.5 inches -->
-</section>
-<section id="landing-gear">
-<h2>Landing gear<a class="headerlink" href="#landing-gear" title="Link to this heading">#</a></h2>
-</section>
+<p>Based on the similar aircraft and Section 11.4 in Raymer, the example airplane will have oleopenumatic system as shock-absorber. Four bar-linkage system will be used to retract the LG. The stroke length and dimensions of the strut, along with tip-over criteria and ground clearance, will be computed once weight and balance studies are completed. This concludes the LG sizing for now.</p>
 </section>
 
     <script type="text/x-thebe-config">
@@ -501,28 +476,21 @@ seat width is 21.5 inches -->
                 <footer class="prev-next-footer d-print-none">
                   
 <div class="prev-next-area">
+    <a class="left-prev"
+       href="fuselage.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Fuselage Sizing</p>
+      </div>
+    </a>
 </div>
                 </footer>
               
             </div>
             
             
-              
-                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
-
-
-  <div class="sidebar-secondary-item">
-  <div class="page-toc tocsection onthispage">
-    <i class="fa-solid fa-list"></i> Contents
-  </div>
-  <nav class="bd-toc-nav page-toc">
-    <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fuselage">Fuselage</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#landing-gear">Landing gear</a></li>
-</ul>
-  </nav></div>
-
-</div></div>
               
             
           </div>
