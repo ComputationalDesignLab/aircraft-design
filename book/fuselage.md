@@ -40,9 +40,9 @@ Fuselage length | 31.6 ft | Calculated
 Fuselage cone length | 14.4 ft | Calculated
 </div>
 
-Below image shows cabin layout in a simple OpenVSP model:
+Below image shows fuselage model created in OpenVSP. The box in the rear of the fuselage represents baggage stowing area. The gap between last seating row and baggage area is used for ingress/outgress through rear fuselage door.
 
-<div style="width:80%; margin: auto;">
+<div style="width:90%; margin: auto;">
 
 ![logos](images/fuselage.png)
 </div>
