@@ -26,5 +26,8 @@ chapters:
     sections:
       - file: powerplant/engine_propeller
       - file: powerplant/installation_thrust
+  - file: aerodynamics/intro
+    sections:
+      - file: aerodynamics/lift_curve
 
   # - file: powerplant_sizing
