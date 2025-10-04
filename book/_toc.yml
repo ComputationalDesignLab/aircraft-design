@@ -22,4 +22,9 @@ chapters:
   - file: tail_sizing
   - file: fuselage
   - file: landing_gear
-  - file: powerplant_sizing
+  - file: powerplant/intro
+    sections:
+      - file: powerplant/engine_propeller
+      - file: powerplant/installation_thrust
+
+  # - file: powerplant_sizing
