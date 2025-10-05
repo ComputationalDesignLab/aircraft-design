@@ -29,5 +29,6 @@ chapters:
   - file: aerodynamics/intro
     sections:
       - file: aerodynamics/lift_curve
+      - file: aerodynamics/drag_buildup
 
   # - file: powerplant_sizing
