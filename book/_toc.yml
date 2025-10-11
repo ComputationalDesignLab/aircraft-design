@@ -30,5 +30,6 @@ chapters:
     sections:
       - file: aerodynamics/lift_curve
       - file: aerodynamics/drag_buildup
+      - file: aerodynamics/drag_polar_induced_drag
 
   # - file: powerplant_sizing
