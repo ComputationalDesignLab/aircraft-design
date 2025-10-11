@@ -57,9 +57,12 @@
     <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'aerodynamics/drag_buildup';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Lift" href="lift_curve.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -122,8 +125,6 @@
       
       
       
-        
-      
       <div class="bd-sidebar-primary bd-sidebar">
         
 
@@ -173,7 +174,7 @@
                 </a>
             </li>
         </ul>
-        <ul class="nav bd-sidenav">
+        <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../setup.html">Computing environment setup</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../python_basics/intro.html">Basics of Python Programming</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../python_basics/python_basics.html">Basic programming in Python and Jupyter Notebooks</a></li>
@@ -208,8 +209,9 @@
 <li class="toctree-l2"><a class="reference internal" href="../powerplant/installation_thrust.html">Installation Thrust</a></li>
 </ul>
 </details></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="intro.html">Aerodynamics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="intro.html">Aerodynamics</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="lift_curve.html">Lift</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Parasitic (Zero-lift) drag</a></li>
 </ul>
 </details></li>
 </ul>
@@ -352,7 +354,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
 </div></div>
       
     </div>
@@ -368,6 +372,18 @@ document.write(`
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#skin-friction-coefficient">Skin friction coefficient</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#form-and-interference-factors">Form and Interference factors</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#total-skin-friction-drag">Total Skin friction drag</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#miscellaneous-drag">Miscellaneous drag</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#final-zero-lift-drag">Final zero-lift drag</a></li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -379,7 +395,231 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="parasitic-zero-lift-drag">
 <h1>Parasitic (Zero-lift) drag<a class="headerlink" href="#parasitic-zero-lift-drag" title="Link to this heading">#</a></h1>
-<p>This section describes how to compute parasitic drag (zero-lift) using drag buildup method and demonstrates the process for the example airplane. In drag buildup method,</p>
+<p>This section describes how to compute parasitic (zero-lift) drag coefficient (<span class="math notranslate nohighlight">\(C_{D_0}\)</span>) using drag buildup method and demonstrates it using the example airplane. The drag buildup method consists of computing zero-lift drag for each major component of the airplane and then summing it up to obtain total zero-lift drag for the entire airplane. The zero lift drag for any component can be divided into two parts: skin friction drag and form drag. The skin friction drag is calculated based on the equivalent flat plate theory. However, in conceptual design phase, it is difficult to get a good estimate of form drag. Hence, a factor (greater than 1) is multiplied to skin friction drag to account for form drag. Once parasitic drag for individual components are evaluated, they are added to obtain final value. Additionally, extra terms representing other sources of zero-lift drag can also be added. Refer to lecture notes, section 12.5 in Raymer, section 13.3 in Nicolai and Carichner, and section 15.4.6 in Gudmundsson for more details. Mathematically, the drag buildup method can be written as</p>
+<div class="math notranslate nohighlight">
+\[
+    C_{D_0} = \frac{ \sum\limits_{i=1}^n C_{f_i} FF_i Q_i S_{wet_i} }{ S_{ref}} + C_{D_{misc}} + C_{D_{L\&amp;P}},
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(C_f\)</span> is the skin friction coefficient, <span class="math notranslate nohighlight">\(FF\)</span> represents form factor to account for form drag, <span class="math notranslate nohighlight">\(Q_i\)</span> denotes inteference factor, <span class="math notranslate nohighlight">\(S_{wet}\)</span> is the wetted area, and <span class="math notranslate nohighlight">\(S_{ref}\)</span> is the reference area. The subscript <span class="math notranslate nohighlight">\(i\)</span> denotes <span class="math notranslate nohighlight">\(i^{th}\)</span> component and <span class="math notranslate nohighlight">\(n\)</span> is the total number of components. The <span class="math notranslate nohighlight">\(C_{D_{misc}}\)</span> represents miscellaneous drag caused by flaps, fixed landing gear, fuselage upsweep angle, etc. The <span class="math notranslate nohighlight">\(C_{D_{L\&amp;P}}\)</span> refers to the drag due to leakages and protuberances.</p>
+<p>For the example airplane, four components are considered in clean (cruise) configuration: wing, fuselage, horizontal tail, and vertical tail. Below subsections compute each term in the above equation, and then computes final <span class="math notranslate nohighlight">\(C_{D_0}\)</span> for the example airplane.</p>
+<section id="skin-friction-coefficient">
+<h2>Skin friction coefficient<a class="headerlink" href="#skin-friction-coefficient" title="Link to this heading">#</a></h2>
+<p>The skin friction coefficient (<span class="math notranslate nohighlight">\(C_f\)</span>) is computed by assuming flow over a flat plate. The value of <span class="math notranslate nohighlight">\(C_f\)</span> is dependent on the type of flow (laminar or turbulent), which in turn is dependent on the Reynolds number (<span class="math notranslate nohighlight">\(Re\)</span>), given by</p>
+<div class="math notranslate nohighlight">
+\[
+    Re = \frac{\rho Vl}{\mu},
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(\rho\)</span> is the density, <span class="math notranslate nohighlight">\(V\)</span> is the freestream velocity, <span class="math notranslate nohighlight">\(l\)</span> is the characteristic length (typically length of the component in the direction of flow), and <span class="math notranslate nohighlight">\(\mu\)</span> is the dynamic viscosity. Based on the <span class="math notranslate nohighlight">\(Re\)</span>, <span class="math notranslate nohighlight">\(C_f\)</span> is computed as (Raymer Eq. 12.26 and 12.27):</p>
+<div class="math notranslate nohighlight">
+\[
+    C_f = \frac{1.328}{\sqrt{Re}} \text{ (laminar)} \quad \text{and} \quad C_f = \frac{0.455}{(\log_{10}Re)^{2.58}} \text{ (turbulent)} 
+\]</div>
+<p>Usually, the flow over airplane components is almost turbulent. Table 12.4 in Raymer provides some guidance for estimating what percent of wetted area might be experiencing laminar flow. For the example airplane, it is assumed that fuselage has 10% laminar flow, while all other components have fully turbulent flow. If the flow is mixed, then <span class="math notranslate nohighlight">\(C_f\)</span> is computed as a weighted average of laminar and turbulent values.</p>
+<p>Note that skin roughness plays an important role in skin friction drag. As recommended by Raymer, a cutoff Re (equation 12.28 in Raymer) can be used to account for the increased turbulent flow. It was determined that the cutoff Re was much large than the actual Re for the example airplane, and hence, not used here. Additionally, <span class="math notranslate nohighlight">\(C_f\)</span> for turbulent flow can be corrected for compressibility effects using Raymer equation 12.27, but it was not used since example airplane will be flying at low speeds.</p>
+<p>Below code block computes skin friction coefficient for each component:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">compute_re_cruise</span><span class="p">(</span><span class="n">l</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Function to compute Re, l should be in m</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">rho</span> <span class="o">=</span> <span class="mf">0.962870</span> <span class="c1"># kg/m^3, 8000 ft</span>
+    <span class="n">mu</span> <span class="o">=</span> <span class="mf">0.0000173188</span> <span class="c1"># Pa.s, 8000 ft</span>
+    <span class="n">V</span> <span class="o">=</span> <span class="mf">102.89</span> <span class="c1"># m/s</span>
+
+    <span class="k">return</span> <span class="n">rho</span><span class="o">*</span><span class="n">V</span><span class="o">*</span><span class="n">l</span><span class="o">/</span><span class="n">mu</span>
+
+<span class="n">compute_cf_laminar</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">re</span><span class="p">:</span> <span class="mf">1.328</span><span class="o">/</span><span class="n">re</span><span class="o">**</span><span class="mf">0.5</span> <span class="c1"># Cf for turbulent flow</span>
+<span class="n">compute_cf_turbulent</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">re</span><span class="p">:</span> <span class="mf">0.455</span><span class="o">/</span><span class="n">math</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">re</span><span class="p">)</span><span class="o">**</span><span class="mf">2.58</span> <span class="c1"># Cf for laminar flow</span>
+
+<span class="c1"># Compute Re</span>
+<span class="n">fuselage_re</span> <span class="o">=</span> <span class="n">compute_re_cruise</span><span class="p">(</span><span class="mf">31.6</span><span class="o">*</span><span class="mf">0.3048</span><span class="p">)</span> <span class="c1"># 31.6 ft to m</span>
+<span class="n">wing_re</span> <span class="o">=</span> <span class="n">compute_re_cruise</span><span class="p">(</span><span class="mf">4.3</span><span class="o">*</span><span class="mf">0.3048</span><span class="p">)</span> <span class="c1"># 4.3 ft to m</span>
+<span class="n">ht_re</span> <span class="o">=</span> <span class="n">compute_re_cruise</span><span class="p">(</span><span class="mf">2.4</span><span class="o">*</span><span class="mf">0.3048</span><span class="p">)</span> <span class="c1"># 2.4 ft to m</span>
+<span class="n">vt_re</span> <span class="o">=</span> <span class="n">compute_re_cruise</span><span class="p">(</span><span class="mf">3.7</span><span class="o">*</span><span class="mf">0.3048</span><span class="p">)</span> <span class="c1"># 3.7 ft to m</span>
+
+<span class="c1"># Compute fuselage Cf</span>
+<span class="n">Cf_fuselage_laminar</span> <span class="o">=</span> <span class="n">compute_cf_laminar</span><span class="p">(</span><span class="n">fuselage_re</span><span class="p">)</span>
+<span class="n">Cf_fuselage_turbulent</span> <span class="o">=</span> <span class="n">compute_cf_turbulent</span><span class="p">(</span><span class="n">fuselage_re</span><span class="p">)</span>
+<span class="n">Cf_fuselage</span> <span class="o">=</span> <span class="n">Cf_fuselage_laminar</span><span class="o">*</span><span class="mf">0.1</span> <span class="o">+</span> <span class="n">Cf_fuselage_turbulent</span><span class="o">*</span><span class="mf">0.9</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Cf fuselage: </span><span class="si">{</span><span class="n">Cf_fuselage</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Compute wing Cf</span>
+<span class="n">Cf_wing</span> <span class="o">=</span> <span class="n">compute_cf_turbulent</span><span class="p">(</span><span class="n">wing_re</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Cf wing: </span><span class="si">{</span><span class="n">Cf_wing</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Compute ht Cf</span>
+<span class="n">Cf_ht</span> <span class="o">=</span> <span class="n">compute_cf_turbulent</span><span class="p">(</span><span class="n">ht_re</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Cf ht: </span><span class="si">{</span><span class="n">Cf_ht</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Compute vt Cf</span>
+<span class="n">Cf_vt</span> <span class="o">=</span> <span class="n">compute_cf_turbulent</span><span class="p">(</span><span class="n">vt_re</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Cf vt: </span><span class="si">{</span><span class="n">Cf_vt</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Cf fuselage: 0.002103
+Cf wing: 0.003147
+Cf ht: 0.003467
+Cf vt: 0.003225
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="form-and-interference-factors">
+<h2>Form and Interference factors<a class="headerlink" href="#form-and-interference-factors" title="Link to this heading">#</a></h2>
+<p>Next, form factor (<span class="math notranslate nohighlight">\(FF\)</span>) for each component is determined. The <span class="math notranslate nohighlight">\(FF\)</span> for wings and tails is determined using:</p>
+<div class="math notranslate nohighlight">
+\[
+    FF = \bigg[ 1 + \frac{0.6}{(x/c)_m} (t/c) + 100 (t/c)^4 \bigg] [ 1.34 M^{0.18} (\cos\Lambda_m)^{0.28} ] ,
+\]</div>
+<p>where <span class="math notranslate nohighlight">\((x/c)_m\)</span> is the location of maximum thickness as a fraction of chord, <span class="math notranslate nohighlight">\(t/c\)</span> is the thickness-to-chord ratio, and <span class="math notranslate nohighlight">\(\Lambda_m\)</span> is the sweep along maximum thickness.</p>
+<p>For the example airplane, <span class="math notranslate nohighlight">\((x/c)_m = 0.3\)</span> for the wing and tails. The <span class="math notranslate nohighlight">\(t/c\)</span> is set to 0.18 for the wing and 0.12 for the tails. The form factor computed using above equation can be adjusted for compressibility and sweep effects, but it was not done here since the example airplane will be flying at low speeds and has no sweep. The <span class="math notranslate nohighlight">\(FF\)</span> for fuselage is determined using:</p>
+<div class="math notranslate nohighlight">
+\[
+    FF = \bigg[ 0.9 + \frac{5}{f^{1.5}} + \frac{f}{400} \bigg],
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(f\)</span> is the fuselage fineness ratio. The interference factor (<span class="math notranslate nohighlight">\(Q\)</span>) for fuselage and wing is set to 1.0, while it is set to 1.04 for both tails. Refer to section 12.5.4 and 12.5.5 in Raymer for more details about <span class="math notranslate nohighlight">\(FF\)</span> and <span class="math notranslate nohighlight">\(Q\)</span>.</p>
+<p>Below code block computes <span class="math notranslate nohighlight">\(FF\)</span> for wing, fuselage, horizontal tail, and vertical tail:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">M</span> <span class="o">=</span> <span class="mf">0.3</span> <span class="c1"># cruise mach number</span>
+<span class="n">compute_ff_fuselage</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">f</span><span class="p">:</span> <span class="mf">0.9</span> <span class="o">+</span> <span class="mi">5</span><span class="o">/</span><span class="n">f</span><span class="o">**</span><span class="mf">1.5</span> <span class="o">+</span> <span class="n">f</span><span class="o">/</span><span class="mi">400</span>
+<span class="n">compute_ff_wing_tail</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">xc</span><span class="p">,</span> <span class="n">tc</span><span class="p">,</span> <span class="n">sweep</span><span class="p">:</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="mf">0.6</span><span class="o">*</span><span class="n">tc</span><span class="o">/</span><span class="n">xc</span> <span class="o">+</span> <span class="mi">100</span><span class="o">*</span><span class="n">tc</span><span class="o">**</span><span class="mi">4</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.34</span><span class="o">*</span><span class="n">M</span><span class="o">**</span><span class="mf">0.18</span><span class="o">*</span><span class="n">math</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">sweep</span><span class="o">*</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">180</span><span class="p">)</span><span class="o">**</span><span class="mf">0.28</span><span class="p">)</span>
+
+<span class="n">ff_fuselage</span> <span class="o">=</span> <span class="n">compute_ff_fuselage</span><span class="p">(</span><span class="mf">5.5</span><span class="p">)</span>
+<span class="n">ff_wing</span> <span class="o">=</span> <span class="n">compute_ff_wing_tail</span><span class="p">(</span><span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.18</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">ff_ht</span> <span class="o">=</span> <span class="n">compute_ff_wing_tail</span><span class="p">(</span><span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.12</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="n">ff_vt</span> <span class="o">=</span> <span class="n">compute_ff_wing_tail</span><span class="p">(</span><span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.12</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Fuselage form factor: </span><span class="si">{</span><span class="n">ff_fuselage</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Wing form factor: </span><span class="si">{</span><span class="n">ff_wing</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Horizontal tail form factor: </span><span class="si">{</span><span class="n">ff_ht</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Vertical tail form factor: </span><span class="si">{</span><span class="n">ff_vt</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fuselage form factor: 1.301388
+Wing form factor: 1.580582
+Horizontal tail form factor: 1.354407
+Vertical tail form factor: 1.306530
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="total-skin-friction-drag">
+<h2>Total Skin friction drag<a class="headerlink" href="#total-skin-friction-drag" title="Link to this heading">#</a></h2>
+<p>Once <span class="math notranslate nohighlight">\(C_f\)</span>, <span class="math notranslate nohighlight">\(FF\)</span>, and <span class="math notranslate nohighlight">\(Q\)</span> are known for each component, skin friction component of the parasitic drag can be calculated. Note that the wetted area for each component is obtained from the OpenVSP models. The fuselage and wing have a wetted area of 380 <span class="math notranslate nohighlight">\(\text{ft}^2\)</span> and 224 <span class="math notranslate nohighlight">\(\text{ft}^2\)</span>, respectively. The horizontal and vertical tail have a wetted area of 60 <span class="math notranslate nohighlight">\(\text{ft}^2\)</span> and 39 <span class="math notranslate nohighlight">\(\text{ft}^2\)</span>, respectively.</p>
+<p>Below code block computes skin friction component of the parasitic drag:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Sref</span> <span class="o">=</span> <span class="mi">134</span> <span class="c1"># sq ft</span>
+<span class="n">CD0_sf</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="c1"># Fuselage</span>
+<span class="n">Q_fuselage</span> <span class="o">=</span> <span class="mf">1.0</span>
+<span class="n">S_wet_fuselage</span> <span class="o">=</span> <span class="mi">380</span> <span class="c1"># sq ft</span>
+<span class="n">CD0_sf</span> <span class="o">+=</span> <span class="n">Cf_fuselage</span> <span class="o">*</span> <span class="n">ff_fuselage</span> <span class="o">*</span> <span class="n">Q_fuselage</span> <span class="o">*</span> <span class="n">S_wet_fuselage</span> <span class="o">/</span> <span class="n">Sref</span>
+
+<span class="c1"># Wing</span>
+<span class="n">Q_wing</span> <span class="o">=</span> <span class="mf">1.0</span>
+<span class="n">S_wet_wing</span> <span class="o">=</span> <span class="mi">224</span> <span class="c1"># sq ft</span>
+<span class="n">CD0_sf</span> <span class="o">+=</span> <span class="n">Cf_wing</span> <span class="o">*</span> <span class="n">ff_wing</span> <span class="o">*</span> <span class="n">Q_wing</span> <span class="o">*</span> <span class="n">S_wet_wing</span> <span class="o">/</span> <span class="n">Sref</span>
+
+<span class="c1"># Horizontal tail</span>
+<span class="n">Q_ht</span> <span class="o">=</span> <span class="mf">1.04</span>
+<span class="n">S_wet_ht</span> <span class="o">=</span> <span class="mi">60</span> <span class="c1"># sq ft</span>
+<span class="n">CD0_sf</span> <span class="o">+=</span> <span class="n">Cf_ht</span> <span class="o">*</span> <span class="n">ff_ht</span> <span class="o">*</span> <span class="n">Q_ht</span> <span class="o">*</span> <span class="n">S_wet_ht</span> <span class="o">/</span> <span class="n">Sref</span>
+
+<span class="c1"># Vertical tail</span>
+<span class="n">Q_vt</span> <span class="o">=</span> <span class="mf">1.04</span>
+<span class="n">S_wet_vt</span> <span class="o">=</span> <span class="mi">39</span> <span class="c1"># sq ft</span>
+<span class="n">CD0_sf</span> <span class="o">+=</span> <span class="n">Cf_vt</span> <span class="o">*</span> <span class="n">ff_vt</span> <span class="o">*</span> <span class="n">Q_vt</span> <span class="o">*</span> <span class="n">S_wet_vt</span> <span class="o">/</span> <span class="n">Sref</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Skin friction drag contribution to parasitic drag: </span><span class="si">{</span><span class="n">CD0_sf</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Skin friction drag contribution to parasitic drag: 0.019538
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="miscellaneous-drag">
+<h2>Miscellaneous drag<a class="headerlink" href="#miscellaneous-drag" title="Link to this heading">#</a></h2>
+<p>The miscellaneous drag usually involves drag due to flaps, landing gear, non-smooth external stores, fuselage upsweep angle, etc. In this section, only drag due to fuselage upsweep angle is considered since example airplane does not contain any external stores. The drag to flaps and landing gear is not included since only clean (cruise) configuration drag is addressed in this section.</p>
+<p>The drag due to fuselage upsweep angle is computed using (Raymer equation 12.36):</p>
+<div class="math notranslate nohighlight">
+\[
+    (D/q)_{\text{upsweep}} = 3.83u^{2.5}A_{max},
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(u\)</span> is the fuselage upsweep angle (in radians), <span class="math notranslate nohighlight">\(A_{max}\)</span> is the maximum cross-sectional area of fuselage, and <span class="math notranslate nohighlight">\(D/q\)</span> is the drag area. Dividing <span class="math notranslate nohighlight">\(D/q\)</span> by <span class="math notranslate nohighlight">\(S_{ref}\)</span> yields parasitic drag coefficient. Similarly, <span class="math notranslate nohighlight">\(D/q\)</span> for windshield is obtained from Table 12.6 in Raymer. Note that the <span class="math notranslate nohighlight">\(D/q\)</span> for the windshield should be multiplied by the ratio of frontal area of windshield and reference area to obtain component of parasitic drag coefficient.</p>
+<p>Below block computes <span class="math notranslate nohighlight">\(C_{D_{misc}}\)</span> for the example airplane:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Sref</span> <span class="o">=</span> <span class="mi">134</span> <span class="c1"># sq ft</span>
+<span class="n">CDmisc</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="c1"># Fuselage upsweep drag</span>
+<span class="n">u</span> <span class="o">=</span> <span class="mi">10</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">180</span> <span class="c1"># rad</span>
+<span class="n">Amax</span> <span class="o">=</span> <span class="mi">24</span> <span class="c1"># sq ft - from fusealge cross-section</span>
+<span class="n">D_by_q_upsweep</span> <span class="o">=</span> <span class="mf">3.83</span> <span class="o">*</span> <span class="n">u</span><span class="o">**</span><span class="mf">2.5</span> <span class="o">*</span> <span class="n">Amax</span>
+
+<span class="n">CDmisc</span> <span class="o">+=</span> <span class="n">D_by_q_upsweep</span> <span class="o">/</span> <span class="n">Sref</span>
+
+<span class="c1"># Windshield drag</span>
+<span class="n">D_by_q_windshield</span> <span class="o">=</span>  <span class="mf">0.07</span>
+<span class="n">CDmisc</span> <span class="o">+=</span> <span class="n">D_by_q_windshield</span> <span class="o">*</span> <span class="mf">0.3</span> <span class="o">*</span> <span class="n">Amax</span> <span class="o">/</span> <span class="n">Sref</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Miscellaneous drag contribution to parasitic drag: </span><span class="si">{</span><span class="n">CDmisc</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Miscellaneous drag contribution to parasitic drag: 0.012491
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="final-zero-lift-drag">
+<h2>Final zero-lift drag<a class="headerlink" href="#final-zero-lift-drag" title="Link to this heading">#</a></h2>
+<p>Once all the requried terms are computed, final value of <span class="math notranslate nohighlight">\(C_{D_0}\)</span> can be computed. Note that the leakage and protuberance drag is assumed to be 5% of the total drag. Below block computes the <span class="math notranslate nohighlight">\(C_{D_0}\)</span> for the example airplane:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">CD0</span> <span class="o">=</span> <span class="n">CD0_sf</span> <span class="o">+</span> <span class="n">CDmisc</span>
+
+<span class="n">CD0</span> <span class="o">*=</span> <span class="mf">1.05</span> <span class="c1"># Leakage and protuberance drag assumed to be 5% of total drag</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Final zero-lift drag coefficient, CD0: </span><span class="si">{</span><span class="n">CD0</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Final zero-lift drag coefficient, CD0: 0.033630
+</pre></div>
+</div>
+</div>
+</div>
+<blockquote>
+<div><p><strong><em>NOTE</em></strong>: Above value of <span class="math notranslate nohighlight">\(C_{D_0}\)</span> is higher than what was assumed (0.028) during initial weight estimation and constraint analysis</p>
+</div></blockquote>
+<p>As outlined in Raymer, initial estimate for <span class="math notranslate nohighlight">\(C_{D_0}\)</span> can also be computed using</p>
+<div class="math notranslate nohighlight">
+\[
+    C_{D_0} = C_{f_e} \frac{S_{wet}}{S_{ref}},
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(C_{f_e}\)</span> is the equivalent skin friction coefficient, <span class="math notranslate nohighlight">\(S_{wet}\)</span> is total airplane wetted area, and <span class="math notranslate nohighlight">\(S_{ref}\)</span> is the reference area. The <span class="math notranslate nohighlight">\(C_{f_e}\)</span> is obtained from Table 12.3 and <span class="math notranslate nohighlight">\(S_{wet}\)</span> can be easily obtained from OpenVSP model. The value obtained from this estimation can be used as a sanity check for the value obtained from detailed drag buildup method. This concludes the parasitic drag section.</p>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -412,12 +652,40 @@ document.write(`
                 <footer class="prev-next-footer d-print-none">
                   
 <div class="prev-next-area">
+    <a class="left-prev"
+       href="lift_curve.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Lift</p>
+      </div>
+    </a>
 </div>
                 </footer>
               
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#skin-friction-coefficient">Skin friction coefficient</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#form-and-interference-factors">Form and Interference factors</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#total-skin-friction-drag">Total Skin friction drag</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#miscellaneous-drag">Miscellaneous drag</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#final-zero-lift-drag">Final zero-lift drag</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>
