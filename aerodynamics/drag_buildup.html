@@ -62,6 +62,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'aerodynamics/drag_buildup';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Drag Polar" href="drag_polar_induced_drag.html" />
     <link rel="prev" title="Lift" href="lift_curve.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -212,6 +213,7 @@
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="intro.html">Aerodynamics</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="lift_curve.html">Lift</a></li>
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">Parasitic (Zero-lift) drag</a></li>
+<li class="toctree-l2"><a class="reference internal" href="drag_polar_induced_drag.html">Drag Polar</a></li>
 </ul>
 </details></li>
 </ul>
@@ -563,6 +565,12 @@ Vertical tail form factor: 1.306530
     (D/q)_{\text{upsweep}} = 3.83u^{2.5}A_{max},
 \]</div>
 <p>where <span class="math notranslate nohighlight">\(u\)</span> is the fuselage upsweep angle (in radians), <span class="math notranslate nohighlight">\(A_{max}\)</span> is the maximum cross-sectional area of fuselage, and <span class="math notranslate nohighlight">\(D/q\)</span> is the drag area. Dividing <span class="math notranslate nohighlight">\(D/q\)</span> by <span class="math notranslate nohighlight">\(S_{ref}\)</span> yields parasitic drag coefficient. Similarly, <span class="math notranslate nohighlight">\(D/q\)</span> for windshield is obtained from Table 12.6 in Raymer. Note that the <span class="math notranslate nohighlight">\(D/q\)</span> for the windshield should be multiplied by the ratio of frontal area of windshield and reference area to obtain component of parasitic drag coefficient.</p>
+<p>Since example airplane is twin-engine propeller driven, one has to compute drag from propellers during an engine out scenario. Since variable pitch propellers are used, it can be feathered so that mid-to-outer section of the propeller is along the airflow and creates minimal drag. The drag from a feathered propeller can be computed as:</p>
+<div class="math notranslate nohighlight">
+\[
+    (D/q)_{\text{feathered prop}} = 0.1\sigma A_{\text{propeller disk}}
+\]</div>
+<p>Note that the drag from a feathered propeller will be included in <span class="math notranslate nohighlight">\(C_{D_{misc}}\)</span> only during an engine out scenario only.</p>
 <p>Below block computes <span class="math notranslate nohighlight">\(C_{D_{misc}}\)</span> for the example airplane:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -581,11 +589,21 @@ Vertical tail form factor: 1.306530
 <span class="n">CDmisc</span> <span class="o">+=</span> <span class="n">D_by_q_windshield</span> <span class="o">*</span> <span class="mf">0.3</span> <span class="o">*</span> <span class="n">Amax</span> <span class="o">/</span> <span class="n">Sref</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Miscellaneous drag contribution to parasitic drag: </span><span class="si">{</span><span class="n">CDmisc</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Feathered propeller</span>
+<span class="n">sigma</span> <span class="o">=</span> <span class="mf">0.786</span>
+<span class="n">A_prop</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="mf">5.8</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="mi">4</span> <span class="c1"># sq ft</span>
+<span class="n">D_by_q_prop</span> <span class="o">=</span> <span class="mf">0.1</span><span class="o">*</span><span class="n">sigma</span><span class="o">*</span><span class="n">A_prop</span>
+
+<span class="n">CDmisc_oei</span> <span class="o">=</span> <span class="n">CDmisc</span> <span class="o">+</span> <span class="n">D_by_q_prop</span> <span class="o">/</span> <span class="n">Sref</span> <span class="c1"># one engine inoperative</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Miscellaneous drag during one engine inoperative: </span><span class="si">{</span><span class="n">CDmisc_oei</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Miscellaneous drag contribution to parasitic drag: 0.012491
+Miscellaneous drag during one engine inoperative: 0.027988
 </pre></div>
 </div>
 </div>
@@ -660,6 +678,15 @@ Vertical tail form factor: 1.306530
         <p class="prev-next-subtitle">previous</p>
         <p class="prev-next-title">Lift</p>
       </div>
+    </a>
+    <a class="right-next"
+       href="drag_polar_induced_drag.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Drag Polar</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
     </a>
 </div>
                 </footer>
