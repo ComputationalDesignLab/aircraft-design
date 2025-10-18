@@ -31,5 +31,8 @@ chapters:
       - file: aerodynamics/lift_curve
       - file: aerodynamics/drag_buildup
       - file: aerodynamics/drag_polar_induced_drag
+  - file: hl_devices/intro
+    sections:
+      - file: hl_devices/takeoff
 
   # - file: powerplant_sizing
