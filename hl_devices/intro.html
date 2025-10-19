@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Takeoff Distance &#8212; Aircraft Design</title>
+    <title>High-Lift Devices &#8212; Aircraft Design</title>
   
   
   
@@ -59,11 +59,11 @@
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'constraint_analysis/takeoff';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'hl_devices/intro';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Landing Distance" href="landing.html" />
-    <link rel="prev" title="Constraint Analysis" href="intro.html" />
+    <link rel="next" title="Takeoff" href="takeoff.html" />
+    <link rel="prev" title="Drag Polar" href="../aerodynamics/drag_polar_induced_drag.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -191,12 +191,12 @@
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="../example_aircraft.html">Example Aircraft</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../initial_weight_estimation.html">Initial Weight Estimation</a></li>
-<li class="toctree-l1 current active has-children"><a class="reference internal" href="intro.html">Constraint Analysis</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">Takeoff Distance</a></li>
-<li class="toctree-l2"><a class="reference internal" href="landing.html">Landing Distance</a></li>
-<li class="toctree-l2"><a class="reference internal" href="climb.html">Climb Gradient</a></li>
-<li class="toctree-l2"><a class="reference internal" href="cruise.html">Cruise Speed</a></li>
-<li class="toctree-l2"><a class="reference internal" href="final.html">Matching process</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../constraint_analysis/intro.html">Constraint Analysis</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../constraint_analysis/takeoff.html">Takeoff Distance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../constraint_analysis/landing.html">Landing Distance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../constraint_analysis/climb.html">Climb Gradient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../constraint_analysis/cruise.html">Cruise Speed</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../constraint_analysis/final.html">Matching process</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="../baseline.html">Initial Design Summary</a></li>
@@ -216,9 +216,9 @@
 <li class="toctree-l2"><a class="reference internal" href="../aerodynamics/drag_polar_induced_drag.html">Drag Polar</a></li>
 </ul>
 </details></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../hl_devices/intro.html">High-Lift Devices</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="../hl_devices/takeoff.html">Takeoff</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../hl_devices/landing.html">Landing</a></li>
+<li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">High-Lift Devices</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="takeoff.html">Takeoff</a></li>
+<li class="toctree-l2"><a class="reference internal" href="landing.html">Landing</a></li>
 </ul>
 </details></li>
 </ul>
@@ -290,7 +290,7 @@
       
       
       
-      <li><a href="../_sources/constraint_analysis/takeoff.ipynb" target="_blank"
+      <li><a href="../_sources/hl_devices/intro.md" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -300,7 +300,7 @@
 <span class="btn__icon-container">
   <i class="fas fa-file"></i>
   </span>
-<span class="btn__text-container">.ipynb</span>
+<span class="btn__text-container">.md</span>
 </a>
 </li>
       
@@ -372,7 +372,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Takeoff Distance</h1>
+    <h1>High-Lift Devices</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -386,79 +386,47 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="takeoff-distance">
-<h1>Takeoff Distance<a class="headerlink" href="#takeoff-distance" title="Link to this heading">#</a></h1>
-<p>Typically, at this stage of design, the <span class="math notranslate nohighlight">\(W/S\)</span> and <span class="math notranslate nohighlight">\(W/P\)</span> required for a certain takeoff distance is determined using the takeoff parameter (TOP), which is defined as</p>
+  <section class="tex2jax_ignore mathjax_ignore" id="high-lift-devices">
+<h1>High-Lift Devices<a class="headerlink" href="#high-lift-devices" title="Link to this heading">#</a></h1>
+<p>This section talks about sizing of high-lift (HL) devices to meet maximum <span class="math notranslate nohighlight">\(C_L\)</span> requirements for the example airplane. Typically, the goal of a HL device is to modified wing camber and area to enhance the lift generated by the wing. There are various types of HL devices and can be located at leading or trailing edge. Some common types of trailing edge HL devices consists of plain flap, split flap, slotted flap, and fowler flaps. Note that control surfaces (aileron, elevator, and rudder) are usually plain flaps. Some leading edge HL devices include LE slot, LE flap, slats, and kruger flap. Refer to lecture notes and section 12.4.6 in Raymer for a detailed discussion about HL devices and how they modify the lift generated by the wing.</p>
+<p>For the example airplane, slotted flaps are used due to its ability to provide adequate increase in <span class="math notranslate nohighlight">\(C_{L_{max}}\)</span> while being simple. Only trailing edge devices are used since there is no need of LE devices. Sizing method consists of a simplified analysis using empirical data and extrapolation from 2D airfoil test data. The first step is to determine spanwise location of the flaps. This can be estimated based on the amount of span occupied by the fuselage at root and the aileron towards the tip of the wing. For the example airplane, fuselage occupies 15% of the half span from the root.</p>
+<p>To determine the aileron size and location, Table 8.3b in Roskam Part 2 is used. The start and end location for aileron is set to 65% and 95% of the wing half span, respectively. The chord ratio for the aileron is set to 25%, note that the chord value can be changed later based on stability analysis. Based on these values, the start and end location of the flaps is set to 20% and 60% of wing half span, respectively. The chord ratio (<span class="math notranslate nohighlight">\(c_f/c\)</span>) for the flaps is set to 25%.</p>
+<p>Once flap size is determined, one can proceed to compute the amount of flap deflection required for producing a requried amount of <span class="math notranslate nohighlight">\(C_{L_{max}}\)</span>. In this section, procedure described in chapter 7 of Roskam Part 2 is followed. First step is to determine the required change in <span class="math notranslate nohighlight">\(C_{L_{max}}\)</span> using</p>
 <div class="math notranslate nohighlight">
 \[
-    \text{TOP} = \frac{ \bigg( \dfrac{W}{S} \bigg)_{TO} \bigg( \dfrac{W}{P} \bigg)_{TO} }{ \sigma C_{L_{max_{TO}}} },
+    \Delta C_{L_{max}} = 1.05 ( C_{L_{max_{req}}} - C_{L_{max}} ),
 \]</div>
-<p>where <span class="math notranslate nohighlight">\(\sigma\)</span> is the ratio of the density at the takeoff altitude to the sea-level. Most aircraft design books will provide a relation between <span class="math notranslate nohighlight">\(\text{TOP}\)</span> and takeoff ground roll or takeoff distance requried to clear an obstacle based on historical data.</p>
-<p>According to <a class="reference internal" href="../example_aircraft.html"><span class="std std-doc">mission specifications</span></a>, the example aircraft needs to takeoff within 1500 ft of ground roll. Additionally, it should also be able to climb to a distance of 50’ above takeoff surface according to CFR <a class="reference external" href="https://www.ecfr.gov/current/title-14/chapter-I/subchapter-C/part-23/subpart-B/subject-group-ECFR0f27e01839859ea/section-23.2115">Part 23.2115</a>. Schematically, it can be represented as</p>
-<div style="width:80%; margin: auto;">
-<p><img alt="logos" src="../_images/far23_takeoff.png" /></p>
-</div>
-<p>In this section, the TOP relation provided in the Section 3.1 of Roskam Part 1 is used, which is given by</p>
+<p>where <span class="math notranslate nohighlight">\(C_{L_{max_{req}}}\)</span> is the required maximum lift coefficient and <span class="math notranslate nohighlight">\(C_{L_{max}}\)</span> refers to the maximum lift coefficient in clean configuration (already known). The factor of 1.05 is to account for trimming the airplane. The computed <span class="math notranslate nohighlight">\(\Delta C_{L_{max}}\)</span> can be linked to the change in maximum lift coefficient for an airfoil using</p>
 <div class="math notranslate nohighlight">
 \[
-    S_{TGR} = 4.9 \text{ } \text{TOP}_{23} + 0.009 \text{ } \text{TOP}_{23}^2,
+    \Delta C_{l_{max}} = \Delta C_{L_{max}} \frac{S_{ref}}{S_f},
 \]</div>
-<p>where <span class="math notranslate nohighlight">\(S_{TGR}\)</span> is the required takeoff ground roll and <span class="math notranslate nohighlight">\(\text{TOP}_{23}\)</span> denotes TOP for FAR 23 airplanes.</p>
-<blockquote>
-<div><p><strong><em>NOTE</em>:</strong> In the above equation, the <span class="math notranslate nohighlight">\(S_{TGR}\)</span> should be in feets, <span class="math notranslate nohighlight">\(W/P\)</span> should be in lbs/hp, and <span class="math notranslate nohighlight">\(W/S\)</span> should be in lbs/<span class="math notranslate nohighlight">\(\text{ft}^2\)</span></p>
-</div></blockquote>
-<p>The <span class="math notranslate nohighlight">\(\text{TOP}_{23}\)</span> can be solved from above quadratic equation and substituted into <span class="math notranslate nohighlight">\(\text{TOP}\)</span> equation to obtain</p>
+<p>where <span class="math notranslate nohighlight">\(S_f\)</span> is the area of the wing between the starting and ending spanwise location of flaps (refer to figure 12.21 in Raymer for a visual representation of <span class="math notranslate nohighlight">\(S_f\)</span>). Note that above equation can be corrected for the wing sweep but it is not used here since example airplane does not have sweep. The <span class="math notranslate nohighlight">\(S_f\)</span> can be estimated based on the wing planform geometry. For the example airplane, flaps starting from 20% half span location and ending at 60% half span location results in <span class="math notranslate nohighlight">\(S_f\)</span> of 58.1 <span class="math notranslate nohighlight">\(\text{ft}^2\)</span>.</p>
+<p>During initial design stages, the computed <span class="math notranslate nohighlight">\(\Delta C_{l_{max}}\)</span> is further refined to compute the required change in section lift coefficient using</p>
 <div class="math notranslate nohighlight">
 \[
-    \frac{ \bigg( \dfrac{W}{S} \bigg)_{TO} \bigg( \dfrac{W}{P} \bigg)_{TO} }{ \sigma C_{L_{max_{TO}}} } \leq \text{TOP}_{23}.
+    \Delta C_l = \Delta C_{l_{max}} / K,
 \]</div>
-<p>This inequality relation can be used to determine various combinations of <span class="math notranslate nohighlight">\(W/S\)</span> and <span class="math notranslate nohighlight">\(W/P\)</span> that satisfy the takeoff ground roll requirement for FAR 23 airplanes.</p>
-<p>Below code plots the takeoff requirement for the example aircraft and highlights the feasible region:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
-
-<span class="n">s_tgr</span> <span class="o">=</span> <span class="mi">1500</span> <span class="c1"># ft</span>
-<span class="n">sigma</span> <span class="o">=</span> <span class="mi">1</span> <span class="c1"># since sealevel conditions</span>
-<span class="n">CL_max_to</span> <span class="o">=</span> <span class="mf">1.8</span>
-
-<span class="c1"># coeff of quadratic eq</span>
-<span class="n">a</span> <span class="o">=</span> <span class="mf">0.009</span>
-<span class="n">b</span> <span class="o">=</span> <span class="mf">4.9</span>
-<span class="n">c</span> <span class="o">=</span> <span class="o">-</span><span class="n">s_tgr</span>
-
-<span class="c1"># TOP solution</span>
-<span class="n">top_23</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="n">b</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">b</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="mi">4</span><span class="o">*</span><span class="n">a</span><span class="o">*</span><span class="n">c</span><span class="p">))</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">/</span> <span class="n">a</span> <span class="c1"># other solution will be negative</span>
-
-<span class="c1"># W/S amd W/P values</span>
-<span class="n">num_pts</span> <span class="o">=</span> <span class="mi">500</span>
-<span class="n">wing_loading</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="n">num_pts</span><span class="p">)</span> <span class="c1"># lb/ft^2</span>
-<span class="n">power_loading</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="n">num_pts</span><span class="p">)</span> <span class="c1"># lb/hp</span>
-<span class="n">X</span><span class="p">,</span> <span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">wing_loading</span><span class="p">,</span> <span class="n">power_loading</span><span class="p">)</span>
-
-<span class="n">takeoff_req</span> <span class="o">=</span> <span class="n">X</span> <span class="o">*</span> <span class="n">Y</span> <span class="o">/</span> <span class="n">sigma</span> <span class="o">/</span> <span class="n">CL_max_to</span> <span class="o">-</span> <span class="n">top_23</span>
-
-<span class="c1"># Plotting</span>
-<span class="n">fs</span> <span class="o">=</span> <span class="mi">12</span> <span class="c1"># fontsize</span>
-
-<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">contour</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">takeoff_req</span><span class="p">,</span> <span class="n">colors</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">wing_loading</span><span class="p">,</span> <span class="n">power_loading</span><span class="p">,</span> <span class="n">takeoff_req</span><span class="o">&lt;=</span><span class="mi">0</span><span class="p">,</span> <span class="n">colors</span><span class="o">=</span><span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="p">[</span><span class="mf">0.5</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s2">&quot;Feasible&quot;</span><span class="p">,</span> <span class="p">(</span><span class="mi">17</span><span class="p">,</span><span class="mi">12</span><span class="p">),</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Wing Loading ($W/S$) [lbs/$ft^2$]&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">fs</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Power Loading ($W/P$) [lbs/hp]&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">fs</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Takeoff distance requirement&quot;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;both&#39;</span><span class="p">,</span> <span class="n">labelsize</span><span class="o">=</span><span class="n">fs</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
-</pre></div>
+<p>where factor <span class="math notranslate nohighlight">\(K\)</span> depends on the flap type and <span class="math notranslate nohighlight">\(c_f/c\)</span>, and is obtained from figure 7.4 in Roskam Part 2. For a single slotted flap with <span class="math notranslate nohighlight">\(c_f/c = 0.25\)</span>, the value of <span class="math notranslate nohighlight">\(K\)</span> is set to 0.93. The <span class="math notranslate nohighlight">\(\Delta C_l\)</span> can be computed based on deflection of a single slotted flap using</p>
+<div class="math notranslate nohighlight">
+\[
+   \Delta C_l = C_{l_\alpha}\alpha_{\delta_f}\delta_f ,
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(C_{l_\alpha}\)</span> is the airfoil lift curve slope, <span class="math notranslate nohighlight">\(\alpha_{\delta_f}\)</span> is the lift effectiveness for a single slotted flap and it depends on the flap deflection. Using Figure 7.8 in Roskam Part 2, appropriate flap deflection, and corresponding <span class="math notranslate nohighlight">\(\alpha_{\delta_f}\)</span>, can be determined so that required <span class="math notranslate nohighlight">\(\Delta C_l\)</span> is obtained.</p>
+<p>The change in zero lift angle of attack, <span class="math notranslate nohighlight">\(\Delta\alpha_{L=0}\)</span>, can be computed using</p>
+<div class="math notranslate nohighlight">
+\[
+    \Delta\alpha_{L=0} = (\Delta\alpha_{L=0})_{airfoil} \frac{S_f}{S_{ref}}.
+\]</div>
+<p>Based on the recommendations provided in Raymer section 12.4.6, <span class="math notranslate nohighlight">\((\Delta\alpha_{L=0})_{airfoil}\)</span> is set to <span class="math notranslate nohighlight">\(-9^{\circ}\)</span> and <span class="math notranslate nohighlight">\(-18^{\circ}\)</span> for takeoff and landing, respectively.</p>
+<p>Furthermore, change in zero-lift drag coefficient, <span class="math notranslate nohighlight">\(\Delta C_{D_0}\)</span>, due to flap deflection can be computed using (Raymer equation 12.61)</p>
+<div class="math notranslate nohighlight">
+\[
+    \Delta C_{D_{0_f}} = F_f \frac{c_f}{c} \frac{S_f}{S_{ref}} (\delta_f - 10),
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(F_f\)</span> is 0.0074 for slotted flaps. Note that in above equation, sweep effects are not included since example airplane has minimal sweep. This concludes the process for sizing the HL devices. Next subsection applies this process for the example airplane in takeoff and landing configuration. The corresponding drag polar are also plotted, along with estimating the maximum <span class="math notranslate nohighlight">\(L/D\)</span>.</p>
+<div class="toctree-wrapper compound">
 </div>
-</div>
-<div class="cell_output docutils container">
-<img alt="../_images/5a1c16212aebb9385829adf6fd32df6f3b4cda9d8f0b87bd55542aef3f317c87.png" src="../_images/5a1c16212aebb9385829adf6fd32df6f3b4cda9d8f0b87bd55542aef3f317c87.png" />
-</div>
-</div>
-<p>So, any point within this red feasbile region will be able to satisfy the takeoff requirement.</p>
 </section>
 
     <script type="text/x-thebe-config">
@@ -474,7 +442,7 @@ document.write(`
         },
         kernelOptions: {
             name: "python3",
-            path: "./constraint_analysis"
+            path: "./hl_devices"
         },
         predefinedOutput: true
     }
@@ -492,20 +460,20 @@ document.write(`
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="intro.html"
+       href="../aerodynamics/drag_polar_induced_drag.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Constraint Analysis</p>
+        <p class="prev-next-title">Drag Polar</p>
       </div>
     </a>
     <a class="right-next"
-       href="landing.html"
+       href="takeoff.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Landing Distance</p>
+        <p class="prev-next-title">Takeoff</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
