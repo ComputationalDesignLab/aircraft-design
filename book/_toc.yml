@@ -34,5 +34,4 @@ chapters:
   - file: hl_devices/intro
     sections:
       - file: hl_devices/takeoff
-
-  # - file: powerplant_sizing
+      - file: hl_devices/landing
