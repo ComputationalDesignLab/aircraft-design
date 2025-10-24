@@ -35,3 +35,4 @@ chapters:
     sections:
       - file: hl_devices/takeoff
       - file: hl_devices/landing
+  - file: weight_and_balance/intro
