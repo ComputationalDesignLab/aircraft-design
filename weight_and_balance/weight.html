@@ -1,0 +1,823 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Weights &#8212; Aircraft Design</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'weight_and_balance/weight';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Weight and Balance" href="intro.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Aircraft Design</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    Introduction
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../setup.html">Computing environment setup</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../python_basics/intro.html">Basics of Python Programming</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../python_basics/python_basics.html">Basic programming in Python and Jupyter Notebooks</a></li>
+
+
+
+
+
+
+<li class="toctree-l2"><a class="reference internal" href="../python_basics/plotting.html">Basic plotting in Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../python_basics/resources.html">Python and Jupyter notebook resources</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../example_aircraft.html">Example Aircraft</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../initial_weight_estimation.html">Initial Weight Estimation</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../constraint_analysis/intro.html">Constraint Analysis</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../constraint_analysis/takeoff.html">Takeoff Distance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../constraint_analysis/landing.html">Landing Distance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../constraint_analysis/climb.html">Climb Gradient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../constraint_analysis/cruise.html">Cruise Speed</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../constraint_analysis/final.html">Matching process</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../baseline.html">Initial Design Summary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../configuration.html">Aircraft Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../wing_layout.html">Wing Planform Sizing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tail_sizing.html">Tail Sizing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fuselage.html">Fuselage Sizing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../landing_gear.html">Landing Gear Sizing</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../powerplant/intro.html">Propulsion System</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../powerplant/engine_propeller.html">Engine and Propeller Selection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../powerplant/installation_thrust.html">Installation Thrust</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../aerodynamics/intro.html">Aerodynamics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../aerodynamics/lift_curve.html">Lift</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../aerodynamics/drag_buildup.html">Parasitic (Zero-lift) drag</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../aerodynamics/drag_polar_induced_drag.html">Drag Polar</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../hl_devices/intro.html">High-Lift Devices</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../hl_devices/takeoff.html">Takeoff</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../hl_devices/landing.html">Landing</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="intro.html">Weight and Balance</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Weights</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/ComputationalDesignLab/aircraft-design" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/weight_and_balance/weight.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Weights</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#wing">Wing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fuselage">Fuselage</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tail">Tail</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#landing-gear">Landing Gear</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#propulsion-system">Propulsion system</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#miscellaneous">Miscellaneous</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="weights">
+<h1>Weights<a class="headerlink" href="#weights" title="Link to this heading">#</a></h1>
+<p>This section computes weight for major aircraft structural components, along with various miscellaneous weights, for the example airplane. The statistical equations used below are referenced from different books (source is mentioned in each sub-section). For brevity, equations are not provided here. It is recommended to compare weights computed using statistical relations provided by different sources, and then select a sensible value. If possible, compare final weight values for each component with available data.</p>
+<p>Below code block imports pacakges and defines some quantities used in various equations. The dynamic pressure is computed at cruise conditions (used in various equations). The limit load will be described in detail for V-n diagrams but for now it is set to 3.5.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
+
+<span class="c1"># Dynamic pressure</span>
+<span class="n">rho</span> <span class="o">=</span> <span class="mf">0.00186850</span> <span class="c1"># slugs/cu ft, at 8000 ft</span>
+<span class="n">V</span> <span class="o">=</span> <span class="mf">337.562</span> <span class="c1"># ft/s, 200 knots</span>
+<span class="n">q</span> <span class="o">=</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">rho</span><span class="o">*</span><span class="n">V</span><span class="o">**</span><span class="mi">2</span> <span class="c1"># lbs/sq ft dynamic pressure at cruise</span>
+
+<span class="n">Wdg</span> <span class="o">=</span> <span class="mi">5354</span> <span class="c1"># lbs, MTOW</span>
+<span class="n">Wfw</span> <span class="o">=</span> <span class="mi">1060</span> <span class="c1"># lbs, fuel weight</span>
+<span class="n">avgas_density</span> <span class="o">=</span> <span class="mf">6.41</span> <span class="c1"># lbs/gallon at -40 C</span>
+
+<span class="n">Nz</span> <span class="o">=</span> <span class="mf">1.5</span> <span class="o">*</span> <span class="mf">3.5</span> <span class="c1"># limit load factor is set to 3.5</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="wing">
+<h2>Wing<a class="headerlink" href="#wing" title="Link to this heading">#</a></h2>
+<p>The wing weight is computed using Raymer equation 15.46 which takes into account wing planform parameters and other variables. One can also compute wing weight using Roskam part 5 equation 5.2 or 5.4.</p>
+<p>Below code block computes wing weight:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Sw</span> <span class="o">=</span> <span class="mi">134</span> <span class="c1"># sq ft</span>
+<span class="n">A</span> <span class="o">=</span> <span class="mi">8</span>
+<span class="n">taper_ratio</span> <span class="o">=</span> <span class="mf">0.4</span>
+<span class="n">tc</span> <span class="o">=</span> <span class="mf">0.16</span> <span class="c1"># average tc for the wing section between root and mac</span>
+<span class="n">sweep</span> <span class="o">=</span> <span class="mi">0</span> <span class="c1"># quarter chord sweep</span>
+<span class="n">wing_span</span> <span class="o">=</span> <span class="mi">33</span> <span class="c1"># ft</span>
+
+<span class="n">Wwing</span> <span class="o">=</span> <span class="mf">0.036</span><span class="o">*</span><span class="n">Sw</span><span class="o">**</span><span class="mf">0.758</span> <span class="o">*</span> <span class="n">Wfw</span><span class="o">**</span><span class="mf">0.0035</span> <span class="o">*</span> <span class="p">(</span><span class="n">A</span><span class="o">/</span><span class="n">math</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">sweep</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">**</span><span class="mf">0.6</span> <span class="o">*</span> <span class="n">q</span><span class="o">**</span><span class="mf">0.006</span> <span class="o">*</span> <span class="n">taper_ratio</span><span class="o">**</span><span class="mf">0.04</span> \
+        <span class="o">*</span> <span class="p">(</span><span class="mi">100</span><span class="o">*</span><span class="n">tc</span><span class="o">/</span><span class="n">math</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">sweep</span><span class="p">))</span><span class="o">**-</span><span class="mf">0.3</span> <span class="o">*</span> <span class="p">(</span><span class="n">Nz</span><span class="o">*</span><span class="n">Wdg</span><span class="p">)</span><span class="o">**</span><span class="mf">0.49</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Weight of the wing: </span><span class="si">{</span><span class="n">Wwing</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2"> lbs&quot;</span><span class="p">)</span>
+
+<span class="c1"># print( 0.04674 * Wdg**0.397 * Sw**0.36 * Nz**0.397 * A**1.712 )</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Weight of the wing: 344 lbs
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="fuselage">
+<h2>Fuselage<a class="headerlink" href="#fuselage" title="Link to this heading">#</a></h2>
+<p>The fuselage weight is computed using Raymer equation 15.49 but one can also compute it using Roskam part equation 5.23 or 5.25.</p>
+<p>Below code block computes fuselage weight:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Sf</span> <span class="o">=</span> <span class="mf">380.12</span> <span class="c1"># sq ft, fuselage wetted from openvsp</span>
+<span class="n">D</span> <span class="o">=</span> <span class="mf">1.5</span><span class="o">/</span><span class="mi">12</span> <span class="c1"># ft, structural depth</span>
+<span class="n">L</span> <span class="o">=</span> <span class="mi">27</span> <span class="c1"># ft, structural length without nose and tail cap</span>
+<span class="n">Lt</span> <span class="o">=</span> <span class="mi">16</span> <span class="c1"># ft, tail moment arm</span>
+
+<span class="n">Wfuselage</span> <span class="o">=</span> <span class="mf">0.052</span> <span class="o">*</span> <span class="n">Sf</span><span class="o">**</span><span class="mf">1.086</span> <span class="o">*</span> <span class="p">(</span><span class="n">Nz</span><span class="o">*</span><span class="n">Wdg</span><span class="p">)</span><span class="o">**</span><span class="mf">0.177</span> <span class="o">*</span> <span class="n">Lt</span><span class="o">**</span><span class="p">(</span><span class="o">-</span><span class="mf">0.051</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">L</span><span class="o">/</span><span class="n">D</span><span class="p">)</span><span class="o">**</span><span class="p">(</span><span class="o">-</span><span class="mf">0.072</span><span class="p">)</span> <span class="o">*</span> <span class="n">q</span><span class="o">**</span><span class="mf">0.241</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Weight of the fuselage: </span><span class="si">{</span><span class="n">Wfuselage</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2"> lbs&quot;</span><span class="p">)</span>
+
+<span class="c1"># print( 0.04628 * Wdg**0.692 * 17**0.374 * L**0.59 )</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Weight of the fuselage: 367 lbs
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="tail">
+<h2>Tail<a class="headerlink" href="#tail" title="Link to this heading">#</a></h2>
+<p>The horizontal and vertical tail weights are computed using Raymer equation 15.47 and 15.48. One can also use Roskam Part 5 Section 5.2 for computing empennage weights.</p>
+<p>Below code block computes weight of the horizontal tail:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Sht</span> <span class="o">=</span> <span class="mi">31</span> <span class="c1"># sq ft</span>
+<span class="n">sweep_ht</span> <span class="o">=</span> <span class="mi">10</span> <span class="c1"># deg</span>
+<span class="n">taper_ratio_ht</span> <span class="o">=</span> <span class="mf">0.741</span>
+
+<span class="n">Wht</span> <span class="o">=</span> <span class="mf">0.016</span> <span class="o">*</span> <span class="p">(</span><span class="n">Nz</span><span class="o">*</span><span class="n">Wdg</span><span class="p">)</span><span class="o">**</span><span class="mf">0.414</span> <span class="o">*</span> <span class="n">q</span><span class="o">**</span><span class="mf">0.168</span> <span class="o">*</span> <span class="n">Sht</span><span class="o">**</span><span class="mf">0.896</span> <span class="o">*</span> <span class="p">(</span><span class="mi">100</span><span class="o">*</span><span class="n">tc</span><span class="o">/</span><span class="n">math</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">sweep</span><span class="o">*</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">180</span><span class="p">))</span><span class="o">**-</span><span class="mf">0.12</span> \
+        <span class="o">*</span> <span class="p">(</span><span class="n">A</span><span class="o">/</span><span class="n">math</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">sweep_ht</span><span class="o">*</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">180</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">**</span><span class="mf">0.043</span> <span class="o">*</span> <span class="n">taper_ratio_ht</span><span class="o">**-</span><span class="mf">0.02</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Weight of the HT: </span><span class="si">{</span><span class="n">Wht</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2"> lbs&quot;</span><span class="p">)</span>
+
+<span class="c1"># print( 127 * ( (Wdg*Nz/1e5)**0.87 * (Sht/100)**1.2 * (Lt)**0.483 * (13/0.12/2.7/12)**0.5 )**0.458 )</span>
+
+<span class="c1"># Ah = 13**2 / 31</span>
+
+<span class="c1"># print( 3.184 * Wdg**0.887 * Sht**0.101 * Ah**0.138 / 174.04 / 0.12**0.223 )</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Weight of the HT: 42 lbs
+</pre></div>
+</div>
+</div>
+</div>
+<p>Below code block computes weight of the vertical tail:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Svt</span> <span class="o">=</span> <span class="mi">17</span> <span class="c1"># sq ft</span>
+<span class="n">taper_ratio_vt</span> <span class="o">=</span> <span class="mf">0.55</span>
+<span class="n">sweep_vt</span> <span class="o">=</span> <span class="mi">30</span> <span class="c1"># deg</span>
+<span class="n">tail_factor</span> <span class="o">=</span> <span class="mi">0</span> <span class="c1"># 0.0 for conv tail</span>
+
+<span class="n">Wvt</span> <span class="o">=</span> <span class="mf">0.073</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="mf">0.2</span><span class="o">*</span><span class="n">tail_factor</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">Nz</span><span class="o">*</span><span class="n">Wdg</span><span class="p">)</span><span class="o">**</span><span class="mf">0.376</span> <span class="o">*</span> <span class="n">q</span><span class="o">**</span><span class="mf">0.122</span> <span class="o">*</span> <span class="n">Svt</span><span class="o">**</span><span class="mf">0.873</span> \
+        <span class="o">*</span> <span class="p">(</span><span class="mi">100</span><span class="o">*</span><span class="n">tc</span><span class="o">/</span><span class="n">math</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">sweep_vt</span><span class="o">*</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">180</span><span class="p">))</span><span class="o">**-</span><span class="mf">0.49</span> <span class="o">*</span> <span class="p">(</span><span class="n">A</span><span class="o">/</span><span class="n">math</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">sweep_vt</span><span class="o">*</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">180</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">**</span><span class="mf">0.357</span> \
+        <span class="o">*</span> <span class="n">taper_ratio_vt</span><span class="o">**</span><span class="mf">0.039</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Weight of the VT: </span><span class="si">{</span><span class="n">Wvt</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2"> lbs&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Weight of the VT: 39 lbs
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="landing-gear">
+<h2>Landing Gear<a class="headerlink" href="#landing-gear" title="Link to this heading">#</a></h2>
+<p>The landing gear (LG) weight is computed using equation 5.4 in Roskam Part 5. The ultimate landing load factor is 1.5 times the gear load factor which is set to 3 using Table 11.5 in Raymer. The main LG extended length is estimate based on propeller diameter and required clearance. The propeller radius of 2.9 ft and 1.1 ft clerance leads to an approximate extended length of 4 ft. Note that for the example airplane, the LG is mounted close to engine mounts and retracted into wings. The value obtained is the total LG weight, including nose LG. Later, it is assumed that nose LG is 25% of the total LG weight.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Ngear</span> <span class="o">=</span> <span class="mi">3</span> <span class="c1"># from Table 11.5</span>
+<span class="n">Nl</span> <span class="o">=</span> <span class="mf">1.5</span> <span class="o">*</span> <span class="n">Ngear</span>
+<span class="n">WL</span> <span class="o">=</span> <span class="mf">0.95</span><span class="o">*</span><span class="n">Wdg</span>
+<span class="n">Lm</span> <span class="o">=</span> <span class="mi">4</span> <span class="c1"># ft</span>
+
+<span class="n">Wlg</span> <span class="o">=</span> <span class="mf">0.054</span> <span class="o">*</span> <span class="n">Lm</span><span class="o">**</span><span class="mf">0.501</span> <span class="o">*</span> <span class="p">(</span><span class="n">WL</span><span class="o">*</span><span class="n">Nl</span><span class="p">)</span><span class="o">**</span><span class="mf">0.684</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Weight of the total LG: </span><span class="si">{</span><span class="n">Wlg</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2"> lbs&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Weight of the Main LG: </span><span class="si">{</span><span class="mf">0.75</span><span class="o">*</span><span class="n">Wlg</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2"> lbs&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Weight of the Nose LG: </span><span class="si">{</span><span class="mf">0.25</span><span class="o">*</span><span class="n">Wlg</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2"> lbs&quot;</span><span class="p">)</span>
+
+<span class="c1"># print(Wlg)</span>
+
+<span class="c1"># print(f&quot;Weight of the Main LG: {Wmlg:.0f} lbs&quot;)</span>
+<span class="c1"># print(f&quot;Weight of the Nose LG: {Wnlg:.0f} lbs&quot;)</span>
+
+<span class="c1"># print(118/373)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Weight of the total LG: 104 lbs
+Weight of the Main LG: 78 lbs
+Weight of the Nose LG: 26 lbs
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="propulsion-system">
+<h2>Propulsion system<a class="headerlink" href="#propulsion-system" title="Link to this heading">#</a></h2>
+<p>The installed engine weight is computed using equation 15.52 in Raymer. As described in propulsion section, the Continental IO-550-N engine is going to be used for example airplane. The fuel systems weight is computed using equation 15.53.</p>
+<p>Below code block computes installed engine and fuel systems weight:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Wen</span> <span class="o">=</span> <span class="mi">491</span> <span class="c1"># lbs</span>
+<span class="n">Nen</span> <span class="o">=</span> <span class="mi">2</span>
+
+<span class="n">Winst_eng</span> <span class="o">=</span> <span class="mf">2.575</span> <span class="o">*</span> <span class="n">Wen</span><span class="o">**</span><span class="mf">0.922</span> <span class="o">*</span> <span class="n">Nen</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Weight of the installed engine: </span><span class="si">{</span><span class="n">Winst_eng</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2"> lbs&quot;</span><span class="p">)</span>
+
+<span class="n">Vt</span> <span class="o">=</span> <span class="n">Wfw</span> <span class="o">/</span> <span class="n">avgas_density</span>
+<span class="n">Vi</span> <span class="o">=</span> <span class="n">Vt</span>
+<span class="n">Nt</span> <span class="o">=</span> <span class="mi">2</span> <span class="c1"># number of fuel tanks</span>
+
+<span class="n">Wfuel_system</span> <span class="o">=</span> <span class="mf">2.49</span> <span class="o">*</span> <span class="n">Vt</span><span class="o">**</span><span class="mf">0.726</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">Vi</span><span class="o">/</span><span class="n">Vt</span><span class="p">)</span><span class="o">**-</span><span class="mf">0.363</span> <span class="o">*</span> <span class="n">Nt</span><span class="o">**</span><span class="mf">0.242</span> <span class="o">*</span> <span class="n">Nen</span><span class="o">**</span><span class="mf">0.157</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Weight of the fuel systems: </span><span class="si">{</span><span class="n">Wfuel_system</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2"> lbs&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Weight of the installed engine: 1559 lbs
+Weight of the fuel systems: 104 lbs
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="miscellaneous">
+<h2>Miscellaneous<a class="headerlink" href="#miscellaneous" title="Link to this heading">#</a></h2>
+<p>There are many other fixed components whose weight needs to be estimated such as flight controls, hydraulics, avionics, etc. The equations are referenced from different books, refer comments in below code block for the source. Note that the weights for anti-icing, pressurization, and air conditioning are not included.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># flight controls</span>
+<span class="n">Wflight_controls</span> <span class="o">=</span> <span class="mf">0.0168</span> <span class="o">*</span> <span class="n">Wdg</span> <span class="c1"># Roskam Part 5, equation 7.2</span>
+
+<span class="c1"># hydraulics</span>
+<span class="n">M</span> <span class="o">=</span> <span class="mf">0.3</span> <span class="c1"># cruise mach number</span>
+<span class="n">Kh</span> <span class="o">=</span> <span class="mf">0.05</span> <span class="c1"># low subsonic with hydraulics for brakes and retracts only</span>
+<span class="n">Whydraulics</span> <span class="o">=</span> <span class="n">Kh</span> <span class="o">*</span> <span class="n">Wdg</span><span class="o">**</span><span class="mf">0.8</span> <span class="o">*</span> <span class="n">M</span><span class="o">**</span><span class="mf">0.5</span> <span class="c1"># Raymer, equation 15.55</span>
+
+<span class="c1"># avionics</span>
+<span class="n">Wavionics</span> <span class="o">=</span> <span class="mi">40</span> <span class="o">+</span> <span class="mf">0.008</span> <span class="o">*</span> <span class="n">Wdg</span> <span class="c1"># Roskam Part 5, 7.23</span>
+
+<span class="c1"># electrical</span>
+<span class="n">Welectrical</span> <span class="o">=</span> <span class="mf">0.0268</span> <span class="o">*</span> <span class="n">Wdg</span> <span class="c1"># Roskam Part 5, 7.13</span>
+
+<span class="c1"># furshings</span>
+<span class="n">Wfurshings</span> <span class="o">=</span> <span class="mf">0.412</span> <span class="o">*</span> <span class="mi">6</span><span class="o">**</span><span class="mf">1.145</span> <span class="o">*</span> <span class="n">Wdg</span><span class="o">**</span><span class="mf">0.489</span> <span class="c1"># Roskam Part 5, 7.41</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Weight of the flight controls: </span><span class="si">{</span><span class="n">Wflight_controls</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2"> lbs&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Weight of the hydraulics: </span><span class="si">{</span><span class="n">Whydraulics</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2"> lbs&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Weight of the avionics: </span><span class="si">{</span><span class="n">Wavionics</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2"> lbs&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Weight of the electrical: </span><span class="si">{</span><span class="n">Welectrical</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2"> lbs&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Weight of the furshings: </span><span class="si">{</span><span class="n">Wfurshings</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2"> lbs&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Total miscellaneous weights: </span><span class="si">{</span><span class="n">Wflight_controls</span><span class="o">+</span><span class="n">Whydraulics</span><span class="o">+</span><span class="n">Wavionics</span><span class="o">+</span><span class="n">Welectrical</span><span class="o">+</span><span class="n">Wfurshings</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2"> lbs&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Weight of the flight controls: 90 lbs
+Weight of the hydraulics: 26 lbs
+Weight of the avionics: 83 lbs
+Weight of the electrical: 143 lbs
+Weight of the furshings: 213 lbs
+Total miscellaneous weights: 556 lbs
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Link to this heading">#</a></h2>
+<p>Following table summarizes the weights computed in this section:</p>
+<div style="width:40%; margin: auto;">
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Component</p></th>
+<th class="head text-center"><p>Weight (lbs)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Wing</p></td>
+<td class="text-center"><p>344</p></td>
+</tr>
+<tr class="row-odd"><td><p>Fuselage</p></td>
+<td class="text-center"><p>367</p></td>
+</tr>
+<tr class="row-even"><td><p>Horizontal tail</p></td>
+<td class="text-center"><p>42</p></td>
+</tr>
+<tr class="row-odd"><td><p>Vertical tail</p></td>
+<td class="text-center"><p>39</p></td>
+</tr>
+<tr class="row-even"><td><p>Main LG</p></td>
+<td class="text-center"><p>78</p></td>
+</tr>
+<tr class="row-odd"><td><p>Nose LG</p></td>
+<td class="text-center"><p>26</p></td>
+</tr>
+<tr class="row-even"><td><p>Installed engine</p></td>
+<td class="text-center"><p>1559</p></td>
+</tr>
+<tr class="row-odd"><td><p>Fuel systems</p></td>
+<td class="text-center"><p>104</p></td>
+</tr>
+<tr class="row-even"><td><p>Flight controls</p></td>
+<td class="text-center"><p>90</p></td>
+</tr>
+<tr class="row-odd"><td><p>Hydraulics</p></td>
+<td class="text-center"><p>26</p></td>
+</tr>
+<tr class="row-even"><td><p>Avionics</p></td>
+<td class="text-center"><p>83</p></td>
+</tr>
+<tr class="row-odd"><td><p>Electrical</p></td>
+<td class="text-center"><p>143</p></td>
+</tr>
+<tr class="row-even"><td><p>Furshings</p></td>
+<td class="text-center"><p>213</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Total Empty weight</strong></p></td>
+<td class="text-center"><p>3218</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<blockquote>
+<div><p><strong><em>NOTE</em></strong>: The value obtained here (3218 lbs) is not far from what was obtained earlier in empty weight estimation (3094 lbs). This increase of 130 lbs will have some impact on the perforamce.</p>
+</div></blockquote>
+<p>This concludes the weights section. Next step is to compute the CG and plot CG travel diagram.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./weight_and_balance"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="intro.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Weight and Balance</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#wing">Wing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fuselage">Fuselage</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tail">Tail</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#landing-gear">Landing Gear</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#propulsion-system">Propulsion system</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#miscellaneous">Miscellaneous</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By CODE Lab
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
