@@ -38,3 +38,4 @@ chapters:
   - file: weight_and_balance/intro
     sections:
       - file: weight_and_balance/weight
+      - file: weight_and_balance/cg
