@@ -39,3 +39,4 @@ chapters:
     sections:
       - file: weight_and_balance/weight
       - file: weight_and_balance/cg
+      - file: weight_and_balance/cg_travel
