@@ -224,6 +224,7 @@
 <li class="toctree-l1 has-children"><a class="reference internal" href="weight_and_balance/intro.html">Weight and Balance</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="weight_and_balance/weight.html">Weights</a></li>
 <li class="toctree-l2"><a class="reference internal" href="weight_and_balance/cg.html">Center of gravity</a></li>
+<li class="toctree-l2"><a class="reference internal" href="weight_and_balance/cg_travel.html">CG Travel Diagram</a></li>
 </ul>
 </details></li>
 </ul>
@@ -408,8 +409,8 @@ document.write(`
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Variables</span>
 <span class="n">W</span> <span class="o">=</span> <span class="mi">5354</span> <span class="c1"># lbs</span>
-<span class="n">ln_by_ld</span> <span class="o">=</span> <span class="mf">0.95</span>
-<span class="n">lm_by_ld</span> <span class="o">=</span> <span class="mf">0.10</span>
+<span class="n">ln_by_ld</span> <span class="o">=</span> <span class="mf">0.90</span>
+<span class="n">lm_by_ld</span> <span class="o">=</span> <span class="mf">0.15</span>
 
 <span class="c1"># Loads</span>
 <span class="n">nose_lg_load</span> <span class="o">=</span> <span class="n">W</span> <span class="o">*</span> <span class="n">lm_by_ld</span> <span class="c1"># lb</span>
@@ -421,8 +422,8 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Max load on nose LG: 535.4 lbs
-Max load on each main LG strut: 5086.3 lbs
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Max load on nose LG: 803.1 lbs
+Max load on main LG: 4818.6 lbs
 </pre></div>
 </div>
 </div>
@@ -442,8 +443,8 @@ Max load on each main LG strut: 5086.3 lbs
 <td class="text-center"><p>Type III</p></td>
 </tr>
 <tr class="row-odd"><td><p>Max applied load, lbs</p></td>
-<td class="text-center"><p>535</p></td>
-<td class="text-center"><p>2543</p></td>
+<td class="text-center"><p>803.1</p></td>
+<td class="text-center"><p>2409.3</p></td>
 </tr>
 <tr class="row-even"><td><p>Max allowed load, lbs</p></td>
 <td class="text-center"><p>1200</p></td>
