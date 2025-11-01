@@ -42,4 +42,4 @@ chapters:
       - file: weight_and_balance/cg_travel
   - file: long_stability/intro
     sections:
-      - file: long_stability/stability
+      - file: long_stability/static_margin
