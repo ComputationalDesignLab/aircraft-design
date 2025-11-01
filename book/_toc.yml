@@ -43,3 +43,4 @@ chapters:
   - file: long_stability/intro
     sections:
       - file: long_stability/static_margin
+      - file: long_stability/trim
