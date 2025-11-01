@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Trim &#8212; Aircraft Design</title>
+    <title>Trim Analysis &#8212; Aircraft Design</title>
   
   
   
@@ -62,6 +62,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'long_stability/trim';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Static Margin" href="static_margin.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -124,8 +125,6 @@
       
       
       
-        
-      
       <div class="bd-sidebar-primary bd-sidebar">
         
 
@@ -175,7 +174,7 @@
                 </a>
             </li>
         </ul>
-        <ul class="nav bd-sidenav">
+        <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../setup.html">Computing environment setup</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../python_basics/intro.html">Basics of Python Programming</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../python_basics/python_basics.html">Basic programming in Python and Jupyter Notebooks</a></li>
@@ -227,8 +226,9 @@
 <li class="toctree-l2"><a class="reference internal" href="../weight_and_balance/cg_travel.html">CG Travel Diagram</a></li>
 </ul>
 </details></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="intro.html">Longitudinal stability</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="intro.html">Longitudinal stability</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="static_margin.html">Static Margin</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Trim Analysis</a></li>
 </ul>
 </details></li>
 </ul>
@@ -384,7 +384,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Trim</h1>
+    <h1>Trim Analysis</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -394,9 +394,14 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#wing-lift-model">Wing lift model</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tail-lift-model">Tail lift model</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#thrust-effects">Thrust Effects</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#wing">Wing</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lift-model">Lift model</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pitching-moment">Pitching moment</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tail">Tail</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fuselage">Fuselage</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#landing-trim">Landing trim</a></li>
 </ul>
             </nav>
         </div>
@@ -408,84 +413,243 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="trim">
-<h1>Trim<a class="headerlink" href="#trim" title="Link to this heading">#</a></h1>
-<!-- $$
-    \bar{X}_{np} = \frac{ C_{L_\alpha} \bar{X}_{ac_w} - C_{M_{\alpha_f}} + \eta_h \dfrac{S_h}{S_w} C_{L_{\alpha_h}} \dfrac{\partial \alpha_h}{\partial \alpha} \bar{X}_{ac_h} + \dfrac{F_{p_\alpha}}{qS_w} \dfrac{\partial \alpha_p}{\partial \alpha} \bar{X}_p } { C_{L_\alpha} + \eta_h \dfrac{S_h}{S_w} C_{L_{\alpha_h}} \dfrac{\partial \alpha_h}{\partial \alpha} + \dfrac{F_{p_\alpha}}{qS_w} \dfrac{\partial \alpha_p}{\partial \alpha} }
-$$ -->
-<section id="wing-lift-model">
-<h2>Wing lift model<a class="headerlink" href="#wing-lift-model" title="Link to this heading">#</a></h2>
+  <section class="tex2jax_ignore mathjax_ignore" id="trim-analysis">
+<h1>Trim Analysis<a class="headerlink" href="#trim-analysis" title="Link to this heading">#</a></h1>
+<p>This section outlines a basic analysis for triming the airplane at given conditions, and hence, determine if the elevator is sized appropriately. At a given condition (such as takeoff), the analysis involves computing the pitching moment coefficient <span class="math notranslate nohighlight">\(C_M\)</span> of the airplane about CG. Then, determine what tail incidence/elevator deflection can yield zero <span class="math notranslate nohighlight">\(C_M\)</span>. Note that changing the tail lift will change the total airplane lift which should be equal to weight (for a steady flight). Hence, free-stream angle of attack needs to be changed. This leads to an iterative process where angle of attack and elevator deflection are to be determined such that <span class="math notranslate nohighlight">\(C_{M_{cg}} = 0\)</span> and lift is equal to weight. This can be done using a computer or a graphical analysis.</p>
+<blockquote>
+<div><p><strong><em>NOTE</em></strong>: Trim analysis is usually performed at takeoff and landing conditions to size/validate the horizontal tail and elevator’s effectiveness in trimming the airplane. The most forward CG position is used for performing landing/takeoff trim analysis.</p>
+</div></blockquote>
+<p>In this section, only <strong>landing trim analysis</strong> is demonstrated for the example airplane. The total lift coefficient of the airplane is written as:</p>
+<div class="math notranslate nohighlight">
+\[
+    C_{L_{total}} = C_{L_w} + C_{L_h},
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(C_{L_w}\)</span> and <span class="math notranslate nohighlight">\(C_{L_h}\)</span> are the lift coefficient for wing and horizontal tail, respectively. Using equation 16.7 in Raymer, the pitching moment coefficient about CG can be computed using</p>
+<div class="math notranslate nohighlight">
+\[
+    C_{M_{cg}} = C_{L_w}(\bar{X}_{cg} - \bar{X}_{ac_w}) + C_{M_w} + C_{M_{w_f}} + C_{M_{fus}} - \eta_h \frac{S_h}{S_w} C_{L_h} (\bar{X}_{ac_h} - \bar{X}_{cg}),
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(C_{M_w}\)</span> refers to the wing pitching moment and <span class="math notranslate nohighlight">\(C_{M_{w_f}}\)</span> refers to the change in the wing pitching moment coefficient due to wing flap deflection. Other terms have been defined in <a class="reference internal" href="static_margin.html"><span class="std std-doc">static margin section</span></a>.</p>
+<blockquote>
+<div><p><strong><em>NOTE</em></strong>: The thrust effect can be ignored for initial analysis, unless the vertical distance between thrust line and CG is large.</p>
+</div></blockquote>
+<p>Using above equation, one can find the <span class="math notranslate nohighlight">\(\alpha\)</span> and elevator deflection so that <span class="math notranslate nohighlight">\(C_{M_{cg}} = 0\)</span> while maintaining a specific <span class="math notranslate nohighlight">\(C_L\)</span>. Following sub-sections compute the pitching moment contributions from different components:</p>
+<section id="wing">
+<h2>Wing<a class="headerlink" href="#wing" title="Link to this heading">#</a></h2>
+<section id="lift-model">
+<h3>Lift model<a class="headerlink" href="#lift-model" title="Link to this heading">#</a></h3>
 <p>The lift model for the wing can be written as</p>
-<p>where <span class="math notranslate nohighlight">\(C_{L_{\alpha_w}}\)</span> is the lift curve slope for the wing, <span class="math notranslate nohighlight">\(i_w\)</span> is the incidence angle, <span class="math notranslate nohighlight">\(\alpha_{0_{L_w}}\)</span> is the zero-lift angle of attack for the wing. The <span class="math notranslate nohighlight">\(C_{L_{\alpha_w}}\)</span> and <span class="math notranslate nohighlight">\(alpha_{0_{L_w}}\)</span> are already computed in aerodynamics section. The <span class="math notranslate nohighlight">\(i_w = 2^{\circ}\)</span> is determined in wing planform section. Note that <span class="math notranslate nohighlight">\(i_w\)</span> can be further tuned if required.</p>
 <div class="math notranslate nohighlight">
 \[
     C_{L_w} = C_{L_{\alpha_w}} (\alpha + i_w - \alpha_{0_{L_w}}),
 \]</div>
-</section>
-<section id="tail-lift-model">
-<h2>Tail lift model<a class="headerlink" href="#tail-lift-model" title="Link to this heading">#</a></h2>
-<div class="math notranslate nohighlight">
-\[
-    C_{L_h} = C_{L_{\alpha_h}} ( \alpha + i_h - \epsilon - \alpha_{0_{L_h}} )
-\]</div>
-<div class="math notranslate nohighlight">
-\[
-\alpha_h = \alpha + i_h - \epsilon - \alpha_{0_{L_h}}
-\]</div>
-</section>
-<section id="thrust-effects">
-<h2>Thrust Effects<a class="headerlink" href="#thrust-effects" title="Link to this heading">#</a></h2>
-<p>Section 16.3.9 Raymer</p>
-<div class="math notranslate nohighlight">
-\[
-    F_{P_\alpha} = qN_BA_p \frac{\partial C_{N_{blade}}}{\partial \alpha} f(T)
-\]</div>
-<p><span class="math notranslate nohighlight">\(N_B\)</span> = number of blades = 3</p>
-<p><span class="math notranslate nohighlight">\(A_P\)</span> = area of the propeller disk</p>
+<p>where <span class="math notranslate nohighlight">\(C_{L_{\alpha_w}}\)</span> is the lift curve slope for the wing, <span class="math notranslate nohighlight">\(i_w\)</span> is the incidence angle, <span class="math notranslate nohighlight">\(\alpha_{0_{L_w}}\)</span> is the zero-lift angle of attack for the wing. The <span class="math notranslate nohighlight">\(C_{L_{\alpha_w}}\)</span> and <span class="math notranslate nohighlight">\(\alpha_{0_{L_w}}\)</span> are already computed in <a class="reference internal" href="../aerodynamics/lift_curve.html"><span class="std std-doc">aerodynamics section</span></a> and <a class="reference internal" href="../hl_devices/landing.html"><span class="std std-doc">high-lift devices section</span></a>. The <span class="math notranslate nohighlight">\(i_w = 2^{\circ}\)</span> is determined in <a class="reference internal" href="../wing_layout.html"><span class="std std-doc">wing planform section</span></a>. Note that <span class="math notranslate nohighlight">\(i_w\)</span> can be changed if required. Below block creates a python function for computing <span class="math notranslate nohighlight">\(C_{L_w}\)</span>:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 
-<span class="n">rho</span> <span class="o">=</span> <span class="mf">0.00186850</span> <span class="c1"># slugs/cu ft, at 8000 ft</span>
-<span class="n">V</span> <span class="o">=</span> <span class="mf">337.562</span> <span class="c1"># ft/s, 200 knots</span>
-<span class="n">q</span> <span class="o">=</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">rho</span><span class="o">*</span><span class="n">V</span><span class="o">**</span><span class="mi">2</span> <span class="c1"># lbs/sq ft dynamic pressure at cruise</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">compute_CL_w</span><span class="p">(</span><span class="n">alpha</span><span class="p">,</span> <span class="n">i_w</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Note: this function will compute CL with landing flaps</span>
 
-<span class="n">n</span> <span class="o">=</span> <span class="mf">0.8</span><span class="o">*</span><span class="mi">2700</span><span class="o">/</span><span class="mi">60</span> <span class="c1"># rps</span>
-<span class="n">D</span> <span class="o">=</span> <span class="mf">5.8</span> <span class="c1"># ft</span>
-<span class="n">NB</span> <span class="o">=</span> <span class="mi">3</span>
-<span class="n">Ap</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">D</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span><span class="mi">4</span>
+<span class="sd">        Input should be in degrees</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
-<span class="n">J</span> <span class="o">=</span> <span class="n">V</span><span class="o">/</span><span class="n">n</span><span class="o">/</span><span class="n">D</span>
+    <span class="n">CL_alpha_w</span> <span class="o">=</span> <span class="mf">5.0</span> <span class="c1"># 1/rad</span>
+    <span class="n">alpha_CLzero_w</span> <span class="o">=</span> <span class="o">-</span><span class="mf">8.8</span> <span class="c1"># deg, computed in HL devices for landing</span>
+    <span class="n">CL</span> <span class="o">=</span> <span class="n">CL_alpha_w</span> <span class="o">*</span> <span class="p">(</span><span class="n">alpha</span> <span class="o">+</span> <span class="n">i_w</span> <span class="o">-</span> <span class="n">alpha_CLzero_w</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">180</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="n">J</span><span class="p">)</span>
-
-<span class="n">dCNblade_dalpha</span> <span class="o">=</span> <span class="mf">0.055</span> <span class="c1"># 1/rad, figure 16.15</span>
-
-<span class="n">K</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">8</span><span class="o">/</span><span class="mf">0.8</span>
-
-<span class="n">CD0</span> <span class="o">=</span> <span class="mf">0.03363</span>
-
-<span class="n">W</span> <span class="o">=</span> <span class="mf">0.95</span><span class="o">*</span><span class="mi">5374</span>
-
-<span class="n">CL</span> <span class="o">=</span> <span class="n">W</span><span class="o">/</span><span class="mf">0.5</span><span class="o">/</span><span class="n">rho</span><span class="o">/</span><span class="n">V</span><span class="o">**</span><span class="mi">2</span>
-
-<span class="n">CD</span> <span class="o">=</span> <span class="n">CD0</span> <span class="o">+</span> <span class="n">K</span><span class="o">*</span><span class="n">CL</span><span class="o">**</span><span class="mi">2</span>
-
-<span class="n">D</span> <span class="o">=</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">rho</span><span class="o">*</span><span class="n">V</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="n">CD</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="mf">32.2</span><span class="o">*</span><span class="n">D</span><span class="o">/</span><span class="n">rho</span><span class="o">/</span><span class="n">V</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span><span class="n">Sw</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
-
-<span class="n">fT</span> <span class="o">=</span> <span class="mi">1</span>
-
-<span class="n">Fp_alpha</span> <span class="o">=</span> <span class="n">q</span><span class="o">*</span><span class="n">NB</span><span class="o">*</span><span class="n">Ap</span><span class="o">*</span><span class="n">dCNblade_dalpha</span><span class="o">*</span><span class="n">fT</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="n">Fp_alpha</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">180</span><span class="o">/</span><span class="mf">32.2</span><span class="p">)</span>
-
-<span class="nb">print</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">CL</span>
 </pre></div>
 </div>
 </div>
 </div>
+</section>
+<section id="pitching-moment">
+<h3>Pitching moment<a class="headerlink" href="#pitching-moment" title="Link to this heading">#</a></h3>
+<p>The wing pitching moment coefficient about the aerodynamic center is comptued using (Raymer, equation 16.19)</p>
+<div class="math notranslate nohighlight">
+\[
+    C_{W_m} = C_{m_{0_{airfoil}}} \bigg( \frac{A}{A + 2} \bigg),
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(C_{m_{0_{airfoil}}}\)</span> is the airfoil pitching moment coefficient about aerodynamic center and <span class="math notranslate nohighlight">\(A\)</span> is the wing aspect ratio. Note that the above equation can be further modified to account for wing wing sweep. To account for the wing twist, the <span class="math notranslate nohighlight">\(C_{W_m}\)</span> is incremented by <span class="math notranslate nohighlight">\(-0.01 \times twist\)</span>. The airfoil pitching moment coefficient can be computed using software such as XFOIL. For the airfoil used in the wing of the example airplane, <span class="math notranslate nohighlight">\(C_{m_{0_{airfoil}}}\)</span> is found to be -0.009. Below code block computes <span class="math notranslate nohighlight">\(C_{M_w}\)</span>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Aw</span> <span class="o">=</span> <span class="mi">8</span>
+<span class="n">twist</span> <span class="o">=</span> <span class="o">-</span><span class="mi">3</span> <span class="c1"># deg</span>
+<span class="n">Cm0_airfoil</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.01</span>
+<span class="n">CM_w</span> <span class="o">=</span> <span class="n">Cm0_airfoil</span> <span class="o">*</span> <span class="n">Aw</span> <span class="o">/</span> <span class="p">(</span><span class="n">Aw</span><span class="o">+</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">CM_w</span> <span class="o">+=</span> <span class="o">-</span><span class="mf">0.01</span><span class="o">*</span><span class="n">twist</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Wing pitching moment about CG: </span><span class="si">{</span><span class="n">CM_w</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Wing pitching moment about CG: 0.0220
+</pre></div>
+</div>
+</div>
+</div>
+<p>The change in wing pitching moment coefficient with respect to wing flap deflection <span class="math notranslate nohighlight">\(\delta_f\)</span> is computed</p>
+<div class="math notranslate nohighlight">
+\[
+    C_{M_{w_f}} = - \Delta C_L (\bar{X}_{cp} - \bar{X}_{cg}),
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(\bar{X}_{cp}\)</span> is the center of pressure of the flap lift increment and <span class="math notranslate nohighlight">\(\Delta C_L\)</span> is the change in lift coefficient due to wing flap deployment. Note that <span class="math notranslate nohighlight">\(\Delta C_L = 0.76\)</span> for landing flaps, as determined in HL devices section. The <span class="math notranslate nohighlight">\(\bar{X}_{cp}\)</span> is determined using Figure 16.9 in Raymer. Below code block computes <span class="math notranslate nohighlight">\(C_{M_{w_f}}\)</span>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">delta_CL</span> <span class="o">=</span> <span class="mf">0.76</span>
+<span class="n">Xcp</span> <span class="o">=</span> <span class="mf">0.44</span>
+<span class="n">Xcg</span> <span class="o">=</span> <span class="mf">0.1</span> <span class="c1"># most forward CG</span>
+<span class="n">CM_w_flap</span> <span class="o">=</span> <span class="o">-</span><span class="n">delta_CL</span> <span class="o">*</span> <span class="p">(</span><span class="n">Xcp</span> <span class="o">-</span> <span class="n">Xcg</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Change in wing pitching moment due to flaps: </span><span class="si">{</span><span class="n">CM_w_flap</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Change in wing pitching moment due to flaps: -0.2584
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="tail">
+<h2>Tail<a class="headerlink" href="#tail" title="Link to this heading">#</a></h2>
+<p>The tail lift model is written as</p>
+<div class="math notranslate nohighlight">
+\[
+    C_{L_h} = C_{L_{\alpha_h}} \alpha_h,
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(C_{L_{\alpha_h}}\)</span> is the lift curve slope for the horizontal tail (computed in static margin section) and <span class="math notranslate nohighlight">\(\alpha_h\)</span> is the angle of attack experienced by the horizontal tail. The <span class="math notranslate nohighlight">\(\alpha_h\)</span> is influenced by the downwash from the wing and can be written as</p>
+<div class="math notranslate nohighlight">
+\[
+    \alpha_h = (\alpha + i_w) \bigg(1 - \frac{\partial \epsilon}{\partial \alpha}\bigg) + (i_h - i_w) + \alpha_{h_{L=0}} - \Delta \epsilon_{\delta},
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(i_h\)</span> is the horizontal tail incidence angle, <span class="math notranslate nohighlight">\(\partial \epsilon / \partial \alpha\)</span> is the change in downwash with respect to change in angle of attack (computed in statis margin section). The <span class="math notranslate nohighlight">\(\alpha_{h_{L=0}}\)</span> is the zero-lift angle of attack for the horizontal tail which depends on the elevator deflection <span class="math notranslate nohighlight">\(\delta_e\)</span>. The <span class="math notranslate nohighlight">\(\Delta \epsilon_{\delta}\)</span> represents change in downwash due to the wing flap deployment. Hence, <span class="math notranslate nohighlight">\(C_{L_h}\)</span> depends on angle of attack and elevator deflection.</p>
+<p>The <span class="math notranslate nohighlight">\(\alpha_{h_{L=0}}\)</span> is zero since symmetrical airfoil is used for horizontal tail. However, it changes when there is elevator deflection. Hence, <span class="math notranslate nohighlight">\(\alpha_{h_{L=0}}\)</span> is estimated as (Raymer, equation 16.16 and 16.18)</p>
+<div class="math notranslate nohighlight">
+\[
+    \alpha_{h_{L=0}} = -\big[ 1.576 (c_e/c)^3 - 3.458 (c_e/c)^2 + 2.882 (c_e/c) \big] \delta_e, 
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(c_e/c\)</span> is the elevator chord ratio and is choosen as 0.4. Note that elevator down is considered as positive.</p>
+<p>The <span class="math notranslate nohighlight">\(\Delta \epsilon_{\delta}\)</span> is estimated using Figure 16.13 in Raymer. Note that <span class="math notranslate nohighlight">\(C_{L_{\alpha_h}}\)</span> does not change with elevator deflection. Below code block defines a function for computing tail lift coefficient:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">compute_CL_ht</span><span class="p">(</span><span class="n">alpha</span><span class="p">,</span> <span class="n">elevator</span><span class="p">,</span> <span class="n">i_w</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">i_h</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Note: this function will compute CL_ht with landing flaps</span>
+
+<span class="sd">        All inputs should be in degrees.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">de_da</span> <span class="o">=</span> <span class="mf">0.3812</span> <span class="c1"># computed in static margin section</span>
+    <span class="n">ce_c</span> <span class="o">=</span> <span class="mf">0.4</span>
+    <span class="n">delta_epsilon</span> <span class="o">=</span> <span class="mf">4.275</span> <span class="c1"># deg </span>
+    <span class="n">CLalpha_ht</span> <span class="o">=</span> <span class="mf">4.4747</span> <span class="c1"># 1/rad</span>
+
+    <span class="n">zero_lift_alpha_ht</span> <span class="o">=</span> <span class="o">-</span><span class="p">(</span><span class="mf">1.576</span><span class="o">*</span><span class="n">ce_c</span><span class="o">**</span><span class="mi">3</span> <span class="o">-</span> <span class="mf">3.458</span><span class="o">*</span><span class="n">ce_c</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="mf">2.882</span><span class="o">*</span><span class="n">ce_c</span><span class="p">)</span><span class="o">*</span><span class="n">elevator</span> <span class="c1"># deg</span>
+
+    <span class="n">alpha_ht</span> <span class="o">=</span> <span class="p">(</span><span class="n">alpha</span> <span class="o">+</span> <span class="n">i_w</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">de_da</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">i_h</span> <span class="o">-</span> <span class="n">i_w</span><span class="p">)</span> <span class="o">-</span> <span class="n">zero_lift_alpha_ht</span> <span class="o">-</span> <span class="n">delta_epsilon</span>
+
+    <span class="n">CL_ht</span> <span class="o">=</span> <span class="n">CLalpha_ht</span> <span class="o">*</span> <span class="n">alpha_ht</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">180</span>
+
+    <span class="k">return</span> <span class="n">CL_ht</span>
+</pre></div>
+</div>
+</div>
+</div>
+<blockquote>
+<div><p><strong><em>NOTE</em></strong>: The pitching moment of tail about its aerodynamic center are usually small, and hence, can be neglected</p>
+</div></blockquote>
+</section>
+<section id="fuselage">
+<h2>Fuselage<a class="headerlink" href="#fuselage" title="Link to this heading">#</a></h2>
+<p>The fuselage pitching moment can computed using a simple model, given by</p>
+<div class="math notranslate nohighlight">
+\[
+    C_{M_{fus}} = C_{M_{\alpha_{fus}}} \alpha,
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(C_{M_{\alpha_{fus}}}\)</span> is computed in static margin section. Below code block defines a function for computing <span class="math notranslate nohighlight">\(C_{M_{fus}}\)</span>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">compute_CM_fus</span><span class="p">(</span><span class="n">alpha</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Alpha should be in degrees.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">CM_alpha_fus</span> <span class="o">=</span> <span class="mf">1.1783</span> <span class="c1"># 1/rad</span>
+
+    <span class="k">return</span> <span class="n">CM_alpha_fus</span> <span class="o">*</span> <span class="n">alpha</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">180</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="landing-trim">
+<h2>Landing trim<a class="headerlink" href="#landing-trim" title="Link to this heading">#</a></h2>
+<p>Now, the trim analysis can be performed in landing configuration. In this demonstration, graphical method is used for triming. It consists of plotting <span class="math notranslate nohighlight">\(C_{M_{cg}}\)</span> vs <span class="math notranslate nohighlight">\(C_{L_{total}}\)</span> for a range of <span class="math notranslate nohighlight">\(\alpha\)</span> at different elevator deflections. Then, visually estimating a point where <span class="math notranslate nohighlight">\(C_{M_{cg}}=0\)</span> and <span class="math notranslate nohighlight">\(C_{L_{total}}\)</span> is equal to desired value.</p>
+<blockquote>
+<div><p><strong><em>NOTE</em></strong>: The ground effect and pitching moment from landing gear is ignored in this analysis.</p>
+</div></blockquote>
+<p>Below code block plots the trim crossplot:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+
+<span class="c1"># Parameters</span>
+<span class="n">i_w</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">mac</span> <span class="o">=</span> <span class="mf">4.3</span> <span class="c1"># ft</span>
+<span class="n">Xac_w</span> <span class="o">=</span> <span class="mf">0.25</span> <span class="c1"># quarter chord</span>
+<span class="n">tail_moment_arm</span> <span class="o">=</span> <span class="mi">15</span> <span class="c1"># ft</span>
+<span class="n">Xac_h</span> <span class="o">=</span> <span class="n">Xac_w</span> <span class="o">+</span> <span class="n">tail_moment_arm</span><span class="o">/</span><span class="n">mac</span> <span class="c1"># distance from LE MAC</span>
+<span class="n">nh</span> <span class="o">=</span> <span class="mf">0.9</span>
+<span class="n">Sw</span> <span class="o">=</span> <span class="mi">134</span> <span class="c1"># sq ft</span>
+<span class="n">Sh</span> <span class="o">=</span> <span class="mi">31</span> <span class="c1"># sq ft.</span>
+<span class="n">fs</span> <span class="o">=</span> <span class="mi">12</span>
+
+<span class="c1"># Plotting parameters</span>
+<span class="n">elevator_deflections</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="o">-</span><span class="mi">15</span><span class="p">,</span> <span class="o">-</span><span class="mi">20</span><span class="p">]</span> <span class="c1"># deg</span>
+<span class="n">alpha</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">18</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span> <span class="c1"># deg</span>
+
+<span class="c1"># Plot</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+
+<span class="k">for</span> <span class="n">deflection</span> <span class="ow">in</span> <span class="n">elevator_deflections</span><span class="p">:</span>
+
+    <span class="c1"># Lift</span>
+    <span class="n">CL_w</span> <span class="o">=</span> <span class="n">compute_CL_w</span><span class="p">(</span><span class="n">alpha</span><span class="p">,</span> <span class="n">i_w</span><span class="p">)</span>
+    <span class="n">CL_ht</span> <span class="o">=</span> <span class="n">compute_CL_ht</span><span class="p">(</span><span class="n">alpha</span><span class="p">,</span> <span class="n">deflection</span><span class="p">,</span> <span class="n">i_w</span><span class="p">)</span>
+    <span class="n">CL_total</span> <span class="o">=</span> <span class="n">CL_w</span> <span class="o">+</span> <span class="n">CL_ht</span>
+
+    <span class="c1"># Pitching moment</span>
+    <span class="n">CM_cg</span> <span class="o">=</span> <span class="n">CL_w</span> <span class="o">*</span> <span class="p">(</span><span class="n">Xcg</span> <span class="o">-</span> <span class="n">Xac_w</span><span class="p">)</span> <span class="o">+</span> <span class="n">CM_w</span> <span class="o">+</span> <span class="n">CM_w_flap</span> <span class="o">+</span> <span class="n">compute_CM_fus</span><span class="p">(</span><span class="n">alpha</span><span class="p">)</span> <span class="o">-</span> <span class="n">nh</span> <span class="o">*</span> <span class="n">Sh</span> <span class="o">/</span> <span class="n">Sw</span> <span class="o">*</span> <span class="n">CL_ht</span> <span class="o">*</span> <span class="p">(</span><span class="n">Xac_h</span> <span class="o">-</span> <span class="n">Xcg</span><span class="p">)</span>
+
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">CL_total</span><span class="p">,</span> <span class="n">CM_cg</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;$\delta_e = </span><span class="si">{</span><span class="n">deflection</span><span class="si">}</span><span class="s2"> deg$&quot;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;o&quot;</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mf">2.2</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s2">&quot;Trim line&quot;</span><span class="p">,</span> <span class="p">(</span><span class="mf">0.75</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.025</span><span class="p">),</span> <span class="n">ha</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">fs</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s2">&quot;Max landing $C_L$&quot;</span><span class="p">,</span> <span class="p">(</span><span class="mf">2.15</span><span class="p">,</span><span class="mf">0.3</span><span class="p">),</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">90</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">fs</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;$C_{L_</span><span class="si">{total}</span><span class="s2">}$&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">fs</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;$C_{M_</span><span class="si">{cg}</span><span class="s2">}$&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">fs</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Trim crossplot for landing&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">fs</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">&quot;upper center&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x74a48b7b70d0&gt;
+</pre></div>
+</div>
+<img alt="../_images/86cbe456f619ad823fa270bbfbf909ca02137aabbab3d3fd3e744843d3cf6f4a.png" src="../_images/86cbe456f619ad823fa270bbfbf909ca02137aabbab3d3fd3e744843d3cf6f4a.png" />
+</div>
+</div>
+<p>Based on the above plot, it can be said that example airplane can be trimmed using <span class="math notranslate nohighlight">\(-15^{\circ}\)</span> elevator deflection while attaining maximum landing lift coefficient. If the airplane cannot be trimmed, then one should vary some of the parameters such as tail airfoil, tail-moment arm (this might slightly change CG calculations), <span class="math notranslate nohighlight">\(c_e/c\)</span>, etc. The usual maximum elevator deflection is around <span class="math notranslate nohighlight">\(\pm30^{\circ}\)</span>, so one should avoid higher trim elevator deflections.</p>
+<p>This concludes the trim analysis at landing condition. Futhermore, one can also plot the trimmed drag polar at landing condition using equation 16.34 in Raymer for computing trimmed induced drag. A similar analysis should be performed at different flight conditions such as takeoff and cruise to verfiy whether elevator can trim the airplane or not.</p>
 </section>
 </section>
 
@@ -519,6 +683,15 @@ $$ -->
                 <footer class="prev-next-footer d-print-none">
                   
 <div class="prev-next-area">
+    <a class="left-prev"
+       href="static_margin.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Static Margin</p>
+      </div>
+    </a>
 </div>
                 </footer>
               
@@ -535,9 +708,14 @@ $$ -->
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#wing-lift-model">Wing lift model</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tail-lift-model">Tail lift model</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#thrust-effects">Thrust Effects</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#wing">Wing</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lift-model">Lift model</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pitching-moment">Pitching moment</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tail">Tail</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fuselage">Fuselage</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#landing-trim">Landing trim</a></li>
 </ul>
   </nav></div>
 

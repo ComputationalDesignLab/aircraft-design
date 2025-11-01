@@ -62,6 +62,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'long_stability/static_margin';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Trim Analysis" href="trim.html" />
     <link rel="prev" title="Longitudinal stability" href="intro.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -228,6 +229,7 @@
 </details></li>
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="intro.html">Longitudinal stability</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">Static Margin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="trim.html">Trim Analysis</a></li>
 </ul>
 </details></li>
 </ul>
@@ -397,7 +399,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tail">Tail</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fuselage">Fuselage</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#neutral-point">Neutral point</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Static Margin</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Static margin</a></li>
 </ul>
             </nav>
         </div>
@@ -548,8 +550,8 @@ Change in HT AOA wrt free-stream AOA: 0.6188
 </div>
 </section>
 <section id="id1">
-<h2>Static Margin<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
-<p>The location of the most aft CG is 0.1861 fraction of the MAC (computed in <a class="reference internal" href="../weight_and_balance/cg_travel.html"><span class="std std-doc">CG travel diagram section</span></a>). This results in a <strong>static margin of 19%</strong>. Following code block plots CG travel diagram with neutral point and the static margin:</p>
+<h2>Static margin<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
+<p>The location of the most aft CG is 0.1861 fraction of the MAC (computed in <a class="reference internal" href="../weight_and_balance/cg_travel.html"><span class="std std-doc">CG travel diagram section</span></a>). This results in a <strong>static margin of 19%</strong>. Following code block plots CG travel diagram with neutral point and static margin:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
@@ -583,12 +585,13 @@ Change in HT AOA wrt free-stream AOA: 0.6188
 <span class="n">ax</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Max TO weight (</span><span class="si">{</span><span class="n">Wfull</span><span class="si">}</span><span class="s2"> lbs)&quot;</span><span class="p">,</span> <span class="p">(</span><span class="n">Xcg_full</span><span class="o">-</span><span class="mf">0.005</span><span class="p">,</span> <span class="n">Wfull</span><span class="p">),</span> <span class="n">ha</span><span class="o">=</span><span class="s2">&quot;right&quot;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s2">&quot;Neutral point&quot;</span><span class="p">,</span> <span class="p">(</span><span class="n">Xnp</span><span class="o">-</span><span class="mf">0.01</span><span class="p">,</span> <span class="p">(</span><span class="n">Wfull</span><span class="o">+</span><span class="n">Wempty</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">),</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">90</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Static Margin: </span><span class="si">{</span><span class="p">(</span><span class="n">Xnp</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">Xcg_full</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">,</span> <span class="p">(</span><span class="mf">0.28</span><span class="p">,</span> <span class="p">(</span><span class="n">Wfull</span><span class="o">+</span><span class="n">Wempty</span><span class="p">)</span><span class="o">/</span><span class="mf">1.75</span><span class="p">),</span> <span class="n">ha</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">xy</span><span class="o">=</span><span class="p">(</span><span class="n">Xcg_full</span><span class="p">,</span> <span class="p">(</span><span class="n">Wfull</span><span class="o">+</span><span class="n">Wempty</span><span class="p">)</span><span class="o">/</span><span class="mf">1.8</span><span class="p">),</span> <span class="n">xytext</span><span class="o">=</span><span class="p">(</span><span class="n">Xnp</span><span class="p">,</span> <span class="p">(</span><span class="n">Wfull</span><span class="o">+</span><span class="n">Wempty</span><span class="p">)</span><span class="o">/</span><span class="mf">1.8</span><span class="p">),</span> <span class="n">arrowprops</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">arrowstyle</span><span class="o">=</span><span class="s1">&#39;&lt;-&gt;&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/d811febd844621ce138b0c0b941784f96881e167e15d0691490ded855f6af856.png" src="../_images/d811febd844621ce138b0c0b941784f96881e167e15d0691490ded855f6af856.png" />
+<img alt="../_images/08fe836c9125fea67aa826737e80723b1b56f709a3cebe642c3a14d8b33ccfa1.png" src="../_images/08fe836c9125fea67aa826737e80723b1b56f709a3cebe642c3a14d8b33ccfa1.png" />
 </div>
 </div>
 <p>This concludes the static margin section. Next section describes how to perform longitudinal trim analysis.</p>
@@ -634,6 +637,15 @@ Change in HT AOA wrt free-stream AOA: 0.6188
         <p class="prev-next-title">Longitudinal stability</p>
       </div>
     </a>
+    <a class="right-next"
+       href="trim.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Trim Analysis</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
 </div>
                 </footer>
               
@@ -654,7 +666,7 @@ Change in HT AOA wrt free-stream AOA: 0.6188
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tail">Tail</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fuselage">Fuselage</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#neutral-point">Neutral point</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Static Margin</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Static margin</a></li>
 </ul>
   </nav></div>
 
