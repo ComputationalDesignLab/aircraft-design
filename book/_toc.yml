@@ -44,3 +44,6 @@ chapters:
     sections:
       - file: long_stability/static_margin
       - file: long_stability/trim
+  - file: lat_stability/intro
+    sections:
+      - file: lat_stability/roll_yaw_derivatives
