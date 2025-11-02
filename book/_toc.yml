@@ -47,3 +47,4 @@ chapters:
   - file: lat_stability/intro
     sections:
       - file: lat_stability/yaw_derivative
+      - file: lat_stability/roll_derivative
