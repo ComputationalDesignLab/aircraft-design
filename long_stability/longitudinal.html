@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Center of gravity &#8212; Aircraft Design</title>
+    <title>Longitudinal Stability &#8212; Aircraft Design</title>
   
   
   
@@ -59,11 +59,9 @@
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'weight_and_balance/cg';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'long_stability/longitudinal';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="CG Travel Diagram" href="cg_travel.html" />
-    <link rel="prev" title="Weights" href="weight.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -126,6 +124,8 @@
       
       
       
+        
+      
       <div class="bd-sidebar-primary bd-sidebar">
         
 
@@ -175,7 +175,7 @@
                 </a>
             </li>
         </ul>
-        <ul class="current nav bd-sidenav">
+        <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../setup.html">Computing environment setup</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../python_basics/intro.html">Basics of Python Programming</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../python_basics/python_basics.html">Basic programming in Python and Jupyter Notebooks</a></li>
@@ -221,19 +221,10 @@
 <li class="toctree-l2"><a class="reference internal" href="../hl_devices/landing.html">Landing</a></li>
 </ul>
 </details></li>
-<li class="toctree-l1 current active has-children"><a class="reference internal" href="intro.html">Weight and Balance</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="weight.html">Weights</a></li>
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">Center of gravity</a></li>
-<li class="toctree-l2"><a class="reference internal" href="cg_travel.html">CG Travel Diagram</a></li>
-</ul>
-</details></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../long_stability/intro.html">Longitudinal stability</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="../long_stability/static_margin.html">Static Margin</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../long_stability/trim.html">Trim Analysis</a></li>
-</ul>
-</details></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../lat_stability/intro.html">Lateral stability</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="../lat_stability/yaw_derivative.html">Static yaw stability derivative</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../weight_and_balance/intro.html">Weight and Balance</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../weight_and_balance/weight.html">Weights</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../weight_and_balance/cg.html">Center of gravity</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../weight_and_balance/cg_travel.html">CG Travel Diagram</a></li>
 </ul>
 </details></li>
 </ul>
@@ -305,7 +296,7 @@
       
       
       
-      <li><a href="../_sources/weight_and_balance/cg.ipynb" target="_blank"
+      <li><a href="../_sources/long_stability/longitudinal.ipynb" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -389,7 +380,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Center of gravity</h1>
+    <h1>Longitudinal Stability</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -399,7 +390,9 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#component-cg-location">Component CG Location</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tail">Tail</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fuselage-pitching-moment">Fuselage Pitching moment</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#thrust-effects">Thrust Effects</a></li>
 </ul>
             </nav>
         </div>
@@ -411,91 +404,151 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="center-of-gravity">
-<h1>Center of gravity<a class="headerlink" href="#center-of-gravity" title="Link to this heading">#</a></h1>
-<p>This section demonstrates CG computation using the example airplane. The first step is to determine the location of major components based on a reference system. Next step involves estimating the CG location for each component. Finally, one can compute the CG of the airplane using</p>
+  <div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rho</span> <span class="o">=</span> <span class="mf">0.96287</span> <span class="c1"># kg/m^3</span>
+<span class="n">V</span> <span class="o">=</span> <span class="mf">102.88</span> <span class="c1"># m/s</span>
+<span class="n">q</span> <span class="o">=</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">rho</span><span class="o">*</span><span class="n">V</span><span class="o">**</span><span class="mi">2</span> <span class="c1"># N/m^2</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">q</span><span class="p">)</span>
+
+<span class="n">rho</span> <span class="o">=</span> <span class="mf">0.00186850</span> <span class="c1"># slugs/cu ft, at 8000 ft</span>
+<span class="n">V</span> <span class="o">=</span> <span class="mf">337.562</span> <span class="c1"># ft/s, 200 knots</span>
+<span class="n">q</span> <span class="o">=</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">rho</span><span class="o">*</span><span class="n">V</span><span class="o">**</span><span class="mi">2</span> <span class="c1"># slugs/sq ft dynamic pressure at cruise</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">q</span><span class="o">*</span><span class="mf">32.2</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">q</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>5095.649774463999
+3427.883715723476
+106.45601601625701
+</pre></div>
+</div>
+</div>
+</div>
+<section class="tex2jax_ignore mathjax_ignore" id="longitudinal-stability">
+<h1>Longitudinal Stability<a class="headerlink" href="#longitudinal-stability" title="Link to this heading">#</a></h1>
+<p>This section demonstrates longitudinal stability analysis using example airplane. Specifically, neutral point and static margin - two important parmeters - are estimated. The neutral point denotes a CG position at which the aircraft will be neutrally stable. This implies any movement of CG beyond this point leads to aircraft being unstable. Refer to lecture notes and Section 16.3.1 and 16.3.2 in Raymer for more details.</p>
+<p>Using equation 16.9. in Raymer, the neutral point can be estimated using:</p>
 <div class="math notranslate nohighlight">
 \[
-    x_{CG} = \dfrac{ \sum_{i=1}^{k} x_{CG_k} W_{k} }{ \sum_{i=1}^{k} W_k },
+    \bar{X}_{np} = \frac{ C_{L_\alpha} \bar{X}_{ac_w} - C_{M_{\alpha_f}} + \eta_h \dfrac{S_h}{S_w} C_{L_{\alpha_h}} \dfrac{\partial \alpha_h}{\partial \alpha} \bar{X}_{ac_h} } { C_{L_\alpha} + \eta_h \dfrac{S_h}{S_w} C_{L_{\alpha_h}} \dfrac{\partial \alpha_h}{\partial \alpha} }
 \]</div>
-<p>where <span class="math notranslate nohighlight">\(x_{CG_k}\)</span> and <span class="math notranslate nohighlight">\(W_k\)</span> are x-coordinate of the CG and weight of the <span class="math notranslate nohighlight">\(k^{th}\)</span> component. Note that above formula is for determining CG location along x-axis but a similar equation can be used for y and z axis. Refer to lecture notes, Roskam Part 2 Chapter 10, and Raymer Chapter 15 for more details.</p>
+<p>Refer to raymer for derviation of this equation.</p>
+<p>Let’s break down this long equation.</p>
 <blockquote>
-<div><p><strong><em>NOTE</em></strong>: The origin of the reference system should be placed such that the CG location of each component is positivie. Morevoer, the origin should be picked so that CG location of any component in a future derivative aircraft is also positive. Refer to figure 10.1 in Roskam Part 2 for a visual depiction.</p>
+<div><p><strong><em>NOTE</em></strong>: In the above equation, effect of thrust/propulsion system are ignored. Based on the recommendation of</p>
 </div></blockquote>
-<section id="component-cg-location">
-<h2>Component CG Location<a class="headerlink" href="#component-cg-location" title="Link to this heading">#</a></h2>
-<p>This sub-section describes how the CG location for various components are determined for the example airplane. Note that only x CG location for each component is determined but a similar approach can be followed for y and z axis. The origin of the reference system is placed such that the airplane nose tip is at <span class="math notranslate nohighlight">\(x=3.4\)</span> ft. Since fuselage is 31.6 ft long, the fuselage end will be located at <span class="math notranslate nohighlight">\(x = 35\)</span> ft.</p>
-<p>One can start from the back of the airplane to determine the location of each component since tail location is approximately known (almost at the end of the fuselage). Then, wing location can be determined using tail moment arms determined in tail sizing section. For the example airplane, once wing is fixed, the powerplant location can be determined since engines are mounted on the wing. The main landing gear location can also be determined since it is mounted close to engine and retracted into the wings. Finally, nose landing gear is fixed based on its length, close to the front of the fuselage. Once a component is fixed, Figure 10.2 from Roskam Part 2 can be used for determining the CG location from the origin of the reference system.</p>
-<blockquote>
-<div><p><strong><em>NOTE</em></strong>: Locating the components involves fair amount of trial and error. It also consists of quick hand calculations, use of engineering judgement and inspiration from similar airplanes. It is recommended to create an OpenVSP model based on the determined component locations to perform a visual check.</p>
-</div></blockquote>
-<p>In this demonstration, the vertical tail is fixed first close to the end of the fuselage. Using vertical tail planform details and Figure 10.2, it is determined that vertical tail CG will be at <span class="math notranslate nohighlight">\(x=32.7\)</span> ft from the origin. Next, horizontal tail planform location is fixed slightly ahead of the end of the fuselage since horizontal moment arm is shorter than vertical moment arm. Using planform details and Figure 10.2, it is determined that horizontal tail CG will be at <span class="math notranslate nohighlight">\(x=32.4\)</span> ft from the origin. Next, wing location is determined using tail moment arm, which lead to wing CG being located at <span class="math notranslate nohighlight">\(x=15.6\)</span> ft.</p>
-<p>Next, powerplant is located using engine dimensions and required propeller clearance. It was found that propulsion system CG is located at <span class="math notranslate nohighlight">\(x=12.2\)</span> ft. Finally, the main landing gear is located based on its mounting position (close to the engine spanwise location). The CG of the main LG is located at <span class="math notranslate nohighlight">\(x = 16.1\)</span> ft. The CG of the nose LG is fixed at <span class="math notranslate nohighlight">\(x = 7.4\)</span> ft based on engineering judegement and the extended length of the nose gear. The fuselage CG is estimated using Figure 10.2 in Roskam Part 2, and was found to be at <span class="math notranslate nohighlight">\(x = 15.7\)</span> ft. The CG of the miscellaneous components is approximated to be at 15.7 ft (same as fuselage CG).</p>
-<p>Below image shows an OpenVSP model created using exact component locations to perform visual check:</p>
-<div style="width:90%; margin: auto;">
-<p><img alt="logos" src="../_images/exact_vsp_model.png" /></p>
-</div>
-<p>Below table summarizes these results and computes moment generated by each component:</p>
-<div style="width:70%; margin: auto;">
-<div class="pst-scrollable-table-container"><table class="table">
-<thead>
-<tr class="row-odd"><th class="head"><p>Component</p></th>
-<th class="head text-center"><p>Weight (lbs)</p></th>
-<th class="head text-center"><p>Moment arm (ft)</p></th>
-<th class="head text-center"><p>Moment (lbs-ft)</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>Wing</p></td>
-<td class="text-center"><p>344</p></td>
-<td class="text-center"><p>15.6</p></td>
-<td class="text-center"><p>5366.4</p></td>
-</tr>
-<tr class="row-odd"><td><p>Fuselage</p></td>
-<td class="text-center"><p>367</p></td>
-<td class="text-center"><p>15.7</p></td>
-<td class="text-center"><p>5761.9</p></td>
-</tr>
-<tr class="row-even"><td><p>Horizontal tail</p></td>
-<td class="text-center"><p>42</p></td>
-<td class="text-center"><p>32.4</p></td>
-<td class="text-center"><p>1360.8</p></td>
-</tr>
-<tr class="row-odd"><td><p>Vertical tail</p></td>
-<td class="text-center"><p>39</p></td>
-<td class="text-center"><p>32.7</p></td>
-<td class="text-center"><p>1275.3</p></td>
-</tr>
-<tr class="row-even"><td><p>Main LG</p></td>
-<td class="text-center"><p>78</p></td>
-<td class="text-center"><p>16.1</p></td>
-<td class="text-center"><p>1255.8</p></td>
-</tr>
-<tr class="row-odd"><td><p>Nose LG</p></td>
-<td class="text-center"><p>26</p></td>
-<td class="text-center"><p>7.4</p></td>
-<td class="text-center"><p>192.4</p></td>
-</tr>
-<tr class="row-even"><td><p>Propulsion system</p></td>
-<td class="text-center"><p>1663</p></td>
-<td class="text-center"><p>12.2</p></td>
-<td class="text-center"><p>20288.6</p></td>
-</tr>
-<tr class="row-odd"><td><p>Miscellaneous</p></td>
-<td class="text-center"><p>555</p></td>
-<td class="text-center"><p>15.7</p></td>
-<td class="text-center"><p>8713.5</p></td>
-</tr>
-<tr class="row-even"><td><p><strong>Total</strong></p></td>
-<td class="text-center"><p>3114</p></td>
-<td class="text-center"><p>-</p></td>
-<td class="text-center"><p>44214.7</p></td>
-</tr>
-</tbody>
-</table>
+<p>First term is a contribution due to wing pitching moment <span class="math notranslate nohighlight">\(C_{L_\alpha}\)</span> is lift curve slope for wing (known) and <span class="math notranslate nohighlight">\(\bar{X}_{ac_w}\)</span> is already known</p>
+<p>Each term in this equation should be adjusted for the flap deflection (when doing takeoff and landing trim analysis)</p>
+<section id="tail">
+<h2>Tail<a class="headerlink" href="#tail" title="Link to this heading">#</a></h2>
+<p>Lift model for the tail is written as</p>
+<div class="math notranslate nohighlight">
+\[
+    C_{L_h} = C_{L_{\alpha_h}} ( \alpha + i_h - \epsilon - \alpha_{0_{L_h}} )
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(C_{L_{\alpha_h}}\)</span> is the horizontal lift curve slope, <span class="math notranslate nohighlight">\(i_h\)</span> is the tail incidence angle, and <span class="math notranslate nohighlight">\(\epsilon\)</span> refers to downwash.</p>
+<p>The <span class="math notranslate nohighlight">\(C_{L_{\alpha_h}}\)</span> is computed using the same method as described in <a class="reference internal" href="../aerodynamics/lift_curve.html"><span class="std std-doc">aerodynamics section</span></a>.</p>
+</section>
+<section id="fuselage-pitching-moment">
+<h2>Fuselage Pitching moment<a class="headerlink" href="#fuselage-pitching-moment" title="Link to this heading">#</a></h2>
+<p><span class="math notranslate nohighlight">\(C_{M_{\alpha_f}}\)</span> is the pitching moment contribution from fuselage, can be computed using Section 16.3.8 in Raymer</p>
+<p>Position of root quarter chord as percent of fuselage length = 0.37 (from position of components in CG section)</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Kfus</span> <span class="o">=</span> <span class="mf">0.014</span> <span class="c1"># from figure 16.14</span>
+<span class="n">Wf</span> <span class="o">=</span> <span class="mf">5.0</span> <span class="c1"># ft</span>
+<span class="n">Lf</span> <span class="o">=</span> <span class="mf">31.6</span> <span class="c1"># ft</span>
+<span class="n">mac</span> <span class="o">=</span> <span class="mf">4.3</span> <span class="c1"># ft</span>
+<span class="n">Sw</span> <span class="o">=</span> <span class="mi">134</span> <span class="c1"># sq ft</span>
+
+<span class="n">Cm_alpha_fuselage</span> <span class="o">=</span> <span class="n">Kfus</span> <span class="o">*</span> <span class="n">Wf</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="n">Lf</span> <span class="o">/</span> <span class="n">mac</span> <span class="o">/</span> <span class="n">Sw</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Fuselage pitching moment: </span><span class="si">{</span><span class="n">Cm_alpha_fuselage</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span> <span class="c1"># 1/deg</span>
+</pre></div>
 </div>
 </div>
-<p>Based on the above table, the CG will be located at <span class="math notranslate nohighlight">\(x = 14.2\)</span> ft from the origin. The CG location is usually written in terms of the fraction of the mean aerodynamic chord (MAC). The LE of the MAC is at <span class="math notranslate nohighlight">\(x = 13.85\)</span> ft and MAC is 4.3 ft. Hence, CG of the airplane is at 8% of the MAC. For the example airplane, this is probably the most forward CG location since fuel and passengers will be move the CG further back. This concludes the CG computation, next section is about how CG location changes when airplane is loaded/unloaded.</p>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fuselage pitching moment: 0.0192
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="thrust-effects">
+<h2>Thrust Effects<a class="headerlink" href="#thrust-effects" title="Link to this heading">#</a></h2>
+<p>Section 16.3.9 Raymer</p>
+<div class="math notranslate nohighlight">
+\[
+    F_{P_\alpha} = qN_BA_p \frac{\partial C_{N_{blade}}}{\partial \alpha} f(T)
+\]</div>
+<p><span class="math notranslate nohighlight">\(N_B\)</span> = number of blades = 3</p>
+<p><span class="math notranslate nohighlight">\(A_P\)</span> = area of the propeller disk</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="n">rho</span> <span class="o">=</span> <span class="mf">0.00186850</span> <span class="c1"># slugs/cu ft, at 8000 ft</span>
+<span class="n">V</span> <span class="o">=</span> <span class="mf">337.562</span> <span class="c1"># ft/s, 200 knots</span>
+<span class="n">q</span> <span class="o">=</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">rho</span><span class="o">*</span><span class="n">V</span><span class="o">**</span><span class="mi">2</span> <span class="c1"># lbs/sq ft dynamic pressure at cruise</span>
+
+<span class="n">n</span> <span class="o">=</span> <span class="mf">0.8</span><span class="o">*</span><span class="mi">2700</span><span class="o">/</span><span class="mi">60</span> <span class="c1"># rps</span>
+<span class="n">D</span> <span class="o">=</span> <span class="mf">5.8</span> <span class="c1"># ft</span>
+<span class="n">NB</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">Ap</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">D</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span><span class="mi">4</span>
+
+<span class="n">J</span> <span class="o">=</span> <span class="n">V</span><span class="o">/</span><span class="n">n</span><span class="o">/</span><span class="n">D</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">J</span><span class="p">)</span>
+
+<span class="n">dCNblade_dalpha</span> <span class="o">=</span> <span class="mf">0.055</span> <span class="c1"># 1/rad, figure 16.15</span>
+
+<span class="n">K</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">8</span><span class="o">/</span><span class="mf">0.8</span>
+
+<span class="n">CD0</span> <span class="o">=</span> <span class="mf">0.03363</span>
+
+<span class="n">W</span> <span class="o">=</span> <span class="mf">0.95</span><span class="o">*</span><span class="mi">5374</span>
+
+<span class="n">CL</span> <span class="o">=</span> <span class="n">W</span><span class="o">/</span><span class="mf">0.5</span><span class="o">/</span><span class="n">rho</span><span class="o">/</span><span class="n">V</span><span class="o">**</span><span class="mi">2</span>
+
+<span class="n">CD</span> <span class="o">=</span> <span class="n">CD0</span> <span class="o">+</span> <span class="n">K</span><span class="o">*</span><span class="n">CL</span><span class="o">**</span><span class="mi">2</span>
+
+<span class="n">D</span> <span class="o">=</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">rho</span><span class="o">*</span><span class="n">V</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="n">CD</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="mf">32.2</span><span class="o">*</span><span class="n">D</span><span class="o">/</span><span class="n">rho</span><span class="o">/</span><span class="n">V</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span><span class="n">Sw</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="n">fT</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="n">Fp_alpha</span> <span class="o">=</span> <span class="n">q</span><span class="o">*</span><span class="n">NB</span><span class="o">*</span><span class="n">Ap</span><span class="o">*</span><span class="n">dCNblade_dalpha</span><span class="o">*</span><span class="n">fT</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">Fp_alpha</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">180</span><span class="o">/</span><span class="mf">32.2</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1.616676245210728
+0.10259264220444914
+0.25154837597261187
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">de_da</span> <span class="o">=</span> <span class="mf">0.05</span>
+
+<span class="n">dap_da</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">de_da</span>
+</pre></div>
+</div>
+</div>
+</div>
 </section>
 </section>
 
@@ -512,7 +565,7 @@ document.write(`
         },
         kernelOptions: {
             name: "python3",
-            path: "./weight_and_balance"
+            path: "./long_stability"
         },
         predefinedOutput: true
     }
@@ -529,24 +582,6 @@ document.write(`
                 <footer class="prev-next-footer d-print-none">
                   
 <div class="prev-next-area">
-    <a class="left-prev"
-       href="weight.html"
-       title="previous page">
-      <i class="fa-solid fa-angle-left"></i>
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Weights</p>
-      </div>
-    </a>
-    <a class="right-next"
-       href="cg_travel.html"
-       title="next page">
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">CG Travel Diagram</p>
-      </div>
-      <i class="fa-solid fa-angle-right"></i>
-    </a>
 </div>
                 </footer>
               
@@ -563,7 +598,9 @@ document.write(`
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#component-cg-location">Component CG Location</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tail">Tail</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fuselage-pitching-moment">Fuselage Pitching moment</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#thrust-effects">Thrust Effects</a></li>
 </ul>
   </nav></div>
 

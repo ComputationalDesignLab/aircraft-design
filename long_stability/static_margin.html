@@ -232,6 +232,10 @@
 <li class="toctree-l2"><a class="reference internal" href="trim.html">Trim Analysis</a></li>
 </ul>
 </details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../lat_stability/intro.html">Lateral stability</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../lat_stability/yaw_derivative.html">Static yaw stability derivative</a></li>
+</ul>
+</details></li>
 </ul>
 
     </div>
@@ -400,6 +404,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fuselage">Fuselage</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#neutral-point">Neutral point</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Static margin</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#static-stability-derivative">Static stability derivative</a></li>
 </ul>
             </nav>
         </div>
@@ -594,7 +599,30 @@ Change in HT AOA wrt free-stream AOA: 0.6188
 <img alt="../_images/08fe836c9125fea67aa826737e80723b1b56f709a3cebe642c3a14d8b33ccfa1.png" src="../_images/08fe836c9125fea67aa826737e80723b1b56f709a3cebe642c3a14d8b33ccfa1.png" />
 </div>
 </div>
-<p>This concludes the static margin section. Next section describes how to perform longitudinal trim analysis.</p>
+</section>
+<section id="static-stability-derivative">
+<h2>Static stability derivative<a class="headerlink" href="#static-stability-derivative" title="Link to this heading">#</a></h2>
+<p>Finally, the static stability derivative along longitudinal direction <span class="math notranslate nohighlight">\(C_{M_{\alpha}}\)</span> is computed using (equation 16.10, Raymer):</p>
+<div class="math notranslate nohighlight">
+\[
+    C_{M_\alpha} = - \bigg( C_{L_{\alpha_w}} + \eta_h \frac{S_h}{S_w}C_{L_{\alpha_h}} \frac{\partial \alpha_h}{\partial \alpha} \bigg) (\bar{X}_{np} - \bar{X}_{cg})
+\]</div>
+<p>Below code block computes <span class="math notranslate nohighlight">\(C_{M_\alpha}\)</span>, assuming CG is at most aft position:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Cma</span> <span class="o">=</span> <span class="o">-</span> <span class="p">(</span><span class="n">CLalpha_w</span> <span class="o">+</span> <span class="n">nh</span> <span class="o">*</span> <span class="n">Sh</span> <span class="o">/</span> <span class="n">Sw</span> <span class="o">*</span> <span class="n">CLalpha_ht</span> <span class="o">*</span> <span class="n">dah_da</span> <span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">Xnp</span> <span class="o">-</span> <span class="n">Xcg_full</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Static stability derivative along longitudinal direction: </span><span class="si">{</span><span class="n">Cma</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> 1/rad&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Static stability derivative along longitudinal direction: -1.0647 1/rad
+</pre></div>
+</div>
+</div>
+</div>
+<p>The <span class="math notranslate nohighlight">\(C_{M_\alpha}\)</span> is negative which indicates that the airplane is statically stable along longitudinal direction. This concludes the static margin section. Next section describes how to perform longitudinal trim analysis.</p>
 </section>
 </section>
 
@@ -667,6 +695,7 @@ Change in HT AOA wrt free-stream AOA: 0.6188
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fuselage">Fuselage</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#neutral-point">Neutral point</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Static margin</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#static-stability-derivative">Static stability derivative</a></li>
 </ul>
   </nav></div>
 
