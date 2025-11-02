@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Landing Gear Sizing &#8212; Aircraft Design</title>
+    <title>&lt;no title&gt; &#8212; Aircraft Design</title>
   
   
   
@@ -59,11 +59,9 @@
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'landing_gear';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'lat_stability';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Propulsion System" href="powerplant/intro.html" />
-    <link rel="prev" title="Fuselage Sizing" href="fuselage.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -126,6 +124,8 @@
       
       
       
+        
+      
       <div class="bd-sidebar-primary bd-sidebar">
         
 
@@ -175,7 +175,7 @@
                 </a>
             </li>
         </ul>
-        <ul class="current nav bd-sidenav">
+        <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="setup.html">Computing environment setup</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="python_basics/intro.html">Basics of Python Programming</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="python_basics/python_basics.html">Basic programming in Python and Jupyter Notebooks</a></li>
@@ -204,7 +204,7 @@
 <li class="toctree-l1"><a class="reference internal" href="wing_layout.html">Wing Planform Sizing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tail_sizing.html">Tail Sizing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="fuselage.html">Fuselage Sizing</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Landing Gear Sizing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="landing_gear.html">Landing Gear Sizing</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="powerplant/intro.html">Propulsion System</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="powerplant/engine_propeller.html">Engine and Propeller Selection</a></li>
 <li class="toctree-l2"><a class="reference internal" href="powerplant/installation_thrust.html">Installation Thrust</a></li>
@@ -230,11 +230,6 @@
 <li class="toctree-l1 has-children"><a class="reference internal" href="long_stability/intro.html">Longitudinal stability</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="long_stability/static_margin.html">Static Margin</a></li>
 <li class="toctree-l2"><a class="reference internal" href="long_stability/trim.html">Trim Analysis</a></li>
-</ul>
-</details></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="lat_stability/intro.html">Lateral stability</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="lat_stability/yaw_derivative.html">Static yaw stability derivative</a></li>
-<li class="toctree-l2"><a class="reference internal" href="lat_stability/roll_derivative.html">Static roll stability derivative</a></li>
 </ul>
 </details></li>
 </ul>
@@ -306,7 +301,7 @@
       
       
       
-      <li><a href="_sources/landing_gear.ipynb" target="_blank"
+      <li><a href="_sources/lat_stability.ipynb" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -377,7 +372,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
 </div></div>
       
     </div>
@@ -388,11 +385,19 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Landing Gear Sizing</h1>
+    <h1><no title></h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="simple visible nav section-nav flex-column">
+</ul>
+
+            </nav>
         </div>
     </div>
 </div>
@@ -402,82 +407,12 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="landing-gear-sizing">
-<h1>Landing Gear Sizing<a class="headerlink" href="#landing-gear-sizing" title="Link to this heading">#</a></h1>
-<p>This section describes initial sizing process for landing gear (LG) and demonstrates it on the example aircraft. Specifically, the goal of this section is to deterine the type of LG, and the number and size of tyres. Moreover, the LG should satisfies the tip-over criteria and provide enough ground clearance. Additionally, one should also explore the retraction mechanism for the LG, and how it will be stored - within wings, fuselage, or wing-fuselage intersection.</p>
-<p>The initial sizing for landing gear is usually performed by estimating the loads on nose and main LG, and accordingly sizing them. However, these loads can only be known precisely once the weight and balance studies are performed. Moreover, the location of the LG should satisfy tip-over and ground clearance criteria. Hence, the LG sizing is an iterative process which will involve some back and forth with weight and balance studies. For landing gear sizing, refer to Chapter 11 in Raymer and Chapter 9 in Roskam Part 2.</p>
-<p>As mentionted in the configuration section, the example airplane will be using tricycle LG, one of the most widely employed LG arrangements. The nose LG will be retracted into the nose, while the main LG will be retracted into the wings. To compute the load on the LG, following equations (from Raymer Chapter 11) will be used:</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}
-\begin{aligned}
-    \text{Max static load on nose LG:} \quad &amp; W \frac{l_m}{l_d} \\
-    \text{Max static load on main LG:} \quad &amp; W \frac{l_n}{l_d}
-\end{aligned}
-\end{split}\]</div>
-<p>Here, <span class="math notranslate nohighlight">\(W\)</span> is the maximum weight of the airplane (MTOW) and <span class="math notranslate nohighlight">\(l_d\)</span> is the distance between nose and main LG. The <span class="math notranslate nohighlight">\(l_n\)</span> denotes the distance between the most aft CG location and nose LG, while <span class="math notranslate nohighlight">\(l_m\)</span> refers to the distance between most forward CG and main LG. Since weight and balance studies are not performed, <span class="math notranslate nohighlight">\(l_n/l_d\)</span> and <span class="math notranslate nohighlight">\(l_m/l_d\)</span> are assumed to be 0.9 and 0.15, respectively. Once the loads are computed, LG can be sized. Below code block computes the loads on nose and main LG:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Variables</span>
-<span class="n">W</span> <span class="o">=</span> <span class="mi">5354</span> <span class="c1"># lbs</span>
-<span class="n">ln_by_ld</span> <span class="o">=</span> <span class="mf">0.90</span>
-<span class="n">lm_by_ld</span> <span class="o">=</span> <span class="mf">0.15</span>
-
-<span class="c1"># Loads</span>
-<span class="n">nose_lg_load</span> <span class="o">=</span> <span class="n">W</span> <span class="o">*</span> <span class="n">lm_by_ld</span> <span class="c1"># lb</span>
-<span class="n">main_lg_load</span> <span class="o">=</span> <span class="n">W</span> <span class="o">*</span> <span class="n">ln_by_ld</span> <span class="c1"># lb</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Max load on nose LG: </span><span class="si">{</span><span class="n">nose_lg_load</span><span class="si">}</span><span class="s2"> lbs&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Max load on main LG: </span><span class="si">{</span><span class="n">main_lg_load</span><span class="si">}</span><span class="s2"> lbs&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Max load on nose LG: 803.1 lbs
-Max load on main LG: 4818.6 lbs
-</pre></div>
-</div>
-</div>
-</div>
-<p>For the example airplane, the nose LG will consists of one strut and one tire, while the main LG will contain two struts (one on each side) and one tire per struct. Hence, each main LG strut will carry 2543 lbs. Based on Table 11.2 in Raymer, tire size can be determined for the example airplane. Once weight and balance studies are performed and LG sizing is refined, one should use Tire manufacturer’s catalog to determine the exact tire dimensions. Below table outlines the tire details:</p>
-<div style="width:50%; margin: auto;">
-<div class="pst-scrollable-table-container"><table class="table">
-<thead>
-<tr class="row-odd"><th class="head"><p>Parameter</p></th>
-<th class="head text-center"><p>Nose LG tire</p></th>
-<th class="head text-center"><p>Main LG tire</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>Tire type</p></td>
-<td class="text-center"><p>Type III</p></td>
-<td class="text-center"><p>Type III</p></td>
-</tr>
-<tr class="row-odd"><td><p>Max applied load, lbs</p></td>
-<td class="text-center"><p>803.1</p></td>
-<td class="text-center"><p>2409.3</p></td>
-</tr>
-<tr class="row-even"><td><p>Max allowed load, lbs</p></td>
-<td class="text-center"><p>1200</p></td>
-<td class="text-center"><p>3250</p></td>
-</tr>
-<tr class="row-odd"><td><p>Max tire width, in</p></td>
-<td class="text-center"><p>5.05</p></td>
-<td class="text-center"><p>9.05</p></td>
-</tr>
-<tr class="row-even"><td><p>Max tire diameter, in</p></td>
-<td class="text-center"><p>13.25</p></td>
-<td class="text-center"><p>26.30</p></td>
-</tr>
-<tr class="row-odd"><td><p>Rolling radius, in</p></td>
-<td class="text-center"><p>5.2</p></td>
-<td class="text-center"><p>10.4</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<p>Based on the similar aircraft and Section 11.4 in Raymer, the example airplane will have oleopenumatic system as shock-absorber. Four bar-linkage system will be used to retract the LG. The stroke length and dimensions of the strut, along with tip-over criteria and ground clearance, will be computed once weight and balance studies are completed. This concludes the LG sizing for now.</p>
-</section>
+  <div class="math notranslate nohighlight">
+\[
+    C_{l_\beta} = C_{l_{\beta_w}} + C_{l_{\beta_v}}
+\]</div>
+<p>The main goal is to check for one-engine out operations</p>
+<p>It is difficult to perform lateral analysis at this stage of the design since it requries 6-DOF analysis and wind-tunnel data</p>
 
     <script type="text/x-thebe-config">
     {
@@ -509,30 +444,27 @@ Max load on main LG: 4818.6 lbs
                 <footer class="prev-next-footer d-print-none">
                   
 <div class="prev-next-area">
-    <a class="left-prev"
-       href="fuselage.html"
-       title="previous page">
-      <i class="fa-solid fa-angle-left"></i>
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Fuselage Sizing</p>
-      </div>
-    </a>
-    <a class="right-next"
-       href="powerplant/intro.html"
-       title="next page">
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Propulsion System</p>
-      </div>
-      <i class="fa-solid fa-angle-right"></i>
-    </a>
 </div>
                 </footer>
               
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="simple visible nav section-nav flex-column">
+</ul>
+
+  </nav></div>
+
+</div></div>
               
             
           </div>

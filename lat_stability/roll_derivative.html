@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Lateral stability &#8212; Aircraft Design</title>
+    <title>Static roll stability derivative &#8212; Aircraft Design</title>
   
   
   
@@ -59,11 +59,10 @@
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'lat_stability/intro';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'lat_stability/roll_derivative';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Static yaw stability derivative" href="yaw_derivative.html" />
-    <link rel="prev" title="Trim Analysis" href="../long_stability/trim.html" />
+    <link rel="prev" title="Static yaw stability derivative" href="yaw_derivative.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -232,9 +231,9 @@
 <li class="toctree-l2"><a class="reference internal" href="../long_stability/trim.html">Trim Analysis</a></li>
 </ul>
 </details></li>
-<li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">Lateral stability</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="intro.html">Lateral stability</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="yaw_derivative.html">Static yaw stability derivative</a></li>
-<li class="toctree-l2"><a class="reference internal" href="roll_derivative.html">Static roll stability derivative</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Static roll stability derivative</a></li>
 </ul>
 </details></li>
 </ul>
@@ -306,7 +305,7 @@
       
       
       
-      <li><a href="../_sources/lat_stability/intro.md" target="_blank"
+      <li><a href="../_sources/lat_stability/roll_derivative.ipynb" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -316,7 +315,7 @@
 <span class="btn__icon-container">
   <i class="fas fa-file"></i>
   </span>
-<span class="btn__text-container">.md</span>
+<span class="btn__text-container">.ipynb</span>
 </a>
 </li>
       
@@ -377,7 +376,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
 </div></div>
       
     </div>
@@ -388,11 +389,21 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Lateral stability</h1>
+    <h1>Static roll stability derivative</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#wing">Wing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tail">Tail</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#final-c-l-beta">Final <span class="math notranslate nohighlight">\(C_{l_\beta}\)</span></a></li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -402,18 +413,136 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="lateral-stability">
-<h1>Lateral stability<a class="headerlink" href="#lateral-stability" title="Link to this heading">#</a></h1>
-<p>This section performs lateral stability analysis for the example airplane. This includes estimation of static stability derivatives and performing trim analysis for one-engine out condition. Refer to lecture notes and Section 16.4 in Raymer for further details. During conceptual design, it is difficult to perform lateral analysis since it requires 6-DOF analysis, and hence, is limited to static stability derivative estimation, along with one engine-out and cross-wind landing/takeoff analysis (if possible).</p>
-<p>Following topics are covered:</p>
-<ol class="arabic simple">
-<li><p>Static yaw stability derivative</p></li>
-<li><p>Static roll stability derivative</p></li>
-<li><p>One engine-out analysis</p></li>
-</ol>
-<p>Before proceeding to above topics, it is important to define the size of the rudder. Note that the aileron size was defined in <a class="reference internal" href="../hl_devices/intro.html"><span class="std std-doc">HL devices section</span></a>. The rudder chord ratio (<span class="math notranslate nohighlight">\(c_r/c\)</span>) is set to 40% based on the historical data in Table 8.3b in Roskam Part 2. For the analysis, it assumed that the rudder extends along the entire span. The rudder and aileron size can be later updated, if dictated by the stability and trim requirement. Note that aileron and rudder are essentially a plain flap, so the lift/force change can be computed using a similar analysis demonstrated in HL devices section.</p>
-<div class="toctree-wrapper compound">
+  <section class="tex2jax_ignore mathjax_ignore" id="static-roll-stability-derivative">
+<h1>Static roll stability derivative<a class="headerlink" href="#static-roll-stability-derivative" title="Link to this heading">#</a></h1>
+<p>This section computes roll static stability derivative <span class="math notranslate nohighlight">\(C_{l_{\beta}}\)</span> for the example airplane. The thrust effects are neglected for this analysis. Using equation 16.43 in Raymer, roll static stability derivative can be written as</p>
+<div class="math notranslate nohighlight">
+\[
+    C_{l_{\beta}} = C_{l_{\beta_w}} + C_{l_{\beta_v}}.
+\]</div>
+<p>The first and second term represent rolling moment contribution from wing and vertical tail, respectively. The fuselage contribution towards rolling is usually based on wing-fuselage intersection which is already included in <span class="math notranslate nohighlight">\(C_{l_{\beta_w}}\)</span>. Following sub-sections compute these component-level derivatives and estimates <span class="math notranslate nohighlight">\(C_{l_{\beta}}\)</span> for the example airplane.</p>
+<section id="wing">
+<h2>Wing<a class="headerlink" href="#wing" title="Link to this heading">#</a></h2>
+<p>The wing contribution towards rolling moment can be computed as (equation 16.47, Raymer):</p>
+<div class="math notranslate nohighlight">
+\[
+    C_{l_{\beta_w}} = \left( \frac{C_{l_{\beta_w}}}{C_L} \right) C_L + (C_{l_\beta})_\Gamma + C_{l_{\beta_{wf}}}
+\]</div>
+<p>The first term represents rolling moment derivative for a swept, tapered wing with no geometric dihedral. The second term accounts for the geometric dihedral while the last term is for wing-fuselage interaction.</p>
+<p>The <span class="math notranslate nohighlight">\(C_{l_{\beta_w}}/C_L\)</span> is computed as <span class="math notranslate nohighlight">\(-0.02 \text{ rad}^{-1}\)</span> using Figure 16.21 in Raymer based on the aspect ratio and taper ratio of the wing. The <span class="math notranslate nohighlight">\((C_{l_\beta})_\Gamma\)</span> is computed using (equation 16.45, Raymer)</p>
+<div class="math notranslate nohighlight">
+\[
+    (C_{l_\beta})_\Gamma = -\frac{C_{L_{\alpha}} \Gamma}{4} \left[ \frac{2(1 + 2\lambda)}{3(1 + \lambda)} \right],
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(\Gamma\)</span> is the geometric dihedral angle (in radians), <span class="math notranslate nohighlight">\(C_{L_{\alpha}}\)</span> is the lift-curve slope and <span class="math notranslate nohighlight">\(\lambda\)</span> is the taper ratio. The wing-fuselage interaction is computed using (equation 16.46, Raymer)</p>
+<div class="math notranslate nohighlight">
+\[
+    C_{l_{\beta_{wf}}} = -1.2 \frac{\sqrt{A} Z_{wf} (D_f + W_f)}{b^2},
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(Z_{wf}\)</span> is the vertical distance of the wing above the fuselage centerline, <span class="math notranslate nohighlight">\(D_f\)</span> is the height of the fuselage, <span class="math notranslate nohighlight">\(W_f\)</span> is the width of the fuselage, and <span class="math notranslate nohighlight">\(A\)</span> is the wing aspect ratio.</p>
+<p>Below block computes <span class="math notranslate nohighlight">\(C_{l_{\beta_w}}\)</span> at three different flight conditions:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="c1"># Parameters</span>
+<span class="n">A</span> <span class="o">=</span> <span class="mi">8</span>
+<span class="n">b</span> <span class="o">=</span> <span class="mi">33</span> <span class="c1"># ft</span>
+<span class="n">taper_ratio</span> <span class="o">=</span> <span class="mf">0.4</span>
+<span class="n">dihedral</span> <span class="o">=</span> <span class="mi">5</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">180</span> <span class="c1"># rad</span>
+<span class="n">Df</span> <span class="o">=</span> <span class="mf">5.75</span> <span class="c1"># ft</span>
+<span class="n">Wf</span> <span class="o">=</span> <span class="mi">5</span> <span class="c1"># ft</span>
+<span class="n">Zwf</span> <span class="o">=</span> <span class="o">-</span><span class="mf">2.54</span> <span class="c1"># ft</span>
+<span class="n">CL_alpha</span> <span class="o">=</span> <span class="mf">5.0</span> <span class="c1"># 1/rad</span>
+
+<span class="c1"># Lift coefficient</span>
+<span class="n">CL_cruise</span> <span class="o">=</span> <span class="mf">0.38</span>
+<span class="n">CL_takeoff</span> <span class="o">=</span> <span class="mf">1.8</span>
+<span class="n">CL_landing</span> <span class="o">=</span> <span class="mf">2.2</span>
+
+<span class="c1"># rolling moment derivative</span>
+<span class="n">Cl_beta_w_CL</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.02</span> <span class="c1"># 1/rad</span>
+<span class="n">Cl_beta_gamma</span> <span class="o">=</span> <span class="o">-</span> <span class="n">CL_alpha</span> <span class="o">*</span> <span class="n">dihedral</span> <span class="o">/</span> <span class="mi">4</span> <span class="o">*</span> <span class="p">(</span> <span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">taper_ratio</span><span class="p">)</span> <span class="o">/</span> <span class="mi">3</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">taper_ratio</span><span class="p">)</span> <span class="p">)</span> <span class="c1"># 1/rad</span>
+<span class="n">Cl_beta_wf</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.2</span> <span class="o">*</span> <span class="n">A</span><span class="o">**</span><span class="mf">0.5</span> <span class="o">*</span> <span class="n">Zwf</span> <span class="o">*</span> <span class="p">(</span><span class="n">Df</span> <span class="o">+</span> <span class="n">Wf</span><span class="p">)</span> <span class="o">/</span> <span class="n">b</span><span class="o">**</span><span class="mi">2</span>
+
+<span class="n">Cl_beta_w_cruise</span> <span class="o">=</span> <span class="n">Cl_beta_w_CL</span> <span class="o">*</span> <span class="n">CL_cruise</span> <span class="o">+</span> <span class="n">Cl_beta_gamma</span> <span class="o">+</span> <span class="n">Cl_beta_wf</span>
+<span class="n">Cl_beta_w_takeoff</span> <span class="o">=</span> <span class="n">Cl_beta_w_CL</span> <span class="o">*</span> <span class="n">CL_takeoff</span> <span class="o">+</span> <span class="n">Cl_beta_gamma</span> <span class="o">+</span> <span class="n">Cl_beta_wf</span>
+<span class="n">Cl_beta_w_landing</span> <span class="o">=</span> <span class="n">Cl_beta_w_CL</span> <span class="o">*</span> <span class="n">CL_landing</span> <span class="o">+</span> <span class="n">Cl_beta_gamma</span> <span class="o">+</span> <span class="n">Cl_beta_wf</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Roll static stability derivative for wing (1/rad):&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;cruise: </span><span class="si">{</span><span class="n">Cl_beta_w_cruise</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;takeoff: </span><span class="si">{</span><span class="n">Cl_beta_w_takeoff</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;landing: </span><span class="si">{</span><span class="n">Cl_beta_w_landing</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
 </div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Roll static stability derivative for wing (1/rad):
+cruise: -0.0160
+takeoff: -0.0444
+landing: -0.0524
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="tail">
+<h2>Tail<a class="headerlink" href="#tail" title="Link to this heading">#</a></h2>
+<p>The tail contribution towards rolling moment can be computed as (equation 16.41, Raymer)</p>
+<div class="math notranslate nohighlight">
+\[
+    C_{l_{\beta_v}} = - C_{F_{\beta_v}} \frac{\partial \beta_v}{\partial \beta} \eta_v \frac{S_v}{S_w} \bar{Z}_v.
+\]</div>
+<p>Some of the terms in the above equation are defined and computed in <a class="reference internal" href="yaw_derivative.html"><span class="std std-doc">yaw static stability derivative section</span></a>. The <span class="math notranslate nohighlight">\(\bar{Z}_v\)</span> represents the vertical distance of the tail aerodynamic center from the CG, normalized using wing span <span class="math notranslate nohighlight">\(b\)</span>. Below code block computes <span class="math notranslate nohighlight">\(C_{l_{\beta_v}}\)</span>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Parameters</span>
+<span class="n">Zv</span> <span class="o">=</span> <span class="mf">2.5</span> <span class="o">/</span> <span class="n">b</span>
+<span class="n">CFbeta_v</span> <span class="o">=</span> <span class="mf">2.7356</span>
+<span class="n">factor</span> <span class="o">=</span> <span class="mf">1.3609</span>
+<span class="n">Sv</span> <span class="o">=</span> <span class="mi">17</span> <span class="c1"># sq ft</span>
+<span class="n">Sw</span> <span class="o">=</span> <span class="mi">134</span> <span class="c1"># sq ft</span>
+
+<span class="n">Cl_beta_vt</span> <span class="o">=</span> <span class="o">-</span> <span class="n">CFbeta_v</span> <span class="o">*</span> <span class="n">factor</span> <span class="o">*</span> <span class="n">Sv</span> <span class="o">/</span> <span class="n">Sw</span> <span class="o">*</span> <span class="n">Zv</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Roll static stability derivative for vertical tail: </span><span class="si">{</span><span class="n">Cl_beta_vt</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> 1/rad&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Roll static stability derivative for vertical tail: -0.0358 1/rad
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="final-c-l-beta">
+<h2>Final <span class="math notranslate nohighlight">\(C_{l_\beta}\)</span><a class="headerlink" href="#final-c-l-beta" title="Link to this heading">#</a></h2>
+<p>The final <span class="math notranslate nohighlight">\(C_{l_\beta}\)</span> is sum of the individual components. Below code computes <span class="math notranslate nohighlight">\(C_{l_\beta}\)</span> for the example airplane at three flight conditions:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Cl_beta_landing</span> <span class="o">=</span> <span class="n">Cl_beta_w_landing</span> <span class="o">+</span> <span class="n">Cl_beta_vt</span>
+<span class="n">Cl_beta_takeoff</span> <span class="o">=</span> <span class="n">Cl_beta_w_takeoff</span> <span class="o">+</span> <span class="n">Cl_beta_vt</span>
+<span class="n">Cl_beta_cruise</span> <span class="o">=</span> <span class="n">Cl_beta_w_cruise</span> <span class="o">+</span> <span class="n">Cl_beta_vt</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Roll static stability derivative for the airplane (1/rad):&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;cruise: </span><span class="si">{</span><span class="n">Cl_beta_cruise</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;takeoff: </span><span class="si">{</span><span class="n">Cl_beta_takeoff</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;landing: </span><span class="si">{</span><span class="n">Cl_beta_landing</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Roll static stability derivative for the airplane (1/rad):
+cruise: -0.0518
+takeoff: -0.0802
+landing: -0.0882
+</pre></div>
+</div>
+</div>
+</div>
+<p>For all three conditions, <span class="math notranslate nohighlight">\(C_{l_\beta}\)</span> is negative which implies that airplane will be statically stable in roll direction. This concludes roll static stability estimation, next section describes lateral direction trim analysis.</p>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -447,22 +576,13 @@ document.write(`
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="../long_stability/trim.html"
+       href="yaw_derivative.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Trim Analysis</p>
-      </div>
-    </a>
-    <a class="right-next"
-       href="yaw_derivative.html"
-       title="next page">
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">next</p>
         <p class="prev-next-title">Static yaw stability derivative</p>
       </div>
-      <i class="fa-solid fa-angle-right"></i>
     </a>
 </div>
                 </footer>
@@ -470,6 +590,23 @@ document.write(`
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#wing">Wing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tail">Tail</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#final-c-l-beta">Final <span class="math notranslate nohighlight">\(C_{l_\beta}\)</span></a></li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>

@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Lateral stability &#8212; Aircraft Design</title>
+    <title>Static roll and yaw stability derivatives &#8212; Aircraft Design</title>
   
   
   
@@ -59,11 +59,10 @@
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'lat_stability/intro';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'lat_stability/roll_yaw_derivatives';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Static yaw stability derivative" href="yaw_derivative.html" />
-    <link rel="prev" title="Trim Analysis" href="../long_stability/trim.html" />
+    <link rel="prev" title="Lateral stability" href="intro.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -232,9 +231,8 @@
 <li class="toctree-l2"><a class="reference internal" href="../long_stability/trim.html">Trim Analysis</a></li>
 </ul>
 </details></li>
-<li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">Lateral stability</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="yaw_derivative.html">Static yaw stability derivative</a></li>
-<li class="toctree-l2"><a class="reference internal" href="roll_derivative.html">Static roll stability derivative</a></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="intro.html">Lateral stability</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Static roll and yaw stability derivatives</a></li>
 </ul>
 </details></li>
 </ul>
@@ -306,7 +304,7 @@
       
       
       
-      <li><a href="../_sources/lat_stability/intro.md" target="_blank"
+      <li><a href="../_sources/lat_stability/roll_yaw_derivatives.ipynb" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -316,7 +314,7 @@
 <span class="btn__icon-container">
   <i class="fas fa-file"></i>
   </span>
-<span class="btn__text-container">.md</span>
+<span class="btn__text-container">.ipynb</span>
 </a>
 </li>
       
@@ -388,7 +386,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Lateral stability</h1>
+    <h1>Static roll and yaw stability derivatives</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -402,18 +400,14 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="lateral-stability">
-<h1>Lateral stability<a class="headerlink" href="#lateral-stability" title="Link to this heading">#</a></h1>
-<p>This section performs lateral stability analysis for the example airplane. This includes estimation of static stability derivatives and performing trim analysis for one-engine out condition. Refer to lecture notes and Section 16.4 in Raymer for further details. During conceptual design, it is difficult to perform lateral analysis since it requires 6-DOF analysis, and hence, is limited to static stability derivative estimation, along with one engine-out and cross-wind landing/takeoff analysis (if possible).</p>
-<p>Following topics are covered:</p>
-<ol class="arabic simple">
-<li><p>Static yaw stability derivative</p></li>
-<li><p>Static roll stability derivative</p></li>
-<li><p>One engine-out analysis</p></li>
-</ol>
-<p>Before proceeding to above topics, it is important to define the size of the rudder. Note that the aileron size was defined in <a class="reference internal" href="../hl_devices/intro.html"><span class="std std-doc">HL devices section</span></a>. The rudder chord ratio (<span class="math notranslate nohighlight">\(c_r/c\)</span>) is set to 40% based on the historical data in Table 8.3b in Roskam Part 2. For the analysis, it assumed that the rudder extends along the entire span. The rudder and aileron size can be later updated, if dictated by the stability and trim requirement. Note that aileron and rudder are essentially a plain flap, so the lift/force change can be computed using a similar analysis demonstrated in HL devices section.</p>
-<div class="toctree-wrapper compound">
-</div>
+  <section class="tex2jax_ignore mathjax_ignore" id="static-roll-and-yaw-stability-derivatives">
+<h1>Static roll and yaw stability derivatives<a class="headerlink" href="#static-roll-and-yaw-stability-derivatives" title="Link to this heading">#</a></h1>
+<div class="math notranslate nohighlight">
+\[
+    C_{l_\beta} = C_{l_{\beta_w}} + C_{l_{\beta_v}}
+\]</div>
+<p>The main goal is to check for one-engine out operations</p>
+<p>It is difficult to perform lateral analysis at this stage of the design since it requries 6-DOF analysis and wind-tunnel data</p>
 </section>
 
     <script type="text/x-thebe-config">
@@ -447,22 +441,13 @@ document.write(`
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="../long_stability/trim.html"
+       href="intro.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Trim Analysis</p>
+        <p class="prev-next-title">Lateral stability</p>
       </div>
-    </a>
-    <a class="right-next"
-       href="yaw_derivative.html"
-       title="next page">
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Static yaw stability derivative</p>
-      </div>
-      <i class="fa-solid fa-angle-right"></i>
     </a>
 </div>
                 </footer>
