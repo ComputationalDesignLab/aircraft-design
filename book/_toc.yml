@@ -48,3 +48,4 @@ chapters:
     sections:
       - file: lat_stability/yaw_derivative
       - file: lat_stability/roll_derivative
+      - file: lat_stability/trim
