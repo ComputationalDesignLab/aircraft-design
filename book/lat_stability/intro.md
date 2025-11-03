@@ -6,6 +6,6 @@ Following topics are covered:
 
 1. Static yaw stability derivative
 2. Static roll stability derivative
-3. One engine-out analysis
+3. Lateral trim analysis
 
 Before proceeding to above topics, it is important to define the size of the rudder. Note that the aileron size was defined in [HL devices section](../hl_devices/intro.md). The rudder chord ratio ($c_r/c$) is set to 40% based on the historical data in Table 8.3b in Roskam Part 2. For the analysis, it assumed that the rudder extends along the entire span. The rudder and aileron size can be later updated, if dictated by the stability and trim requirement. Note that aileron and rudder are essentially a plain flap, so the lift/force change can be computed using a similar analysis demonstrated in HL devices section.
