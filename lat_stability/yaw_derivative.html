@@ -235,6 +235,7 @@
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="intro.html">Lateral stability</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">Static yaw stability derivative</a></li>
 <li class="toctree-l2"><a class="reference internal" href="roll_derivative.html">Static roll stability derivative</a></li>
+<li class="toctree-l2"><a class="reference internal" href="trim.html">Lateral trim</a></li>
 </ul>
 </details></li>
 </ul>
@@ -533,8 +534,6 @@ cruise: 0.0014
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Side force curve slope for VT: </span><span class="si">{</span><span class="n">CFbeta_v</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> 1/rad&quot;</span><span class="p">)</span>
 
 <span class="n">factor</span> <span class="o">=</span> <span class="mf">0.724</span> <span class="o">+</span> <span class="mf">3.06</span> <span class="o">*</span> <span class="n">Svs</span> <span class="o">/</span> <span class="n">Sw</span> <span class="o">-</span> <span class="mf">0.4</span> <span class="o">*</span> <span class="n">Zwf</span> <span class="o">/</span> <span class="n">Df</span> <span class="o">+</span> <span class="mf">0.009</span> <span class="o">*</span> <span class="n">A</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="n">factor</span><span class="p">)</span>
 
 <span class="n">Cn_beta_vt</span> <span class="o">=</span> <span class="n">CFbeta_v</span> <span class="o">*</span> <span class="n">factor</span> <span class="o">*</span> <span class="n">Sv</span> <span class="o">/</span> <span class="n">Sw</span> <span class="o">*</span> <span class="p">(</span><span class="n">Xac_v</span> <span class="o">-</span> <span class="n">Xcg</span><span class="p">)</span> <span class="o">*</span> <span class="n">mac</span> <span class="o">/</span> <span class="n">b</span>
 

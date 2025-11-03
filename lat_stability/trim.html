@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Drag Polar &#8212; Aircraft Design</title>
+    <title>Lateral trim &#8212; Aircraft Design</title>
   
   
   
@@ -59,11 +59,10 @@
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'aerodynamics/drag_polar_induced_drag';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'lat_stability/trim';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="High-Lift Devices" href="../hl_devices/intro.html" />
-    <link rel="prev" title="Parasitic (Zero-lift) drag" href="drag_buildup.html" />
+    <link rel="prev" title="Static roll stability derivative" href="roll_derivative.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -210,10 +209,10 @@
 <li class="toctree-l2"><a class="reference internal" href="../powerplant/installation_thrust.html">Installation Thrust</a></li>
 </ul>
 </details></li>
-<li class="toctree-l1 current active has-children"><a class="reference internal" href="intro.html">Aerodynamics</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="lift_curve.html">Lift</a></li>
-<li class="toctree-l2"><a class="reference internal" href="drag_buildup.html">Parasitic (Zero-lift) drag</a></li>
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">Drag Polar</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../aerodynamics/intro.html">Aerodynamics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../aerodynamics/lift_curve.html">Lift</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../aerodynamics/drag_buildup.html">Parasitic (Zero-lift) drag</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../aerodynamics/drag_polar_induced_drag.html">Drag Polar</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../hl_devices/intro.html">High-Lift Devices</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -232,10 +231,10 @@
 <li class="toctree-l2"><a class="reference internal" href="../long_stability/trim.html">Trim Analysis</a></li>
 </ul>
 </details></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../lat_stability/intro.html">Lateral stability</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="../lat_stability/yaw_derivative.html">Static yaw stability derivative</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../lat_stability/roll_derivative.html">Static roll stability derivative</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../lat_stability/trim.html">Lateral trim</a></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="intro.html">Lateral stability</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="yaw_derivative.html">Static yaw stability derivative</a></li>
+<li class="toctree-l2"><a class="reference internal" href="roll_derivative.html">Static roll stability derivative</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Lateral trim</a></li>
 </ul>
 </details></li>
 </ul>
@@ -307,7 +306,7 @@
       
       
       
-      <li><a href="../_sources/aerodynamics/drag_polar_induced_drag.ipynb" target="_blank"
+      <li><a href="../_sources/lat_stability/trim.ipynb" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -378,7 +377,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
 </div></div>
       
     </div>
@@ -389,11 +390,20 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Drag Polar</h1>
+    <h1>Lateral trim</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#one-engine-out">One-engine out</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#crosswind">Crosswind</a></li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -403,55 +413,124 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="drag-polar">
-<h1>Drag Polar<a class="headerlink" href="#drag-polar" title="Link to this heading">#</a></h1>
-<p>This section builds a drag polar model for the example airplane. During conceptual design stage, a simple drag polar model is used, written as</p>
+  <section class="tex2jax_ignore mathjax_ignore" id="lateral-trim">
+<h1>Lateral trim<a class="headerlink" href="#lateral-trim" title="Link to this heading">#</a></h1>
+<p>This section describes lateral trim analysis for the example airplane under two scenarios: one-engine inoperative and cross-wind conditions. In these scenarios, the rudder should be able to trim the airplane such that sideslip angle <span class="math notranslate nohighlight">\(\beta=0\)</span>. In both cases, maximum rudder applied should not exceed <span class="math notranslate nohighlight">\(\pm20^{\circ}\)</span>. One can also use other requirements (such as spin recovery) for verifying/sizing the rudder. Refer to lecture notes, Section 21.6 in Nicolai and Carichner, and Section 16.4.2 in Raymer for further details.</p>
+<section id="one-engine-out">
+<h2>One-engine out<a class="headerlink" href="#one-engine-out" title="Link to this heading">#</a></h2>
+<p>The one-engine out scenario mentions that rudder should be able to produce enough yawing moment to hold the aircraft at <span class="math notranslate nohighlight">\(\beta=0\)</span> at takeoff speed (1.1 times the stall speed) and CG being at most-aft position. Using yawing moment balance about CG, following condition can be derived (equation 21.24, Nicolai and Carichner) for asymmetric power:</p>
 <div class="math notranslate nohighlight">
 \[
-    C_D = C_{D_0} + \frac{C_L^2}{\pi Ae},
+    C_{n_{\delta_r}} \delta_r (\bar{X}_{ac_v} - \bar{X}_{cg}) = \frac{T+D}{qS_wb} \bar{Y}_p,
 \]</div>
-<p>where the first term denotes parasitic drag (computed in previous section) and second term represents induced drag. The <span class="math notranslate nohighlight">\(A\)</span> stands for aspect ratio and <span class="math notranslate nohighlight">\(e\)</span> refers to oswald efficiency factor. The aspect ratio is set to 8, which was assumed during initial weight estimation. The oswald effciency factor is computed using (Raymer equation 12.48):</p>
+<p>where <span class="math notranslate nohighlight">\(\delta_r\)</span> is the rudder deflection (rad), <span class="math notranslate nohighlight">\(T\)</span> is the thrust from one engine, <span class="math notranslate nohighlight">\(D\)</span> is the drag from inoperative engine, <span class="math notranslate nohighlight">\(q\)</span> is the dynamic pressure, and <span class="math notranslate nohighlight">\(\bar{Y}_p\)</span> is the distance between the engine and CG, normalized using wing span <span class="math notranslate nohighlight">\(b\)</span>. Other terms have been defined earlier. Above equation can be solved for required <span class="math notranslate nohighlight">\(\delta_r\)</span> to trim the airplane in one-engine out scenario.</p>
+<p>The thrust for operative engine is computed using takeoff power from engine and 80% propeller efficiency, while accounting for installation losses. The drag from the inoperative engine is estimated using <span class="math notranslate nohighlight">\(D/q\)</span> for feathered propeller described in <a class="reference internal" href="../aerodynamics/drag_buildup.html#miscellaneous-drag"><span class="std std-ref">parasitic drag section</span></a>, along with drag from idle engine. The rudder control derivative can be computed using (equation 21.26, Nicolai)</p>
 <div class="math notranslate nohighlight">
 \[
-    e = 1.78(1 - 0.045A^{0.68}) - 0.64
+    C_{n_{\delta_r}} = 0.9 C_{F_{\beta_v}} V_{vt} \tau,
 \]</div>
-<p>Once required parameters are known, <span class="math notranslate nohighlight">\(C_D\)</span> can be computed for a given value of <span class="math notranslate nohighlight">\(C_L\)</span>. The model developed in lift section is used for computing <span class="math notranslate nohighlight">\(C_L\)</span> for a range of angle of attack. Then, <span class="math notranslate nohighlight">\(C_L\)</span> values are used for computing <span class="math notranslate nohighlight">\(C_D\)</span>.</p>
-<p>Below code block computes drag polar for the example airplane in clean (cruise) configuration:</p>
+<p>where <span class="math notranslate nohighlight">\(C_{F_{\beta_v}}\)</span> is the side-force curve slope for vertical tail (computed earlier), <span class="math notranslate nohighlight">\(\tau\)</span> is the rudder effectiveness (obtained from figure 21.14, Nicolai) and <span class="math notranslate nohighlight">\(V_{vt}\)</span> is the vertical tail volume coefficient.</p>
+<p>Below code block computes thrust and drag for one-engine out scenario:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 
-<span class="n">A</span> <span class="o">=</span> <span class="mi">8</span>
-<span class="n">e</span> <span class="o">=</span> <span class="mf">1.78</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="mf">0.045</span><span class="o">*</span><span class="n">A</span><span class="o">**</span><span class="mf">0.68</span><span class="p">)</span><span class="o">-</span><span class="mf">0.64</span>
-<span class="n">alpha</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
-<span class="n">alpha_CLzero</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.0</span>
-<span class="n">CLalpha</span> <span class="o">=</span> <span class="mf">5.0</span>
-<span class="n">fs</span> <span class="o">=</span> <span class="mi">12</span>
+<span class="n">rho</span> <span class="o">=</span> <span class="mf">0.00237717</span> <span class="c1"># slugs/cu ft, sea-level</span>
+<span class="n">wing_loading</span> <span class="o">=</span> <span class="mi">40</span> <span class="c1"># lbs/sq ft</span>
+<span class="n">CLmax_TO</span> <span class="o">=</span> <span class="mf">1.8</span>
+<span class="n">Vstall</span> <span class="o">=</span> <span class="p">(</span> <span class="n">wing_loading</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">/</span> <span class="n">rho</span> <span class="o">/</span> <span class="n">CLmax_TO</span> <span class="p">)</span><span class="o">**</span><span class="mf">0.5</span> <span class="c1"># ft/s</span>
+<span class="n">V</span> <span class="o">=</span> <span class="mf">1.1</span> <span class="o">*</span> <span class="n">Vstall</span> <span class="c1"># ft/s</span>
+<span class="n">q</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">rho</span> <span class="o">*</span> <span class="n">V</span><span class="o">**</span><span class="mi">2</span> <span class="c1"># lbs/ft^2</span>
 
-<span class="n">CL</span> <span class="o">=</span> <span class="n">CLalpha</span> <span class="o">*</span> <span class="p">(</span><span class="n">alpha</span> <span class="o">-</span> <span class="n">alpha_CLzero</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">180</span>
-<span class="n">CD0</span> <span class="o">=</span> <span class="mf">0.03363</span>
-<span class="n">CDi</span> <span class="o">=</span> <span class="n">CL</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="n">A</span> <span class="o">/</span> <span class="n">e</span>
-<span class="n">CD</span> <span class="o">=</span> <span class="n">CD0</span> <span class="o">+</span> <span class="n">CDi</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Speed at takeoff: </span><span class="si">{</span><span class="n">V</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> ft/s&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Dynamic pressure at takeoff: </span><span class="si">{</span><span class="n">q</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> lbs/sq ft&quot;</span><span class="p">)</span>
 
-<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">CD</span><span class="p">,</span> <span class="n">CL</span><span class="p">,</span> <span class="s2">&quot;k-&quot;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.24</span><span class="p">],</span> <span class="s2">&quot;k--&quot;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="mf">0.065</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;$C_D$&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">fs</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;$C_L$&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">fs</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Drag polar for example airplane - cruise configuration&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">fs</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s2">&quot;$L/D$ max&quot;</span><span class="p">,</span> <span class="p">(</span><span class="mf">0.065</span><span class="p">,</span><span class="mf">0.7</span><span class="p">),</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">fs</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s2">&quot;left&quot;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="c1"># Propeller area, sq ft</span>
+<span class="n">D</span> <span class="o">=</span> <span class="mf">5.9</span> <span class="c1"># ft</span>
+<span class="n">Aprop</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">D</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="mi">4</span>
+
+<span class="c1"># Thrust</span>
+<span class="n">n_prop</span> <span class="o">=</span> <span class="mf">0.8</span> <span class="c1"># prop efficiency</span>
+<span class="n">P</span> <span class="o">=</span> <span class="mi">298</span> <span class="c1"># hp, takeoff power</span>
+<span class="n">T</span> <span class="o">=</span> <span class="mi">550</span> <span class="o">*</span> <span class="n">P</span> <span class="o">*</span> <span class="n">n_prop</span> <span class="o">/</span> <span class="n">V</span> <span class="c1"># lbs (one-engine only)</span>
+
+<span class="n">D</span> <span class="o">=</span> <span class="mf">0.08</span> <span class="o">*</span> <span class="n">T</span> <span class="o">+</span> <span class="mf">0.1</span><span class="o">*</span><span class="n">Aprop</span><span class="o">*</span><span class="n">q</span> <span class="c1"># drag of inoperative engine</span>
+<span class="n">T</span> <span class="o">=</span> <span class="mf">0.92</span> <span class="o">*</span> <span class="n">T</span> <span class="c1"># account for installation effects</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Thrust from one engine: </span><span class="si">{</span><span class="n">T</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> lbs&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Drag from inoperative engine: </span><span class="si">{</span><span class="n">D</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> lbs&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/bb467fccb8e1b07d17da222bc2a3290a9a08e8bbaf0b01e7239367d91c3f9bc8.png" src="../_images/bb467fccb8e1b07d17da222bc2a3290a9a08e8bbaf0b01e7239367d91c3f9bc8.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Speed at takeoff: 150.41 ft/s
+Dynamic pressure at takeoff: 26.89 lbs/sq ft
+Thrust from one engine: 802.02 lbs
+Drag from inoperative engine: 143.25 lbs
+</pre></div>
 </div>
 </div>
-<p>As indicated in the above plot, the point where line from origin is tangent to drag polar refers to maximum <span class="math notranslate nohighlight">\(L/D\)</span>. The example airplane has a maximum <span class="math notranslate nohighlight">\(L/D\)</span> of 12.31. This concludes the drag polar section. In next section, high-lift devices are sized, and the drag polar and lift model are updated accordingly. The corresponding drag polar in takeoff and landing configuration are also plotted.</p>
+</div>
+<p>Below code block computes required <span class="math notranslate nohighlight">\(\delta_r\)</span> for one-engine out scenario:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Parameters</span>
+<span class="n">mac</span> <span class="o">=</span> <span class="mf">4.3</span> <span class="c1"># ft</span>
+<span class="n">Xac_v</span> <span class="o">=</span> <span class="mf">0.25</span> <span class="o">+</span> <span class="mi">17</span><span class="o">/</span><span class="n">mac</span>
+<span class="n">Xcg</span> <span class="o">=</span> <span class="mf">0.1861</span>
+<span class="n">b</span> <span class="o">=</span> <span class="mi">33</span> <span class="c1"># ft</span>
+<span class="n">Sw</span> <span class="o">=</span> <span class="mi">134</span> <span class="c1"># sq ft</span>
+<span class="n">tau</span> <span class="o">=</span> <span class="mf">0.58</span> <span class="c1"># figure 21.14, Nicolai</span>
+<span class="n">V_vt</span> <span class="o">=</span> <span class="mf">0.065</span>
+<span class="n">CFbeta_v</span> <span class="o">=</span> <span class="mf">2.7356</span> <span class="c1"># 1/rad</span>
+<span class="n">Yp</span> <span class="o">=</span> <span class="mf">6.5</span><span class="o">/</span><span class="n">b</span> <span class="c1"># distance between engine and CG</span>
+
+<span class="n">Cn_delta_r</span> <span class="o">=</span> <span class="mf">0.9</span> <span class="o">*</span> <span class="n">CFbeta_v</span> <span class="o">*</span> <span class="n">V_vt</span> <span class="o">*</span> <span class="n">tau</span> <span class="c1"># 1/rad</span>
+
+<span class="n">delta_r</span> <span class="o">=</span> <span class="p">(</span><span class="n">T</span> <span class="o">+</span> <span class="n">D</span><span class="p">)</span> <span class="o">*</span> <span class="n">Yp</span> <span class="o">/</span> <span class="n">q</span> <span class="o">/</span> <span class="n">Sw</span> <span class="o">/</span> <span class="n">b</span> <span class="o">/</span> <span class="n">Cn_delta_r</span> <span class="o">/</span> <span class="p">(</span> <span class="p">(</span><span class="n">Xac_v</span> <span class="o">-</span> <span class="n">Xcg</span><span class="p">)</span> <span class="o">*</span> <span class="n">mac</span> <span class="o">/</span> <span class="n">b</span> <span class="p">)</span> <span class="o">*</span> <span class="mi">180</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Required rudder deflection for one-engine out scenario: </span><span class="si">{</span><span class="n">delta_r</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> degree&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Required rudder deflection for one-engine out scenario: 1.8 degree
+</pre></div>
+</div>
+</div>
+</div>
+<p>Based on the above calculation, the rudder is more than capable of providing directional control during engine out scenario.</p>
+</section>
+<section id="crosswind">
+<h2>Crosswind<a class="headerlink" href="#crosswind" title="Link to this heading">#</a></h2>
+<p>The crosswind scenario requries that aircraft should be able to operate in crosswind speed equal to 20% of takeoff speed. Equivalently, this can be written as <span class="math notranslate nohighlight">\(11.5^{\circ}\)</span> of sideslip at takeoff speed. Using moment balance, requried <span class="math notranslate nohighlight">\(\delta_r\)</span> can be computed using (equation 21.25, Nicolai and Carichner)</p>
+<div class="math notranslate nohighlight">
+\[
+    C_{n_{\beta}} \beta + C_{n_{\delta_r}} \delta_r = 0.
+\]</div>
+<p>Note that <span class="math notranslate nohighlight">\(C_{n_\beta}\)</span> for takeoff conditions is already computed in <a class="reference internal" href="yaw_derivative.html#final-c-n-beta"><span class="std std-ref">yaw static stability section</span></a>. Below code block computes required <span class="math notranslate nohighlight">\(\delta_r\)</span> for crosswind condition:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Cn_beta</span> <span class="o">=</span> <span class="mf">0.1385</span> <span class="c1"># 1/rad, takeoff</span>
+<span class="n">beta</span> <span class="o">=</span> <span class="mf">11.5</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">180</span> <span class="c1"># rad, required beta</span>
+
+<span class="n">crosswind_speed</span> <span class="o">=</span> <span class="mf">0.2</span> <span class="o">*</span> <span class="n">V</span> <span class="c1"># ft/s</span>
+
+<span class="n">delta_r</span> <span class="o">=</span> <span class="o">-</span> <span class="n">Cn_beta</span> <span class="o">*</span> <span class="n">beta</span> <span class="o">/</span> <span class="n">Cn_delta_r</span> <span class="o">*</span> <span class="mi">180</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="c1"># deg</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Required rudder deflection for max crosswind speed of </span><span class="si">{</span><span class="n">crosswind_speed</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2"> ft/s: </span><span class="si">{</span><span class="n">delta_r</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> degree&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Required rudder deflection for max crosswind speed of 30 ft/s: -17.2 degree
+</pre></div>
+</div>
+</div>
+</div>
+<p>Based on the above calculation, it can be seen that crosswind condition is the driving requirement for rudder sizing since it requires much larger rudder deflection than one-engine out scenario.</p>
+<p>This concludes the lateral trim analysis for the example airplane.</p>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -467,7 +546,7 @@ document.write(`
         },
         kernelOptions: {
             name: "python3",
-            path: "./aerodynamics"
+            path: "./lat_stability"
         },
         predefinedOutput: true
     }
@@ -485,22 +564,13 @@ document.write(`
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="drag_buildup.html"
+       href="roll_derivative.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Parasitic (Zero-lift) drag</p>
+        <p class="prev-next-title">Static roll stability derivative</p>
       </div>
-    </a>
-    <a class="right-next"
-       href="../hl_devices/intro.html"
-       title="next page">
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">High-Lift Devices</p>
-      </div>
-      <i class="fa-solid fa-angle-right"></i>
     </a>
 </div>
                 </footer>
@@ -508,6 +578,22 @@ document.write(`
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#one-engine-out">One-engine out</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#crosswind">Crosswind</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>
