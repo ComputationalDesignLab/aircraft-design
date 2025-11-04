@@ -238,6 +238,10 @@
 <li class="toctree-l2"><a class="reference internal" href="../lat_stability/trim.html">Lateral trim</a></li>
 </ul>
 </details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../performance/intro.html">Performance</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../performance/takeoff.html">Takeoff</a></li>
+</ul>
+</details></li>
 </ul>
 
     </div>
@@ -506,7 +510,8 @@ Zero-lift angle of attack with TO flaps: -4.9  deg
 </div>
 <section id="takeoff-drag-polar">
 <h2>Takeoff Drag Polar<a class="headerlink" href="#takeoff-drag-polar" title="Link to this heading">#</a></h2>
-<p>Once lift curve is obtained for the takeoff flap setting, one can plot the drag polar as well. As discussed in aerodynamics section, a simple drag polar model is used. With flaps deployed, one has to compute its effect on <span class="math notranslate nohighlight">\(C_{D_0}\)</span> and <span class="math notranslate nohighlight">\(C_{L_i}\)</span>. As described in <a class="reference internal" href="intro.html"><span class="std std-doc">high-lift devices</span></a> section, the change in <span class="math notranslate nohighlight">\(C_{D_0}\)</span> can be computed based on amount of flap deflection. To account for the change in induced drag, the value of <span class="math notranslate nohighlight">\(e\)</span> is reduced by 0.05 (based on Table 3.6, Roskam Part 1). Below code block computes the change in zero-lift drag:</p>
+<p>Once lift curve is obtained for the takeoff flap setting, one can plot the drag polar as well. As discussed in aerodynamics section, a simple drag polar model is used. With flaps deployed, one has to compute its effect on <span class="math notranslate nohighlight">\(C_{D_0}\)</span> and <span class="math notranslate nohighlight">\(C_{L_i}\)</span>. As described in <a class="reference internal" href="intro.html"><span class="std std-doc">high-lift devices</span></a> section, the change in <span class="math notranslate nohighlight">\(C_{D_0}\)</span> can be computed based on amount of flap deflection. To account for the change in induced drag, the value of <span class="math notranslate nohighlight">\(e\)</span> is reduced by 0.05 (based on Table 3.6, Roskam Part 1). Since LG is not fully sized at this stage of design, increase in <span class="math notranslate nohighlight">\(C_{D_0}\)</span> due to LG is set to 0.02. One should also account for the ground effect while computing takeoff drag polar. Section 12.6.4 in Raymer provides an equation to update <span class="math notranslate nohighlight">\(K\)</span> to account for the ground effects.</p>
+<p>Below code block computes the change in zero-lift drag:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Ff</span> <span class="o">=</span> <span class="mf">0.0074</span>
@@ -515,14 +520,14 @@ Zero-lift angle of attack with TO flaps: -4.9  deg
 <span class="n">Sref</span> <span class="o">=</span> <span class="mi">134</span> <span class="c1"># sq ft</span>
 <span class="n">delta_f</span> <span class="o">=</span> <span class="mi">15</span> <span class="c1"># deg</span>
 
-<span class="n">delta_CD0</span> <span class="o">=</span> <span class="n">Ff</span> <span class="o">*</span> <span class="n">cf_c</span> <span class="o">*</span> <span class="n">Sf</span> <span class="o">/</span> <span class="n">Sref</span> <span class="o">*</span> <span class="p">(</span><span class="n">delta_f</span> <span class="o">-</span> <span class="mi">10</span><span class="p">)</span>
+<span class="n">delta_CD0</span> <span class="o">=</span> <span class="n">Ff</span> <span class="o">*</span> <span class="n">cf_c</span> <span class="o">*</span> <span class="n">Sf</span> <span class="o">/</span> <span class="n">Sref</span> <span class="o">*</span> <span class="p">(</span><span class="n">delta_f</span> <span class="o">-</span> <span class="mi">10</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.02</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Change in zero-lift drag: </span><span class="si">{</span><span class="n">delta_CD0</span><span class="si">:</span><span class="s2">2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Change in zero-lift drag: 0.004011
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Change in zero-lift drag: 0.024011
 </pre></div>
 </div>
 </div>
@@ -535,6 +540,10 @@ Zero-lift angle of attack with TO flaps: -4.9  deg
 <span class="n">CLalpha</span> <span class="o">=</span> <span class="mf">5.1</span> <span class="c1"># 1/rad</span>
 <span class="n">alpha_CLzero</span> <span class="o">=</span> <span class="o">-</span><span class="mf">4.9</span> <span class="c1"># deg</span>
 <span class="n">e</span> <span class="o">=</span> <span class="mf">1.78</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="mf">0.045</span><span class="o">*</span><span class="n">A</span><span class="o">**</span><span class="mf">0.68</span><span class="p">)</span><span class="o">-</span><span class="mf">0.64</span> <span class="o">-</span> <span class="mf">0.05</span> <span class="c1"># e in TO</span>
+<span class="n">K</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="n">A</span><span class="o">/</span><span class="n">e</span>
+<span class="n">h</span> <span class="o">=</span> <span class="mi">4</span> <span class="c1"># ft</span>
+<span class="n">b</span> <span class="o">=</span> <span class="mi">33</span> <span class="c1"># ft</span>
+<span class="n">Keff</span> <span class="o">=</span> <span class="n">K</span> <span class="o">*</span> <span class="p">(</span> <span class="mi">33</span> <span class="o">*</span> <span class="p">(</span><span class="n">h</span><span class="o">/</span><span class="n">b</span><span class="p">)</span><span class="o">**</span><span class="mf">1.5</span> <span class="o">/</span> <span class="p">(</span> <span class="mi">1</span> <span class="o">+</span> <span class="mi">33</span> <span class="o">*</span> <span class="p">(</span><span class="n">h</span><span class="o">/</span><span class="n">b</span><span class="p">)</span><span class="o">**</span><span class="mf">1.5</span> <span class="p">)</span> <span class="p">)</span> <span class="c1"># eq 12.60, Raymer</span>
 
 <span class="n">alpha</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">7</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span> <span class="c1"># alpha in deg</span>
 
@@ -542,26 +551,26 @@ Zero-lift angle of attack with TO flaps: -4.9  deg
 
 <span class="n">CD0</span> <span class="o">=</span> <span class="mf">0.03363</span> <span class="o">+</span> <span class="n">delta_CD0</span> <span class="c1"># zero-lift drag in TO conditions</span>
 
-<span class="n">CD</span> <span class="o">=</span> <span class="n">CD0</span> <span class="o">+</span> <span class="n">CL</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="n">A</span><span class="o">/</span><span class="n">e</span> <span class="c1"># drag model</span>
+<span class="n">CD</span> <span class="o">=</span> <span class="n">CD0</span> <span class="o">+</span> <span class="n">Keff</span><span class="o">*</span><span class="n">CL</span><span class="o">**</span><span class="mi">2</span> <span class="c1"># drag model</span>
 
 <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">CD</span><span class="p">,</span> <span class="n">CL</span><span class="p">,</span> <span class="s2">&quot;k-&quot;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.125</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.41</span><span class="p">],</span> <span class="s2">&quot;k--&quot;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="mf">0.075</span><span class="p">,</span> <span class="mf">0.85</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.135</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.62</span><span class="p">],</span> <span class="s2">&quot;k--&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="mf">0.112</span><span class="p">,</span> <span class="mf">1.35</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;$C_D$&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">fs</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;$C_L$&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">fs</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Drag polar for example airplane - TO configuration&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">fs</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s2">&quot;$L/D$ max&quot;</span><span class="p">,</span> <span class="p">(</span><span class="mf">0.075</span><span class="p">,</span><span class="mf">0.75</span><span class="p">),</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">fs</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s2">&quot;left&quot;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s2">&quot;$L/D$ max&quot;</span><span class="p">,</span> <span class="p">(</span><span class="mf">0.112</span><span class="p">,</span><span class="mf">1.25</span><span class="p">),</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">fs</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s2">&quot;left&quot;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/7ca529ea7449ed8eedb67d6bde8ca31df86975c2b8aee8fd00c75af8ad2ba3b1.png" src="../_images/7ca529ea7449ed8eedb67d6bde8ca31df86975c2b8aee8fd00c75af8ad2ba3b1.png" />
+<img alt="../_images/96c6bce3e732e2fddfdd8ba17fddf3196250e90878066e77db9e3ccc85c483d4.png" src="../_images/96c6bce3e732e2fddfdd8ba17fddf3196250e90878066e77db9e3ccc85c483d4.png" />
 </div>
 </div>
-<p>As indicated in the above plot, the point where line from origin is tangent to drag polar refers to maximum <span class="math notranslate nohighlight">\(L/D\)</span> in TO configuration. The example airplane has a maximum <span class="math notranslate nohighlight">\(L/D\)</span> of 11.33. This concludes the HL devices sizing for TO condition. In next section, high-lift devices for landing configuration are sized.</p>
+<p>As indicated in the above plot, the point where line from origin is tangent to drag polar refers to maximum <span class="math notranslate nohighlight">\(L/D\)</span> in TO configuration. The example airplane has a maximum <span class="math notranslate nohighlight">\(L/D\)</span> of 12. This concludes the HL devices sizing for TO condition. In next section, high-lift devices for landing configuration are sized.</p>
 </section>
 </section>
 

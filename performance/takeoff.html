@@ -1,0 +1,752 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Takeoff &#8212; Aircraft Design</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'performance/takeoff';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Performance" href="intro.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Aircraft Design</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    Introduction
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../setup.html">Computing environment setup</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../python_basics/intro.html">Basics of Python Programming</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../python_basics/python_basics.html">Basic programming in Python and Jupyter Notebooks</a></li>
+
+
+
+
+
+
+<li class="toctree-l2"><a class="reference internal" href="../python_basics/plotting.html">Basic plotting in Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../python_basics/resources.html">Python and Jupyter notebook resources</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../example_aircraft.html">Example Aircraft</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../initial_weight_estimation.html">Initial Weight Estimation</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../constraint_analysis/intro.html">Constraint Analysis</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../constraint_analysis/takeoff.html">Takeoff Distance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../constraint_analysis/landing.html">Landing Distance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../constraint_analysis/climb.html">Climb Gradient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../constraint_analysis/cruise.html">Cruise Speed</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../constraint_analysis/final.html">Matching process</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../baseline.html">Initial Design Summary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../configuration.html">Aircraft Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../wing_layout.html">Wing Planform Sizing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tail_sizing.html">Tail Sizing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fuselage.html">Fuselage Sizing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../landing_gear.html">Landing Gear Sizing</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../powerplant/intro.html">Propulsion System</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../powerplant/engine_propeller.html">Engine and Propeller Selection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../powerplant/installation_thrust.html">Installation Thrust</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../aerodynamics/intro.html">Aerodynamics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../aerodynamics/lift_curve.html">Lift</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../aerodynamics/drag_buildup.html">Parasitic (Zero-lift) drag</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../aerodynamics/drag_polar_induced_drag.html">Drag Polar</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../hl_devices/intro.html">High-Lift Devices</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../hl_devices/takeoff.html">Takeoff</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../hl_devices/landing.html">Landing</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../weight_and_balance/intro.html">Weight and Balance</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../weight_and_balance/weight.html">Weights</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../weight_and_balance/cg.html">Center of gravity</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../weight_and_balance/cg_travel.html">CG Travel Diagram</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../long_stability/intro.html">Longitudinal stability</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../long_stability/static_margin.html">Static Margin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../long_stability/trim.html">Trim Analysis</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../lat_stability/intro.html">Lateral stability</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../lat_stability/yaw_derivative.html">Static yaw stability derivative</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lat_stability/roll_derivative.html">Static roll stability derivative</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lat_stability/trim.html">Lateral trim</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="intro.html">Performance</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Takeoff</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/ComputationalDesignLab/aircraft-design" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/performance/takeoff.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Takeoff</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ground-roll">Ground roll</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rotation">Rotation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#transition-and-climb">Transition and Climb</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#s-to"><span class="math notranslate nohighlight">\(S_{to}\)</span></a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="takeoff">
+<h1>Takeoff<a class="headerlink" href="#takeoff" title="Link to this heading">#</a></h1>
+<p>This section performs takeoff analysis for the example airplane using the method described in Raymer Section 17.8. The takeoff segment is divided into four parts - ground roll, rotation, transition to climb, and climb over obstacle. Refer to Figure 17.18 in Raymer for a visual depiction of these phases. Hence, total takeoff distance <span class="math notranslate nohighlight">\(S_{to}\)</span> is defined as</p>
+<div class="math notranslate nohighlight">
+\[
+    S_{to} = S_g + S_r + S_{tr} + S_c,
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(S_{g}\)</span> is the ground roll, <span class="math notranslate nohighlight">\(S_{r}\)</span> is the distance travelled during rotation, <span class="math notranslate nohighlight">\(S_{tr}\)</span> is the horizontal distance covered during transiting to climb, and <span class="math notranslate nohighlight">\(S_c\)</span> is the horizontal distance travelled before clearing the obstacle. Note that the total ground roll distance <span class="math notranslate nohighlight">\(S_{gr}\)</span> will be summation of <span class="math notranslate nohighlight">\(S_g\)</span> and <span class="math notranslate nohighlight">\(S_r\)</span>. The following sub-sections compute the distance traveled in each phase.</p>
+<section id="ground-roll">
+<h2>Ground roll<a class="headerlink" href="#ground-roll" title="Link to this heading">#</a></h2>
+<p>The ground roll distance <span class="math notranslate nohighlight">\(S_g\)</span> can be estimated using (equation 17.102, Raymer)</p>
+<div class="math notranslate nohighlight">
+\[
+    S_g = \frac{1}{2gK_a} \ln \bigg( 1 + \frac{K_a}{K_t} V_{to}^2 \bigg),
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(K_a\)</span> and <span class="math notranslate nohighlight">\(K_t\)</span> are defined as (equation 17.103 and 17.104, Raymer)</p>
+<div class="math notranslate nohighlight">
+\[
+    K_t = T/W - \mu \quad \text{and} \quad K_a = \frac{\rho}{2(W/S)} (\mu C_L - C_{D_0} - KC_{L}^2).
+\]</div>
+<p>The <span class="math notranslate nohighlight">\(T\)</span> is the thrust computed using the average velocity during the ground roll phase, <span class="math notranslate nohighlight">\(\mu\)</span> is the rolling resistance coefficient and <span class="math notranslate nohighlight">\(W\)</span> is the takeoff weight. The <span class="math notranslate nohighlight">\(g\)</span> refers to acceleration due to gravity, <span class="math notranslate nohighlight">\(C_L\)</span> is the lift coefficient based on the angle of attack experienced by the plane on ground, and <span class="math notranslate nohighlight">\(C_{D_0}\)</span> is the parasitic drag coefficient in takeoff configuration. The takeoff velocity <span class="math notranslate nohighlight">\(V_{to}\)</span> is usually 1.1 times the stall speed, computed with takeoff flaps settings. The average velocity used for computing <span class="math notranslate nohighlight">\(T\)</span> is usually <span class="math notranslate nohighlight">\(1/\sqrt{2}\)</span> times <span class="math notranslate nohighlight">\(V_{to}\)</span>.</p>
+<p>Below block computes the takeoff speed <span class="math notranslate nohighlight">\(V_{to}\)</span> and the thrust <span class="math notranslate nohighlight">\(T\)</span>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Parameters</span>
+<span class="n">wing_loading</span> <span class="o">=</span> <span class="mi">40</span> <span class="c1"># lbs/sq ft</span>
+<span class="n">rho</span> <span class="o">=</span> <span class="mf">0.00237717</span> <span class="c1"># slugs/cu ft, sea-level</span>
+<span class="n">CLmax_TO</span> <span class="o">=</span> <span class="mf">1.8</span>
+<span class="n">prop_eff</span> <span class="o">=</span> <span class="mf">0.8</span>
+<span class="n">P</span> <span class="o">=</span> <span class="mi">298</span> <span class="c1"># hp, takeoff power</span>
+
+<span class="n">Vto</span> <span class="o">=</span> <span class="mf">1.1</span> <span class="o">*</span> <span class="p">(</span> <span class="n">wing_loading</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">/</span> <span class="n">rho</span> <span class="o">/</span> <span class="n">CLmax_TO</span> <span class="p">)</span><span class="o">**</span><span class="mf">0.5</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Takeoff speed: </span><span class="si">{</span><span class="n">Vto</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2"> ft/s&quot;</span><span class="p">)</span>
+
+<span class="n">T</span> <span class="o">=</span> <span class="mi">550</span> <span class="o">*</span> <span class="n">P</span> <span class="o">*</span> <span class="n">prop_eff</span> <span class="o">/</span> <span class="mf">0.707</span> <span class="o">/</span> <span class="n">Vto</span>
+<span class="n">T</span> <span class="o">=</span> <span class="mf">0.92</span> <span class="o">*</span> <span class="n">T</span> <span class="c1"># installation loss</span>
+<span class="n">T_avg</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">T</span> <span class="c1"># lbs</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Average thrust during TO: </span><span class="si">{</span><span class="n">T_avg</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2"> lbs&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Takeoff speed: 150 ft/s
+Average thrust during TO: 2269 lbs
+</pre></div>
+</div>
+</div>
+</div>
+<p>Below code block computes ground roll distance:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="n">A</span> <span class="o">=</span> <span class="mi">8</span>
+<span class="n">e</span> <span class="o">=</span> <span class="mf">0.81</span> <span class="o">-</span> <span class="mf">0.05</span> <span class="c1"># in TO conditions</span>
+<span class="n">g</span> <span class="o">=</span> <span class="mf">32.174</span> <span class="c1"># ft/s^2</span>
+<span class="n">mu</span> <span class="o">=</span> <span class="mf">0.04</span> <span class="c1"># Raymer Table 17.1</span>
+<span class="n">W</span> <span class="o">=</span> <span class="mf">0.99</span> <span class="o">*</span> <span class="mi">5374</span> <span class="c1"># lbs</span>
+<span class="n">CD0</span> <span class="o">=</span> <span class="mf">0.03363</span> <span class="o">+</span> <span class="mf">0.024011</span> <span class="c1"># TO conditions</span>
+<span class="n">CL</span> <span class="o">=</span> <span class="mf">0.6</span> <span class="c1"># TO lift curve with wing incidence of 2 deg</span>
+
+<span class="c1"># K in drag model</span>
+<span class="n">K</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="n">A</span><span class="o">/</span><span class="n">e</span>
+<span class="n">h</span> <span class="o">=</span> <span class="mi">4</span> <span class="c1"># ft, height of wing above ground</span>
+<span class="n">b</span> <span class="o">=</span> <span class="mi">33</span> <span class="c1"># ft, wing span</span>
+<span class="n">Keff</span> <span class="o">=</span> <span class="n">K</span> <span class="o">*</span> <span class="p">(</span> <span class="mi">33</span> <span class="o">*</span> <span class="p">(</span><span class="n">h</span><span class="o">/</span><span class="n">b</span><span class="p">)</span><span class="o">**</span><span class="mf">1.5</span> <span class="o">/</span> <span class="p">(</span> <span class="mi">1</span> <span class="o">+</span> <span class="mi">33</span> <span class="o">*</span> <span class="p">(</span><span class="n">h</span><span class="o">/</span><span class="n">b</span><span class="p">)</span><span class="o">**</span><span class="mf">1.5</span> <span class="p">)</span> <span class="p">)</span> <span class="c1"># eq 12.60, Raymer</span>
+
+<span class="c1"># ground roll distance</span>
+<span class="n">KT</span> <span class="o">=</span> <span class="p">(</span><span class="n">T_avg</span><span class="o">/</span><span class="n">W</span><span class="p">)</span> <span class="o">-</span> <span class="n">mu</span>
+<span class="n">KA</span> <span class="o">=</span> <span class="n">rho</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">/</span> <span class="n">wing_loading</span> <span class="o">*</span> <span class="p">(</span><span class="n">mu</span><span class="o">*</span><span class="n">CL</span> <span class="o">-</span> <span class="n">CD0</span> <span class="o">-</span> <span class="n">Keff</span><span class="o">*</span><span class="n">CL</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">Sg</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">KA</span><span class="o">/</span><span class="n">KT</span><span class="o">*</span><span class="n">Vto</span><span class="o">**</span><span class="mi">2</span> <span class="p">)</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">/</span> <span class="n">g</span> <span class="o">/</span> <span class="n">KA</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Ground roll distance: </span><span class="si">{</span><span class="n">Sg</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2"> ft&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Ground roll distance: 947 ft
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="rotation">
+<h2>Rotation<a class="headerlink" href="#rotation" title="Link to this heading">#</a></h2>
+<p>The distance covered during rotation depends on the pilot. However, it can be estimated using the takeoff speed and time for rotation, assuming that there is no acceleration in this phase. For small planes, it can be assumed that it takes about 1 sec for rotation. Below code block computes <span class="math notranslate nohighlight">\(S_r\)</span> and total ground roll <span class="math notranslate nohighlight">\(S_{gr}\)</span>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">t_rotation</span> <span class="o">=</span> <span class="mi">1</span> <span class="c1"># sec</span>
+<span class="n">Sr</span> <span class="o">=</span> <span class="n">Vto</span> <span class="o">*</span> <span class="n">t_rotation</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Distance travelled during rotation: </span><span class="si">{</span><span class="n">Sr</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2"> ft&quot;</span><span class="p">)</span>
+
+<span class="n">Sgr</span> <span class="o">=</span> <span class="n">Sg</span> <span class="o">+</span> <span class="n">Sr</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Total ground roll: </span><span class="si">{</span><span class="n">Sgr</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2"> ft&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Distance travelled during rotation: 150 ft
+Total ground roll: 1097 ft
+</pre></div>
+</div>
+</div>
+</div>
+<p>Based on the calculations, the total ground roll for the example airplane is less than the requried distance of 1500 ft.</p>
+</section>
+<section id="transition-and-climb">
+<h2>Transition and Climb<a class="headerlink" href="#transition-and-climb" title="Link to this heading">#</a></h2>
+<p>During transition, airplane accelerates from takeoff speed (1.1 times stall speed) to climb speed (1.2 times stall speed), and hence, the average speed during transition <span class="math notranslate nohighlight">\(V_{tr}\)</span> will be about 1.15 times stall speed. The path of the airplane is approximated as a circular arc whose radius is given as (equation 17.107, Raymer)</p>
+<div class="math notranslate nohighlight">
+\[
+    R = \frac{V_{tr}^2}{0.2g}.
+\]</div>
+<p>The climb angle at the end of this phase is computed using (equation 17.108, Raymer)</p>
+<div class="math notranslate nohighlight">
+\[
+    \gamma_{climb} = \sin^{-1} \bigg( \frac{T}{W} - \frac{1}{L/D} \bigg),
+\]</div>
+<p>where the average <span class="math notranslate nohighlight">\(T\)</span> is computed using <span class="math notranslate nohighlight">\(V_{tr}\)</span> and the average <span class="math notranslate nohighlight">\(L/D\)</span> is computed using 90% of the maximum <span class="math notranslate nohighlight">\(L/D\)</span> with takeoff flaps. Using this radius <span class="math notranslate nohighlight">\(R\)</span> and climb angle <span class="math notranslate nohighlight">\(\gamma_{climb}\)</span>, horizontal and vertical distance traveled by the airplane during this phase can be computed. First, vertical distance is computed using (equation 17.110, Raymer)</p>
+<div class="math notranslate nohighlight">
+\[
+    h_{tr} = R(1 - \cos\gamma_{climb}).
+\]</div>
+<p>If <span class="math notranslate nohighlight">\(h_{tr}\)</span> is less than the obstacle height <span class="math notranslate nohighlight">\(h_{obs}\)</span> (50 ft in this case), then <span class="math notranslate nohighlight">\(S_{tr}\)</span> is computed using (equation 17.109, Raymer)</p>
+<div class="math notranslate nohighlight">
+\[
+    S_{tr} = R \sin\gamma_{climb}.
+\]</div>
+<p>If <span class="math notranslate nohighlight">\(h_{tr}\)</span> is more than the obstacle height <span class="math notranslate nohighlight">\(h_{obs}\)</span>, then <span class="math notranslate nohighlight">\(S_{tr}\)</span> is computed using (equation 17.111, Raymer)</p>
+<div class="math notranslate nohighlight">
+\[
+    S_{tr} = \sqrt{ R^2 - (R - h_{obs})^2 }.
+\]</div>
+<p>Moreover, the climb distance <span class="math notranslate nohighlight">\(S_c\)</span> will also be zero since airplane has traveled the required vertical distance of <span class="math notranslate nohighlight">\(h_{obs}\)</span>.</p>
+<p>Below code block computes <span class="math notranslate nohighlight">\(\gamma_{climb}\)</span> and <span class="math notranslate nohighlight">\(h_{tr}\)</span>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Transition speed</span>
+<span class="n">Vtr</span> <span class="o">=</span> <span class="mf">1.15</span> <span class="o">*</span> <span class="n">Vto</span> <span class="o">/</span> <span class="mf">1.1</span> <span class="c1"># ft/s</span>
+
+<span class="c1"># Radius</span>
+<span class="n">R</span> <span class="o">=</span> <span class="n">Vtr</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="mf">0.2</span> <span class="o">/</span> <span class="n">g</span> <span class="c1"># ft</span>
+
+<span class="c1"># Thrust</span>
+<span class="n">T</span> <span class="o">=</span> <span class="mi">550</span> <span class="o">*</span> <span class="n">P</span> <span class="o">*</span> <span class="n">prop_eff</span> <span class="o">/</span> <span class="n">Vtr</span>
+<span class="n">T</span> <span class="o">=</span> <span class="mf">0.92</span> <span class="o">*</span> <span class="n">T</span> <span class="c1"># installation loss</span>
+<span class="n">T_transition</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">T</span> <span class="c1"># lbs</span>
+
+<span class="c1"># Climb angle</span>
+<span class="n">CL_tr</span> <span class="o">=</span> <span class="mf">0.9</span><span class="o">*</span><span class="n">CLmax_TO</span>
+<span class="n">L_by_D</span> <span class="o">=</span> <span class="n">CL_tr</span> <span class="o">/</span> <span class="p">(</span> <span class="n">CD0</span> <span class="o">+</span> <span class="n">K</span><span class="o">*</span><span class="n">CL_tr</span><span class="o">**</span><span class="mi">2</span> <span class="p">)</span>
+<span class="n">W</span> <span class="o">=</span> <span class="mf">0.985</span> <span class="o">*</span> <span class="mi">5374</span> <span class="c1"># lbs</span>
+<span class="n">climb_gamma</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arcsin</span><span class="p">(</span> <span class="n">T_transition</span><span class="o">/</span><span class="n">W</span> <span class="o">-</span> <span class="mi">1</span><span class="o">/</span><span class="n">L_by_D</span> <span class="p">)</span> <span class="o">*</span> <span class="mi">180</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="c1"># deg</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Climb angle: </span><span class="si">{</span><span class="n">climb_gamma</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2"> deg&quot;</span><span class="p">)</span>
+
+<span class="c1"># Vertical distance</span>
+<span class="n">htr</span> <span class="o">=</span> <span class="n">R</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">deg2rad</span><span class="p">(</span><span class="n">climb_gamma</span><span class="p">)))</span> <span class="c1"># ft</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Vertical height gained: </span><span class="si">{</span><span class="n">htr</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2"> ft&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Climb angle: 10 deg
+Vertical height gained: 56 ft
+</pre></div>
+</div>
+</div>
+</div>
+<p>Based on the above calculcations, the vertical height is more than the obstacle of 50 ft. Hence, <span class="math notranslate nohighlight">\(S_{tr}\)</span> will be computed using equation 17.111 (Raymer) and <span class="math notranslate nohighlight">\(S_c\)</span> will zero. Below block computes <span class="math notranslate nohighlight">\(S_{tr}\)</span> and <span class="math notranslate nohighlight">\(S_{c}\)</span>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Str</span> <span class="o">=</span> <span class="p">(</span> <span class="n">R</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="p">(</span><span class="n">R</span> <span class="o">-</span> <span class="n">htr</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="p">)</span><span class="o">**</span><span class="mf">0.5</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Horizonal distance traveled during transition: </span><span class="si">{</span><span class="n">Str</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2"> ft&quot;</span><span class="p">)</span>
+
+<span class="n">Sc</span> <span class="o">=</span> <span class="mi">0</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Horizonal distance traveled during transition: 651 ft
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="s-to">
+<h2><span class="math notranslate nohighlight">\(S_{to}\)</span><a class="headerlink" href="#s-to" title="Link to this heading">#</a></h2>
+<p>The final takeoff distance is just the sum of the individual components. Below code block computes <span class="math notranslate nohighlight">\(S_{to}\)</span>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Sto</span> <span class="o">=</span> <span class="n">Sg</span> <span class="o">+</span> <span class="n">Sr</span> <span class="o">+</span> <span class="n">Str</span> <span class="o">+</span> <span class="n">Sc</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Total takeoff distance: </span><span class="si">{</span><span class="n">Sto</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2"> ft&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Total takeoff distance: 1749 ft
+</pre></div>
+</div>
+</div>
+</div>
+<p>Below image summarizes the final result from the takeoff analysis:</p>
+<div style="width:80%; margin: auto;">
+<p><img alt="logos" src="../_images/takeoff_analysis.png" /></p>
+</div>
+<p>This concludes the takeoff analysis, next section is about landing distance.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./performance"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="intro.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Performance</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ground-roll">Ground roll</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rotation">Rotation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#transition-and-climb">Transition and Climb</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#s-to"><span class="math notranslate nohighlight">\(S_{to}\)</span></a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By CODE Lab
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
