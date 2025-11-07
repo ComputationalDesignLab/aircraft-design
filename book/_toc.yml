@@ -52,3 +52,4 @@ chapters:
   - file: performance/intro
     sections:
       - file: performance/takeoff
+      - file: performance/landing
