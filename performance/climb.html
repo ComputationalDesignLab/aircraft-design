@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>AEO &#8212; Aircraft Design</title>
+    <title>Climb gradient &#8212; Aircraft Design</title>
   
   
   
@@ -57,9 +57,12 @@
     <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'performance/climb';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Landing" href="landing.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -122,8 +125,6 @@
       
       
       
-        
-      
       <div class="bd-sidebar-primary bd-sidebar">
         
 
@@ -173,7 +174,7 @@
                 </a>
             </li>
         </ul>
-        <ul class="nav bd-sidenav">
+        <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../setup.html">Computing environment setup</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../python_basics/intro.html">Basics of Python Programming</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../python_basics/python_basics.html">Basic programming in Python and Jupyter Notebooks</a></li>
@@ -236,9 +237,10 @@
 <li class="toctree-l2"><a class="reference internal" href="../lat_stability/trim.html">Lateral trim</a></li>
 </ul>
 </details></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="intro.html">Performance</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="intro.html">Performance</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="takeoff.html">Takeoff</a></li>
 <li class="toctree-l2"><a class="reference internal" href="landing.html">Landing</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Climb gradient</a></li>
 </ul>
 </details></li>
 </ul>
@@ -394,7 +396,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>AEO</h1>
+    <h1>Climb gradient</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -404,10 +406,10 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">AEO</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#oei">OEI</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#aeo">AEO</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#oei">OEI</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#blaked-landing">Blaked landing</a></li>
 </ul>
-
             </nav>
         </div>
     </div>
@@ -418,106 +420,129 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="aeo">
-<h1>AEO<a class="headerlink" href="#aeo" title="Link to this heading">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="climb-gradient">
+<h1>Climb gradient<a class="headerlink" href="#climb-gradient" title="Link to this heading">#</a></h1>
+<p>This section describes climb gradient analysis for the example airplane. This analysis is performed to determine whether the airplane satisfies the climb gradient requirements or not. It is difficult to compute maximum climb gradient at any given condition for a propeller-driven airplane. Hence, in this section, a simple analysis method is used, similar to the method used in <a class="reference internal" href="../constraint_analysis/climb.html"><span class="std std-doc">constraint analysis</span></a>. The climb gradient (CGR) is computed as (equation 3.29, Roskam Part 1)</p>
+<div class="math notranslate nohighlight">
+\[
+    CGR = \frac{18.97\eta_p\sqrt{\sigma}}{W/P \sqrt{W/S}} - \frac{1}{L/D},
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(P\)</span> is the power, <span class="math notranslate nohighlight">\(W\)</span> is the weight, and <span class="math notranslate nohighlight">\(\eta_p\)</span> is propeller efficiency. The <span class="math notranslate nohighlight">\(S\)</span> is the wing reference area and <span class="math notranslate nohighlight">\(\sigma\)</span> is the ratio of the density at  given altitude to sea-level. Note that this is the same equation used in constraint analysis. However, parameters in this equation are computed using better methods. The best possible climb gradient occurs when <span class="math notranslate nohighlight">\(C_L\)</span> is close to its maximum value. This can be dangerous since the aircraft will be flying close to stall speed, and hence, a margin of 0.2 is used as recommended in Roskam Part 1. The <span class="math notranslate nohighlight">\(L/D\)</span> can be computed using</p>
+<div class="math notranslate nohighlight">
+\[
+    \frac{L}{D} = \frac{C_L}{C_{D_0} + \dfrac{C_L^2}{\pi Ae}}.
+\]</div>
+<p>The following sub-sections compute CGR for the three conditions - all engine operative (AEO), one engine inoperative (OEI), and blaked landing (BL).</p>
+<p>Below code block imports required packages and defines a function for computing CGR:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 
-<span class="n">A</span> <span class="o">=</span> <span class="mi">8</span>
-<span class="n">e</span> <span class="o">=</span> <span class="mf">0.81</span> <span class="o">-</span> <span class="mf">0.05</span> <span class="c1"># in TO conditions</span>
-<span class="n">mu</span> <span class="o">=</span> <span class="mf">0.04</span> <span class="c1"># Raymer Table 17.1</span>
-<span class="n">W</span> <span class="o">=</span> <span class="mf">0.99</span> <span class="o">*</span> <span class="mi">5374</span> <span class="c1"># lbs</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">compute_CGR</span><span class="p">(</span><span class="n">W</span><span class="p">,</span> <span class="n">CL</span><span class="p">,</span> <span class="n">CD0</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> <span class="n">P</span><span class="p">):</span>
+
+    <span class="n">A</span> <span class="o">=</span> <span class="mi">8</span> <span class="c1"># aspect ratio</span>
+    <span class="n">S</span> <span class="o">=</span> <span class="mi">134</span> <span class="c1"># sq ft</span>
+    <span class="n">prop_eff</span> <span class="o">=</span> <span class="mf">0.8</span>
+    <span class="n">K</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="n">A</span><span class="o">/</span><span class="n">e</span>
+    <span class="n">L_by_D</span> <span class="o">=</span> <span class="n">CL</span> <span class="o">/</span> <span class="p">(</span> <span class="n">CD0</span> <span class="o">+</span> <span class="n">K</span><span class="o">*</span><span class="n">CL</span><span class="o">**</span><span class="mi">2</span> <span class="p">)</span>
+
+    <span class="n">CGR</span> <span class="o">=</span> <span class="mf">18.97</span> <span class="o">*</span> <span class="n">prop_eff</span> <span class="o">*</span> <span class="p">(</span><span class="n">sigma</span><span class="o">*</span><span class="n">CL</span><span class="p">)</span><span class="o">**</span><span class="mf">0.5</span> <span class="o">/</span> <span class="p">(</span><span class="n">W</span><span class="o">/</span><span class="n">P</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">W</span><span class="o">/</span><span class="n">S</span><span class="p">)</span><span class="o">**</span><span class="mf">0.5</span> <span class="o">-</span> <span class="mi">1</span><span class="o">/</span><span class="n">L_by_D</span>
+
+    <span class="k">return</span> <span class="n">CGR</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="aeo">
+<h2>AEO<a class="headerlink" href="#aeo" title="Link to this heading">#</a></h2>
+<p>The flight conditions for AEO case is given in <a class="reference internal" href="../constraint_analysis/climb.html"><span class="std std-doc">constraint analysis</span></a> section. Below code computes CGR for AEO case:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">MTOW</span> <span class="o">=</span> <span class="mi">5374</span> <span class="c1"># lbs</span>
+<span class="n">W</span> <span class="o">=</span> <span class="mf">0.984</span> <span class="o">*</span> <span class="n">MTOW</span> <span class="c1"># lbs</span>
+<span class="n">CLmax</span> <span class="o">=</span> <span class="mf">1.8</span>
+<span class="n">CL</span> <span class="o">=</span> <span class="n">CLmax</span> <span class="o">-</span> <span class="mf">0.2</span> <span class="c1"># 0.2 is safety margin</span>
 <span class="n">CD0</span> <span class="o">=</span> <span class="mf">0.03363</span> <span class="o">+</span> <span class="mf">0.024011</span> <span class="c1"># TO conditions</span>
-<span class="n">CL</span> <span class="o">=</span> <span class="mf">0.7</span> <span class="o">*</span> <span class="mf">1.8</span>
-<span class="n">K</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="n">A</span><span class="o">/</span><span class="n">e</span>
-<span class="n">L_by_D</span> <span class="o">=</span> <span class="n">CL</span> <span class="o">/</span> <span class="p">(</span> <span class="n">CD0</span> <span class="o">+</span> <span class="n">K</span><span class="o">*</span><span class="n">CL</span><span class="o">**</span><span class="mi">2</span> <span class="p">)</span>
-<span class="n">rho</span> <span class="o">=</span> <span class="mf">0.00237717</span> <span class="c1"># slugs/cu ft, sea-level</span>
-<span class="n">S</span> <span class="o">=</span> <span class="mi">134</span> <span class="c1"># ft^2</span>
+<span class="n">rho_sealevel</span> <span class="o">=</span> <span class="mf">0.00237717</span> <span class="c1"># slugs/cu ft, sea-level</span>
+<span class="n">sigma</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">e</span> <span class="o">=</span> <span class="mf">0.81</span> <span class="o">-</span> <span class="mf">0.05</span> <span class="c1"># TO condition</span>
+<span class="n">P_max</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="mi">298</span> <span class="c1"># hp, max to power</span>
+<span class="n">P_max_cont</span> <span class="o">=</span> <span class="n">P_max</span> <span class="o">/</span> <span class="mf">1.1</span> <span class="c1"># hp, max continuous power</span>
 
-<span class="n">Vstall</span> <span class="o">=</span> <span class="p">(</span><span class="n">W</span><span class="o">/</span><span class="n">S</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">/</span> <span class="n">rho</span> <span class="o">/</span><span class="n">CL</span><span class="p">)</span><span class="o">**</span><span class="mf">0.5</span>
+<span class="n">CGR</span> <span class="o">=</span> <span class="n">compute_CGR</span><span class="p">(</span><span class="n">W</span><span class="p">,</span> <span class="n">CL</span><span class="p">,</span> <span class="n">CD0</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> <span class="n">P_max_cont</span><span class="p">)</span>
 
-<span class="n">P</span> <span class="o">=</span> <span class="mi">298</span> <span class="c1">#hp</span>
-<span class="n">prop_eff</span> <span class="o">=</span> <span class="mf">0.8</span>
-<span class="n">Vclimb</span> <span class="o">=</span> <span class="mf">1.2</span> <span class="o">*</span> <span class="n">Vstall</span>
-
-<span class="c1"># Thrust</span>
-<span class="n">T</span> <span class="o">=</span> <span class="mi">550</span> <span class="o">*</span> <span class="n">P</span> <span class="o">*</span> <span class="n">prop_eff</span> <span class="o">/</span> <span class="n">Vclimb</span>
-<span class="n">T</span> <span class="o">=</span> <span class="mf">0.92</span> <span class="o">*</span> <span class="n">T</span> <span class="c1"># installation loss</span>
-<span class="n">T_transition</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">T</span> <span class="c1"># lbs</span>
-
-<span class="c1"># Climb angle</span>
-<span class="n">climb_gamma</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arcsin</span><span class="p">(</span> <span class="n">T_transition</span><span class="o">/</span><span class="n">W</span> <span class="o">-</span> <span class="mi">1</span><span class="o">/</span><span class="n">L_by_D</span> <span class="p">)</span> <span class="o">*</span> <span class="mi">180</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="c1"># deg</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="n">climb_gamma</span><span class="p">)</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">tan</span><span class="p">(</span><span class="n">climb_gamma</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">180</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Climb gradient for AEO case: </span><span class="si">{</span><span class="n">CGR</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>6.913977830826516
-12.126083583942146
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Climb gradient for AEO case: 0.1933
 </pre></div>
 </div>
 </div>
 </div>
+<p>Note that the computed AEO climb gradient is greater than the required CGR of 0.083.</p>
 </section>
 <section id="oei">
-<h1>OEI<a class="headerlink" href="#oei" title="Link to this heading">#</a></h1>
+<h2>OEI<a class="headerlink" href="#oei" title="Link to this heading">#</a></h2>
+<p>The flight conditions for OEI case is given in <a class="reference internal" href="../constraint_analysis/climb.html"><span class="std std-doc">constraint analysis</span></a> section. Note that drag due to stopped propeller should be taken into account. Below code computes CGR for OEI case:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
-
-<span class="n">A</span> <span class="o">=</span> <span class="mi">8</span>
-<span class="n">e</span> <span class="o">=</span> <span class="mf">0.81</span> <span class="c1"># clean conditions</span>
-<span class="n">W</span> <span class="o">=</span> <span class="mf">0.95</span> <span class="o">*</span> <span class="mi">5374</span> <span class="c1"># lbs</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">W</span> <span class="o">=</span> <span class="mf">0.95</span> <span class="o">*</span> <span class="n">MTOW</span> <span class="c1"># lbs</span>
+<span class="n">CLmax</span> <span class="o">=</span> <span class="mf">1.44</span>
+<span class="n">CL</span> <span class="o">=</span> <span class="n">CLmax</span> <span class="o">-</span> <span class="mf">0.2</span> <span class="c1"># 0.2 is safety margin</span>
 <span class="n">CD0</span> <span class="o">=</span> <span class="mf">0.03363</span> <span class="c1"># clean conditions</span>
-<span class="n">CL</span> <span class="o">=</span> <span class="mf">0.7</span> <span class="o">*</span> <span class="mf">1.44</span>
-<span class="n">K</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="n">A</span><span class="o">/</span><span class="n">e</span>
-<span class="n">L_by_D</span> <span class="o">=</span> <span class="n">CL</span> <span class="o">/</span> <span class="p">(</span> <span class="n">CD0</span> <span class="o">+</span> <span class="n">K</span><span class="o">*</span><span class="n">CL</span><span class="o">**</span><span class="mi">2</span> <span class="p">)</span>
-<span class="n">rho</span> <span class="o">=</span> <span class="mf">0.00204834</span> <span class="c1"># slugs/cu ft, sea-level</span>
-<span class="n">S</span> <span class="o">=</span> <span class="mi">134</span> <span class="c1"># ft^2</span>
+<span class="n">rho_5000</span> <span class="o">=</span> <span class="mf">0.00204834</span> <span class="c1"># slugs/cu ft, at 5000 ft</span>
+<span class="n">sigma</span> <span class="o">=</span> <span class="n">rho_5000</span> <span class="o">/</span> <span class="n">rho_sealevel</span>
+<span class="n">e</span> <span class="o">=</span> <span class="mf">0.81</span> <span class="c1"># clean condition</span>
+<span class="n">P</span> <span class="o">=</span> <span class="n">P_max</span><span class="o">/</span><span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">sigma</span> <span class="o">-</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">sigma</span><span class="p">)</span><span class="o">/</span><span class="mf">7.75</span><span class="p">)</span> <span class="c1"># power at 5000 ft</span>
 
-<span class="n">Vstall</span> <span class="o">=</span> <span class="p">(</span><span class="n">W</span><span class="o">/</span><span class="n">S</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">/</span> <span class="n">rho</span> <span class="o">/</span><span class="n">CL</span><span class="p">)</span><span class="o">**</span><span class="mf">0.5</span>
+<span class="c1"># drag due to stopped propeller</span>
+<span class="n">S</span> <span class="o">=</span> <span class="mi">134</span> <span class="c1"># sq ft</span>
+<span class="n">dia</span> <span class="o">=</span> <span class="mf">5.8</span> <span class="c1"># ft</span>
+<span class="n">Aprop</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="p">(</span><span class="n">dia</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="mi">4</span>
+<span class="n">CD0_prop</span> <span class="o">=</span> <span class="mf">0.1</span> <span class="o">*</span> <span class="n">sigma</span> <span class="o">*</span> <span class="n">Aprop</span> <span class="o">/</span> <span class="n">S</span>
 
-<span class="n">P</span> <span class="o">=</span> <span class="mi">298</span> <span class="c1">#hp</span>
-<span class="n">prop_eff</span> <span class="o">=</span> <span class="mf">0.8</span>
-<span class="n">Vclimb</span> <span class="o">=</span> <span class="mf">1.2</span> <span class="o">*</span> <span class="n">Vstall</span>
+<span class="n">CGR</span> <span class="o">=</span> <span class="n">compute_CGR</span><span class="p">(</span><span class="n">W</span><span class="p">,</span> <span class="n">CL</span><span class="p">,</span> <span class="n">CD0</span><span class="o">+</span><span class="n">CD0_prop</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> <span class="n">P</span><span class="p">)</span>
 
-<span class="c1"># Propeller area, sq ft</span>
-<span class="n">dia</span> <span class="o">=</span> <span class="mf">5.9</span> <span class="c1"># ft</span>
-<span class="n">Aprop</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">dia</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="mi">4</span>
-<span class="n">q</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">rho</span> <span class="o">*</span> <span class="n">Vclimb</span><span class="o">**</span><span class="mi">2</span>
-
-<span class="n">T</span> <span class="o">=</span> <span class="mi">550</span> <span class="o">*</span> <span class="n">P</span> <span class="o">*</span> <span class="n">prop_eff</span> <span class="o">/</span> <span class="n">Vclimb</span>
-<span class="n">T</span> <span class="o">=</span> <span class="mf">0.92</span> <span class="o">*</span> <span class="n">T</span> <span class="c1"># installation loss</span>
-<span class="n">D</span> <span class="o">=</span> <span class="mf">0.08</span> <span class="o">*</span> <span class="n">T</span> <span class="o">+</span> <span class="mf">0.1</span><span class="o">*</span><span class="n">Aprop</span><span class="o">*</span><span class="n">q</span> <span class="c1"># drag of inoperative engine</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="n">T</span><span class="p">,</span><span class="n">D</span><span class="p">)</span>
-
-<span class="n">T_transition</span> <span class="o">=</span> <span class="n">T</span> <span class="o">-</span> <span class="n">D</span> <span class="c1"># lbs</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="n">T_transition</span><span class="o">/</span><span class="n">W</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="n">L_by_D</span><span class="p">)</span>
-
-<span class="c1"># Climb angle</span>
-<span class="n">climb_gamma</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arcsin</span><span class="p">(</span> <span class="n">T_transition</span><span class="o">/</span><span class="n">W</span> <span class="o">-</span> <span class="mi">1</span><span class="o">/</span><span class="n">L_by_D</span> <span class="p">)</span> <span class="o">*</span> <span class="mi">180</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="c1"># deg</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="n">climb_gamma</span><span class="p">)</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">tan</span><span class="p">(</span><span class="n">climb_gamma</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">180</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Climb gradient for OEI case: </span><span class="si">{</span><span class="n">CGR</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>523.2793282022667 190.66556780146072
-0.06515067878495014 0.08287796642224045
--1.0157519697171769
--1.7730073753669897
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Climb gradient for OEI case: 0.0234
 </pre></div>
 </div>
 </div>
 </div>
+<p>Note that the computed OEI climb gradient is greater than the required CGR of 0.015.</p>
+</section>
+<section id="blaked-landing">
+<h2>Blaked landing<a class="headerlink" href="#blaked-landing" title="Link to this heading">#</a></h2>
+<p>The flight conditions for blaked landing case is given in <a class="reference internal" href="../constraint_analysis/climb.html"><span class="std std-doc">constraint analysis</span></a> section. Below code computes CGR for blaked landing case:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">W</span> <span class="o">=</span> <span class="mf">0.95</span> <span class="o">*</span> <span class="n">MTOW</span> <span class="c1"># lbs</span>
+<span class="n">CLmax</span> <span class="o">=</span> <span class="mf">2.2</span>
+<span class="n">CL</span> <span class="o">=</span> <span class="n">CLmax</span> <span class="o">-</span> <span class="mf">0.2</span> <span class="c1"># 0.2 is safety margin</span>
+<span class="n">CD0</span> <span class="o">=</span> <span class="mf">0.03363</span> <span class="o">+</span> <span class="mf">0.048074</span> <span class="c1"># landing conditions</span>
+<span class="n">sigma</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">e</span> <span class="o">=</span> <span class="mf">0.81</span> <span class="o">-</span> <span class="mf">0.1</span> <span class="c1"># landing condition</span>
+
+<span class="n">CGR</span> <span class="o">=</span> <span class="n">compute_CGR</span><span class="p">(</span><span class="n">W</span><span class="p">,</span> <span class="n">CL</span><span class="p">,</span> <span class="n">CD0</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> <span class="n">P_max</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Climb gradient for AEO case: </span><span class="si">{</span><span class="n">CGR</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Climb gradient for AEO case: 0.2530
+</pre></div>
+</div>
+</div>
+</div>
+<p>Note that the computed blaked landing climb gradient is greater than the required CGR of 0.03. This concludes the climb gradient analysis.</p>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -550,6 +575,15 @@ document.write(`
                 <footer class="prev-next-footer d-print-none">
                   
 <div class="prev-next-area">
+    <a class="left-prev"
+       href="landing.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Landing</p>
+      </div>
+    </a>
 </div>
                 </footer>
               
@@ -566,10 +600,10 @@ document.write(`
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">AEO</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#oei">OEI</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#aeo">AEO</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#oei">OEI</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#blaked-landing">Blaked landing</a></li>
 </ul>
-
   </nav></div>
 
 </div></div>
