@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Performance &#8212; Aircraft Design</title>
+    <title>&lt;no title&gt; &#8212; Aircraft Design</title>
   
   
   
@@ -59,11 +59,9 @@
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'performance/intro';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'stability/longitudinal';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Takeoff" href="takeoff.html" />
-    <link rel="prev" title="Lateral trim" href="../lat_stability/trim.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -126,6 +124,8 @@
       
       
       
+        
+      
       <div class="bd-sidebar-primary bd-sidebar">
         
 
@@ -175,7 +175,7 @@
                 </a>
             </li>
         </ul>
-        <ul class="current nav bd-sidenav">
+        <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../setup.html">Computing environment setup</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../python_basics/intro.html">Basics of Python Programming</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../python_basics/python_basics.html">Basic programming in Python and Jupyter Notebooks</a></li>
@@ -225,23 +225,6 @@
 <li class="toctree-l2"><a class="reference internal" href="../weight_and_balance/weight.html">Weights</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../weight_and_balance/cg.html">Center of gravity</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../weight_and_balance/cg_travel.html">CG Travel Diagram</a></li>
-</ul>
-</details></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../long_stability/intro.html">Longitudinal stability</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="../long_stability/static_margin.html">Static Margin</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../long_stability/trim.html">Trim Analysis</a></li>
-</ul>
-</details></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../lat_stability/intro.html">Lateral stability</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="../lat_stability/yaw_derivative.html">Static yaw stability derivative</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../lat_stability/roll_derivative.html">Static roll stability derivative</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../lat_stability/trim.html">Lateral trim</a></li>
-</ul>
-</details></li>
-<li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">Performance</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="takeoff.html">Takeoff</a></li>
-<li class="toctree-l2"><a class="reference internal" href="landing.html">Landing</a></li>
-<li class="toctree-l2"><a class="reference internal" href="climb.html">Climb gradient</a></li>
 </ul>
 </details></li>
 </ul>
@@ -313,7 +296,7 @@
       
       
       
-      <li><a href="../_sources/performance/intro.md" target="_blank"
+      <li><a href="../_sources/stability/longitudinal.ipynb" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -323,7 +306,7 @@
 <span class="btn__icon-container">
   <i class="fas fa-file"></i>
   </span>
-<span class="btn__text-container">.md</span>
+<span class="btn__text-container">.ipynb</span>
 </a>
 </li>
       
@@ -384,7 +367,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
 </div></div>
       
     </div>
@@ -395,11 +380,19 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Performance</h1>
+    <h1><no title></h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="simple visible nav section-nav flex-column">
+</ul>
+
+            </nav>
         </div>
     </div>
 </div>
@@ -409,18 +402,14 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="performance">
-<h1>Performance<a class="headerlink" href="#performance" title="Link to this heading">#</a></h1>
-<p>This section performs detailed performance analysis for the example airplane. Specifically, takeoff, landing, cruise speed, and climb segments are analyzed. Further more, range and endurance of the airplane are also estimated. Additional performance metrics can also be determined as required. This analysis assumes that airplane is stable and trimmed during these segments. But this should be verfied using the methods described in stability section. Refer to lecture notes and Chapter 17 in Raymer for more details. Following topics are covered in this section:</p>
-<ol class="arabic simple">
-<li><p>Takeoff</p></li>
-<li><p>Landing</p></li>
-<li><p>Climb</p></li>
-<li><p>Cruise speed</p></li>
-</ol>
-<div class="toctree-wrapper compound">
-</div>
-</section>
+  <p>Section 16.3 ib Raymer Chapter 16</p>
+<div class="math notranslate nohighlight">
+\[
+    \bar{X}_{np} = \frac{ C_{L_\alpha} \bar{X}_{ac_w} - C_{M_{\alpha_f}} + \eta_h \dfrac{S_h}{S_w} C_{L_{\alpha_h}} \dfrac{\partial \alpha_h}{\partial \alpha} \bar{X}_{ac_h} + \dfrac{F_{p_\alpha}}{qS_w} \dfrac{\partial \alpha_p}{\partial \alpha} \bar{X}_p } { C_{L_\alpha} + \eta_h \dfrac{S_h}{S_w} C_{L_{\alpha_h}} \dfrac{\partial \alpha_h}{\partial \alpha} + \dfrac{F_{p_\alpha}}{qS_w} \dfrac{\partial \alpha_p}{\partial \alpha} }
+\]</div>
+<p>Let’s break down this long equation.</p>
+<p>First term is a contribution due to wing pitching moment <span class="math notranslate nohighlight">\(C_{L_\alpha}\)</span> is lift curve slope for wing (known) and</p>
+<p>Each term in this equation should be adjusted for the flap deflection (when doing takeoff and landing trim analysis)</p>
 
     <script type="text/x-thebe-config">
     {
@@ -435,7 +424,7 @@ document.write(`
         },
         kernelOptions: {
             name: "python3",
-            path: "./performance"
+            path: "./stability"
         },
         predefinedOutput: true
     }
@@ -452,30 +441,27 @@ document.write(`
                 <footer class="prev-next-footer d-print-none">
                   
 <div class="prev-next-area">
-    <a class="left-prev"
-       href="../lat_stability/trim.html"
-       title="previous page">
-      <i class="fa-solid fa-angle-left"></i>
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Lateral trim</p>
-      </div>
-    </a>
-    <a class="right-next"
-       href="takeoff.html"
-       title="next page">
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Takeoff</p>
-      </div>
-      <i class="fa-solid fa-angle-right"></i>
-    </a>
 </div>
                 </footer>
               
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="simple visible nav section-nav flex-column">
+</ul>
+
+  </nav></div>
+
+</div></div>
               
             
           </div>

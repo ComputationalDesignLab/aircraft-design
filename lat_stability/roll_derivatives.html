@@ -413,23 +413,65 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="static-roll-and-yaw-stability-derivatives">
 <h1>Static roll and yaw stability derivatives<a class="headerlink" href="#static-roll-and-yaw-stability-derivatives" title="Link to this heading">#</a></h1>
-<p>Yaw derivative:</p>
+<p>This section computes roll static stability derivative <span class="math notranslate nohighlight">\(C_{l_{\beta}}\)</span> for the example airplane. The thrust effects are neglected for this analysis. Using equation 16.43 in Raymer, roll static stability derivative can be written as:</p>
 <div class="math notranslate nohighlight">
 \[
-    C_{n_{\beta}} = C_{n_{\beta_w}} + C_{n_{\beta_{fus}}} + C_{n_{\beta_v}}
+    C_{l_{\beta}} = C_{l_{\beta_w}} + C_{l_{\beta_v}}.
 \]</div>
-<p>veritical force at prop is ignored</p>
-<p>Roll derivative:</p>
-<div class="math notranslate nohighlight">
-\[
-    C_{l_\beta} = C_{l_{\beta_w}} + C_{l_{\beta_v}}
-\]</div>
+<p>The first and second term represent rolling moment contribution from wing and vertical tail, respectively. The fuselage contribution towards rolling is usually based wing-fuselage intersection which is already included in <span class="math notranslate nohighlight">\(C_{l_{\beta_w}}\)</span>.</p>
 <section id="wing">
 <h2>Wing<a class="headerlink" href="#wing" title="Link to this heading">#</a></h2>
+<p>The wing contribution towards rolling moment can be computed as (equation 16.47, Raymer):</p>
 <div class="math notranslate nohighlight">
 \[
-    C_{n_{\beta_w}} = 
+    C_{l_{\beta_w}} = \left( \frac{C_{l_{\beta_w}}}{C_L} \right) C_L + (C_{l_\beta})_\Gamma + C_{l_{\beta_{wf}}}
 \]</div>
+<p>The first term represents rolling moment derivative for a swept, tapered wing with no geometric dihedral. The second term accounts for the geometric dihedral while the last term is for wing-fuselage interaction.</p>
+<p>The <span class="math notranslate nohighlight">\(C_{l_{\beta_w}}/C_L\)</span> is computed as <span class="math notranslate nohighlight">\(-0.02 \text{ rad}^{-1}\)</span> using Figure 16.21 in Raymer based on the aspect ratio and taper ratio of the wing. The <span class="math notranslate nohighlight">\((C_{l_\beta})_\Gamma\)</span> is computed as (equation 16.45, Raymer)</p>
+<div class="math notranslate nohighlight">
+\[
+    (C_{l_\beta})_\Gamma = -\frac{C_{L_{\alpha}} \Gamma}{4} \left[ \frac{2(1 + 2\lambda)}{3(1 + \lambda)} \right],
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(\Gamma\)</span> is the geometric dihedral angle (in radians), <span class="math notranslate nohighlight">\(C_{L_{\alpha}}\)</span> is the lift-curve slope and <span class="math notranslate nohighlight">\(\lambda\)</span> is the taper ratio. The wing-fuselage interaction is computed using (equation 16.46, Raymer)</p>
+<div class="math notranslate nohighlight">
+\[
+    C_{l_{\beta_{wf}}} = -1.2 \frac{\sqrt{A} Z_{wf} (D_f + W_f)}{b^2},
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(Z_{wf}\)</span> is the vertical distance of the wing above the fuselage centerline, <span class="math notranslate nohighlight">\(D_f\)</span> is the height of the fuselage, <span class="math notranslate nohighlight">\(W_f\)</span> is the width of the fuselage, and <span class="math notranslate nohighlight">\(A\)</span> is the wing aspect ratio.</p>
+<p>Below block computes <span class="math notranslate nohighlight">\(C_{l_{\beta_w}}\)</span> at three different flight conditions:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="c1"># Parameters</span>
+<span class="n">A</span> <span class="o">=</span> <span class="mi">8</span>
+<span class="n">b</span> <span class="o">=</span> <span class="mi">33</span> <span class="c1"># ft</span>
+<span class="n">taper_ratio</span> <span class="o">=</span> <span class="mf">0.4</span>
+<span class="n">dihedral</span> <span class="o">=</span> <span class="mi">5</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">180</span> <span class="c1"># rad</span>
+<span class="n">Df</span> <span class="o">=</span> <span class="mf">5.75</span> <span class="c1"># ft</span>
+<span class="n">Wf</span> <span class="o">=</span> <span class="mi">5</span> <span class="c1"># ft</span>
+<span class="n">Zwf</span> <span class="o">=</span> <span class="o">-</span><span class="mf">2.54</span> <span class="c1"># ft</span>
+<span class="n">Cl_beta_w_CL</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.02</span> <span class="c1"># 1/rad</span>
+<span class="n">CL_alpha</span> <span class="o">=</span> <span class="mf">5.0</span> <span class="c1"># 1/rad</span>
+
+<span class="c1"># Lift coefficient</span>
+<span class="n">CL_cruise</span> <span class="o">=</span> <span class="mf">0.38</span>
+<span class="n">CL_takeoff</span> <span class="o">=</span> <span class="mf">1.8</span>
+<span class="n">CL_landing</span> <span class="o">=</span> <span class="mf">2.2</span>
+
+
+
+<span class="c1"># rolling moment derivative</span>
+
+<span class="n">Cl_beta_gamma</span> <span class="o">=</span> 
+
+
+
+<span class="n">Cl_beta_w_cruise</span> <span class="o">=</span> <span class="n">Cl_beta_w_CL</span> <span class="o">*</span> <span class="n">CL_cruise</span> <span class="o">+</span> 
+</pre></div>
+</div>
+</div>
+</div>
 </section>
 </section>
 
