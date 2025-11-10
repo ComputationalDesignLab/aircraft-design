@@ -54,3 +54,4 @@ chapters:
       - file: performance/takeoff
       - file: performance/landing
       - file: performance/climb
+      - file: performance/mission_analysis
