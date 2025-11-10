@@ -1,0 +1,900 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Mission analysis &#8212; Aircraft Design</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'performance/mission_analysis';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Climb gradient" href="climb.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Aircraft Design</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    Introduction
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../setup.html">Computing environment setup</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../python_basics/intro.html">Basics of Python Programming</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../python_basics/python_basics.html">Basic programming in Python and Jupyter Notebooks</a></li>
+
+
+
+
+
+
+<li class="toctree-l2"><a class="reference internal" href="../python_basics/plotting.html">Basic plotting in Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../python_basics/resources.html">Python and Jupyter notebook resources</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../example_aircraft.html">Example Aircraft</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../initial_weight_estimation.html">Initial Weight Estimation</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../constraint_analysis/intro.html">Constraint Analysis</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../constraint_analysis/takeoff.html">Takeoff Distance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../constraint_analysis/landing.html">Landing Distance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../constraint_analysis/climb.html">Climb Gradient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../constraint_analysis/cruise.html">Cruise Speed</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../constraint_analysis/final.html">Matching process</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../baseline.html">Initial Design Summary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../configuration.html">Aircraft Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../wing_layout.html">Wing Planform Sizing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tail_sizing.html">Tail Sizing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fuselage.html">Fuselage Sizing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../landing_gear.html">Landing Gear Sizing</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../powerplant/intro.html">Propulsion System</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../powerplant/engine_propeller.html">Engine and Propeller Selection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../powerplant/installation_thrust.html">Installation Thrust</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../aerodynamics/intro.html">Aerodynamics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../aerodynamics/lift_curve.html">Lift</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../aerodynamics/drag_buildup.html">Parasitic (Zero-lift) drag</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../aerodynamics/drag_polar_induced_drag.html">Drag Polar</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../hl_devices/intro.html">High-Lift Devices</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../hl_devices/takeoff.html">Takeoff</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../hl_devices/landing.html">Landing</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../weight_and_balance/intro.html">Weight and Balance</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../weight_and_balance/weight.html">Weights</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../weight_and_balance/cg.html">Center of gravity</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../weight_and_balance/cg_travel.html">CG Travel Diagram</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../long_stability/intro.html">Longitudinal stability</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../long_stability/static_margin.html">Static Margin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../long_stability/trim.html">Trim Analysis</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../lat_stability/intro.html">Lateral stability</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../lat_stability/yaw_derivative.html">Static yaw stability derivative</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lat_stability/roll_derivative.html">Static roll stability derivative</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lat_stability/trim.html">Lateral trim</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="intro.html">Performance</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="takeoff.html">Takeoff</a></li>
+<li class="toctree-l2"><a class="reference internal" href="landing.html">Landing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="climb.html">Climb gradient</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Mission analysis</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/ComputationalDesignLab/aircraft-design" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/performance/mission_analysis.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Mission analysis</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cruise">Cruise</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#loiter">Loiter</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fuel-fraction">Fuel fraction</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="mission-analysis">
+<h1>Mission analysis<a class="headerlink" href="#mission-analysis" title="Link to this heading">#</a></h1>
+<p>Once more details are available for the airplane, it is important to perform a refined mission analysis to access whether the airplane can still complete the design mission. Accordingly, this section performs mission analysis for the example airplane. Similar to initial sizing, the <a class="reference internal" href="../example_aircraft.html"><span class="std std-doc">mission profile</span></a> is divided into various segments and the weight fraction (or fuel weight) is estimated for each segment. However, the methods used in this section are more refined as compared to the methods used in intial sizing. The additional information about the airplane is incorporated which is computed in various preceding sections.</p>
+<p>For this demonstration, only the cruise and loiter estimation is refined. Other segments of the mission are assumed to be same as initial sizing. However, if refined models are available for other segments, then those should be used for computing fuel and weight fraction. As described in <a class="reference internal" href="../initial_weight_estimation.html"><span class="std std-doc">initial sizing</span></a>, following table summarizes the weight fraction for each segment, except for cruise and loiter.</p>
+<div style="width:60%; margin: auto;">
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Mission segment</p></th>
+<th class="head text-center"><p>Weight fraction</p></th>
+<th class="head text-center"><p>Value</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Warmup, taxi, takeoff</p></td>
+<td class="text-center"><p><span class="math notranslate nohighlight">\(W_1/W_0\)</span></p></td>
+<td class="text-center"><p>0.984</p></td>
+</tr>
+<tr class="row-odd"><td><p>Climb</p></td>
+<td class="text-center"><p><span class="math notranslate nohighlight">\(W_2/W_1\)</span></p></td>
+<td class="text-center"><p>0.990</p></td>
+</tr>
+<tr class="row-even"><td><p>Descent</p></td>
+<td class="text-center"><p><span class="math notranslate nohighlight">\(W_4/W_3\)</span></p></td>
+<td class="text-center"><p>0.992</p></td>
+</tr>
+<tr class="row-odd"><td><p>Climb</p></td>
+<td class="text-center"><p><span class="math notranslate nohighlight">\(W_5/W_4\)</span></p></td>
+<td class="text-center"><p>0.990</p></td>
+</tr>
+<tr class="row-even"><td><p>Descent</p></td>
+<td class="text-center"><p><span class="math notranslate nohighlight">\(W_7/W_6\)</span></p></td>
+<td class="text-center"><p>0.992</p></td>
+</tr>
+<tr class="row-odd"><td><p>Land, taxi, shutdown</p></td>
+<td class="text-center"><p><span class="math notranslate nohighlight">\(W_8/W_7\)</span></p></td>
+<td class="text-center"><p>0.992</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Note that above table does not specify a value for <span class="math notranslate nohighlight">\(W_3/W_2\)</span> and <span class="math notranslate nohighlight">\(W_6/W_5\)</span>. Following table summarizes various fixed values used in this analysis.</p>
+<div style="width:90%; margin: auto;">
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter</p></th>
+<th class="head text-center"><p>Value</p></th>
+<th class="head text-center"><p>Source</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Aspect ratio, <span class="math notranslate nohighlight">\(A\)</span></p></td>
+<td class="text-center"><p>8</p></td>
+<td class="text-center"><p>Assumed</p></td>
+</tr>
+<tr class="row-odd"><td><p>Zero-lift drag coeff, <span class="math notranslate nohighlight">\(C_{D_0}\)</span></p></td>
+<td class="text-center"><p>0.033</p></td>
+<td class="text-center"><p>Calculated</p></td>
+</tr>
+<tr class="row-even"><td><p>Cruise propeller efficiency, <span class="math notranslate nohighlight">\(\eta_{p_{cr}}\)</span></p></td>
+<td class="text-center"><p>0.82</p></td>
+<td class="text-center"><p>Roskam Part 1, Table 2.2</p></td>
+</tr>
+<tr class="row-odd"><td><p>Cruise brake specific fuel consumption, <span class="math notranslate nohighlight">\(C_{{bhp}_{cr}}\)</span></p></td>
+<td class="text-center"><p>0.4 lb/hr/bhp</p></td>
+<td class="text-center"><p>Raymer, Table 3.4</p></td>
+</tr>
+<tr class="row-even"><td><p>Loiter propeller efficiency, <span class="math notranslate nohighlight">\(\eta_{p_{lo}}\)</span></p></td>
+<td class="text-center"><p>0.72</p></td>
+<td class="text-center"><p>Roskam Part 1, Table 2.2</p></td>
+</tr>
+<tr class="row-odd"><td><p>Loiter brake specific fuel consumption, <span class="math notranslate nohighlight">\(C_{{bhp}_{lo}}\)</span></p></td>
+<td class="text-center"><p>0.4 lb/hr/bhp</p></td>
+<td class="text-center"><p>Raymer, Table 3.4</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Below code block imports requried packages and defines some variables:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="n">A</span> <span class="o">=</span> <span class="mi">8</span>
+<span class="n">e</span> <span class="o">=</span> <span class="mf">0.81</span>
+<span class="n">K</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="n">A</span><span class="o">/</span><span class="n">e</span>
+<span class="n">S</span> <span class="o">=</span> <span class="mi">134</span> <span class="c1"># sq ft</span>
+<span class="n">CD0</span> <span class="o">=</span> <span class="mf">0.03363</span> <span class="c1"># clean configuration</span>
+<span class="n">prop_eff_cruise</span> <span class="o">=</span> <span class="mf">0.82</span>
+<span class="n">prop_eff_loiter</span> <span class="o">=</span> <span class="mf">0.72</span>
+<span class="n">Cbhp</span> <span class="o">=</span> <span class="mf">0.4</span> <span class="c1"># lbs/hp-hr</span>
+<span class="n">rho_sea_level</span> <span class="o">=</span> <span class="mf">0.0023769</span> <span class="c1"># slugs/ft^3</span>
+<span class="n">rho_4000</span> <span class="o">=</span> <span class="mf">0.00211114</span> <span class="c1"># slugs/ft^3</span>
+<span class="n">rho_8000</span> <span class="o">=</span> <span class="mf">0.00186850</span> <span class="c1"># slugs/ft^3</span>
+<span class="n">MTOW</span> <span class="o">=</span> <span class="mi">5374</span> <span class="c1"># lbs</span>
+
+<span class="c1"># Weight fractions</span>
+<span class="n">W1_W0</span> <span class="o">=</span> <span class="mf">0.985</span>
+<span class="n">W2_W1</span> <span class="o">=</span> <span class="mf">0.99</span>
+<span class="n">W4_W3</span> <span class="o">=</span> <span class="mf">0.992</span>
+<span class="n">W5_W4</span> <span class="o">=</span> <span class="mf">0.99</span>
+<span class="n">W7_W6</span> <span class="o">=</span> <span class="mf">0.992</span>
+<span class="n">W8_W7</span> <span class="o">=</span> <span class="mf">0.992</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Below sub-sections describe cruise and loiter analysis, and computes corresponding weight fractions.</p>
+<section id="cruise">
+<h2>Cruise<a class="headerlink" href="#cruise" title="Link to this heading">#</a></h2>
+<p>Similar to the initial sizing analysis, the cruise performance is evaluated using the Breguet range equation, but with a few key differences. In the initial sizing phase, the lift coefficient, <span class="math notranslate nohighlight">\(C_L\)</span>, was chosen to maximize the lift-to-drag ratio (L/D), thereby maximizing range. However, that approach does not account for the specified cruise speed requirement of 200 knots.</p>
+<p>In this cruise analysis, <span class="math notranslate nohighlight">\(C_L\)</span> is instead determined from the aircraft’s weight and the required cruise speed. Once <span class="math notranslate nohighlight">\(C_L\)</span> is known, the corresponding <span class="math notranslate nohighlight">\(L/D\)</span> ratio is computed using the simplified drag model described in the <a class="reference internal" href="../aerodynamics/drag_polar_induced_drag.html"><span class="std std-doc">aerodynamics section</span></a>.</p>
+<p>Because the aircraft’s weight decreases during cruise due to fuel burn, <span class="math notranslate nohighlight">\(C_L\)</span> must be updated continuously to maintain a constant cruise speed. To capture this effect, the cruise segment is divided into smaller subsegments, with the weight assumed constant within each subsegment. The overall cruise weight fraction is simply the weight fraction across all subsegments multiplied together and is written as</p>
+<div class="math notranslate nohighlight">
+\[
+    \frac{W_3}{W_2} = \prod_{j=1}^{k} \frac{w_{j}}{w_{j-1}},
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(w_j/w_{j-1}\)</span> is the weight fraction for subsegment <span class="math notranslate nohighlight">\(j\)</span>, <span class="math notranslate nohighlight">\(k\)</span> is the total number of subsegments, and <span class="math notranslate nohighlight">\(w_0 = W_2\)</span>. The weight fraction for each subsegment is computed using the Breguet range equation as</p>
+<div class="math notranslate nohighlight">
+\[
+    \frac{w_{j}}{w_{j-1}} = \exp \Bigg[ - \frac{ RC_{{bhp}_{cr}} }{ 375\eta_{p_{cr}} (L/D)_j } \Bigg],
+\]</div>
+<p>where lift to drag ratio for subsegment <span class="math notranslate nohighlight">\(j\)</span> is given by</p>
+<div class="math notranslate nohighlight">
+\[
+    (L/D)_j = \frac{C_{L_j}}{C_{D_0} + KC_{L_j}^2}.
+\]</div>
+<p>Note that the range should be in miles in the above weight fraction equation. The lift coefficient for subsegment <span class="math notranslate nohighlight">\(j\)</span> is computed as</p>
+<div class="math notranslate nohighlight">
+\[
+    C_{L_j} = \frac{w_{j-1}}{0.5\rho V^2S}
+\]</div>
+<p>For this analysis, MTOW is set to 5374 lbs (value found from initial sizing and refined empty weight estimation). Below code block defines function to compute cruise weight fraction. Note that it also computes the average power requried for cruise. This is used for verifying whether the engine can provide sufficient power for cruise.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">compute_cruise_weight_fraction</span><span class="p">(</span><span class="n">weight</span><span class="p">,</span> <span class="n">R</span><span class="o">=</span><span class="mi">1200</span><span class="p">,</span> <span class="n">V</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">num_segements</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Compute the weight fraction for cruise segment.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        weight : float</span>
+<span class="sd">            Initial weight at the beginning of cruise (lbs)</span>
+<span class="sd">        R : float</span>
+<span class="sd">            Range of cruise (nm)</span>
+<span class="sd">        V : float</span>
+<span class="sd">            Velocity during cruise (knots)</span>
+<span class="sd">        num_segements : int</span>
+<span class="sd">            Number of segments to divide the cruise into</span>
+<span class="sd">        </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        weight_fraction: float</span>
+<span class="sd">            Total weight fraction for the cruise segment</span>
+<span class="sd">        avg_power_req: float</span>
+<span class="sd">            Average power required during cruise (hp)</span>
+<span class="sd">        avg_CL_cruise: float</span>
+<span class="sd">            Average lift coefficient during cruise</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">segment_range</span> <span class="o">=</span> <span class="n">R</span> <span class="o">/</span> <span class="n">num_segements</span> <span class="o">*</span> <span class="mf">1.15077945</span> <span class="c1"># miles</span>
+    <span class="n">V</span> <span class="o">=</span> <span class="n">V</span> <span class="o">*</span> <span class="mf">1.68781</span>  <span class="c1"># Convert to ft/s</span>
+    <span class="n">q</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">rho_8000</span> <span class="o">*</span> <span class="n">V</span><span class="o">**</span><span class="mi">2</span> <span class="c1"># lbs/sq ft</span>
+
+    <span class="c1"># initialize empty lists</span>
+    <span class="n">weight_fractions</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">power_req</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">CL_req</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_segements</span><span class="p">):</span>
+
+        <span class="n">CL</span> <span class="o">=</span> <span class="n">weight</span> <span class="o">/</span> <span class="n">q</span> <span class="o">/</span> <span class="n">S</span>
+        <span class="n">CL_req</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">CL</span><span class="p">)</span>
+        <span class="n">CD</span> <span class="o">=</span> <span class="n">CD0</span> <span class="o">+</span> <span class="n">K</span> <span class="o">*</span> <span class="n">CL</span><span class="o">**</span><span class="mi">2</span>
+        <span class="n">LbyD</span> <span class="o">=</span> <span class="n">CL</span><span class="o">/</span><span class="n">CD</span>
+
+        <span class="n">weight_fraction</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span> <span class="o">-</span> <span class="n">segment_range</span> <span class="o">*</span> <span class="n">Cbhp</span> <span class="o">/</span> <span class="mi">375</span> <span class="o">/</span> <span class="n">prop_eff_cruise</span> <span class="o">/</span> <span class="n">LbyD</span> <span class="p">)</span> <span class="c1"># weight fraction per segment</span>
+        <span class="n">weight_fractions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">weight_fraction</span><span class="p">)</span>
+        <span class="n">weight</span> <span class="o">=</span> <span class="n">weight</span> <span class="o">*</span> <span class="n">weight_fraction</span>
+
+        <span class="c1"># Power required for the segment</span>
+        <span class="n">T</span> <span class="o">=</span> <span class="n">CD</span> <span class="o">*</span> <span class="n">q</span> <span class="o">*</span> <span class="n">S</span> <span class="o">/</span> <span class="mf">0.92</span> <span class="c1"># lbs, 0.92 for installation losses</span>
+        <span class="n">P_req</span> <span class="o">=</span> <span class="n">T</span> <span class="o">*</span> <span class="n">V</span> <span class="o">/</span> <span class="n">prop_eff_cruise</span> <span class="o">/</span> <span class="mi">550</span> <span class="c1"># hp</span>
+
+        <span class="n">power_req</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">P_req</span><span class="p">)</span>
+
+    <span class="n">total_weight_fraction</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">prod</span><span class="p">(</span><span class="n">weight_fractions</span><span class="p">)</span>
+    <span class="n">avg_power_req</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">power_req</span><span class="p">)</span>
+    <span class="n">avg_CL_cruise</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">CL_req</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">total_weight_fraction</span><span class="p">,</span> <span class="n">avg_power_req</span><span class="p">,</span> <span class="n">avg_CL_cruise</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Below code block computes the cruise weight fraction and average power required for cruise. Note that the value of power required is at cruising altitude of 8000 ft.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">W2</span> <span class="o">=</span> <span class="n">W2_W1</span> <span class="o">*</span> <span class="n">W1_W0</span> <span class="o">*</span> <span class="n">MTOW</span>
+
+<span class="n">W3_W2</span><span class="p">,</span> <span class="n">avg_power_cruise</span><span class="p">,</span> <span class="n">avg_CL_cruise</span> <span class="o">=</span> <span class="n">compute_cruise_weight_fraction</span><span class="p">(</span><span class="n">W2</span><span class="p">,</span> <span class="n">R</span><span class="o">=</span><span class="mi">1200</span><span class="p">,</span> <span class="n">V</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">num_segements</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Cruise weight fraction: </span><span class="si">{</span><span class="n">W3_W2</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Average power required during cruise (hp): </span><span class="si">{</span><span class="n">avg_power_cruise</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Average CL during cruise: </span><span class="si">{</span><span class="n">avg_CL_cruise</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Cruise weight fraction: 0.810
+Average power required during cruise (hp): 455
+Average CL during cruise: 0.336
+</pre></div>
+</div>
+</div>
+</div>
+<p>Based on the above values, the cruise weight fraction is lower than initial sizing estimate of 0.88. This can be attributed to the fact that airplane is not flying at maximum L/D during cruise, but rather at a lift coefficient required to maintain 200 knots. Also, note the value of average <span class="math notranslate nohighlight">\(C_L\)</span> during cruise. This value can be easily achieved at low angle of attack based on the <a class="reference internal" href="../aerodynamics/lift_curve.html"><span class="std std-doc">lift curve </span></a> in clean onfiguration.</p>
+<p>Below code block computes maximum available power from engine at cruising altitude:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Pmax_sea_level</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="mi">298</span> <span class="c1"># hp</span>
+<span class="n">sigma</span> <span class="o">=</span> <span class="n">rho_8000</span> <span class="o">/</span> <span class="n">rho_sea_level</span>
+<span class="n">Pmax_8000</span> <span class="o">=</span> <span class="n">Pmax_sea_level</span> <span class="o">*</span> <span class="p">(</span><span class="n">sigma</span> <span class="o">-</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">sigma</span><span class="p">)</span><span class="o">/</span><span class="mf">7.75</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Maximum available power at 8000 ft (hp): </span><span class="si">{</span><span class="n">Pmax_8000</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Maximum available power at 8000 ft (hp): 452
+</pre></div>
+</div>
+</div>
+</div>
+<p>Based on the maximum available power, this propulsion system cannot achieve the cruise speed of 200 knots. This implies that the design needs to be refined to ensure that enough power available. Note that the maximum poqer available at cruising altitude should be much higher than the required power since engine will not be operating at max power during cruise.</p>
+</section>
+<section id="loiter">
+<h2>Loiter<a class="headerlink" href="#loiter" title="Link to this heading">#</a></h2>
+<p>A similar process is followed for loiter analysis with some differences. Since there is no speed requirement for loiter, <span class="math notranslate nohighlight">\(C_L\)</span> computed such that the endurance is maximized. Because the aircraft’s weight decreases during loiter due to fuel burn, the airplane speed must be updated continuously to maintain the <span class="math notranslate nohighlight">\(C_L\)</span>. To capture this effect, the loiter segment is divided into smaller subsegments, with the weight assumed constant within each subsegment. The overall loiter weight fraction is simply the weight fraction across all subsegments multiplied together (similar to cruise section).</p>
+<p>Below code block defines function to compute loiter weight fraction. Note that it also computes the average power requried for loiter. This is used for verifying whether the engine can provide sufficient power for loiter.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">compute_loiter_weight_fraction</span><span class="p">(</span><span class="n">weight</span><span class="p">,</span> <span class="n">E</span><span class="o">=</span><span class="mi">45</span><span class="p">,</span> <span class="n">num_segements</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Compute the weight fraction for loiter segment.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        weight : float</span>
+<span class="sd">            Initial weight at the beginning of loiter (lbs)</span>
+<span class="sd">        E : float</span>
+<span class="sd">            loiter time (min)</span>
+<span class="sd">        num_segements : int</span>
+<span class="sd">            Number of segments to divide the loiter into</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        weight_fraction: float</span>
+<span class="sd">            Total weight fraction for the loiter segment</span>
+<span class="sd">        avg_power_req: float</span>
+<span class="sd">            Average power required during loiter (hp)</span>
+<span class="sd">        avg_speed_loiter: float</span>
+<span class="sd">            Average speed during loiter</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">segment_E</span> <span class="o">=</span> <span class="n">E</span> <span class="o">/</span> <span class="n">num_segements</span> <span class="o">/</span> <span class="mi">60</span> <span class="c1"># hr</span>
+
+    <span class="c1"># initialize empty lists</span>
+    <span class="n">weight_fractions</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">power_req</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">avg_V</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="n">CL</span> <span class="o">=</span> <span class="p">(</span><span class="mi">3</span><span class="o">*</span><span class="n">CD0</span><span class="o">/</span><span class="n">K</span><span class="p">)</span><span class="o">**</span><span class="mf">0.5</span> <span class="c1"># for max endurance for prop airplane</span>
+    <span class="n">CD</span> <span class="o">=</span> <span class="n">CD0</span> <span class="o">+</span> <span class="n">K</span> <span class="o">*</span> <span class="n">CL</span><span class="o">**</span><span class="mi">2</span>
+    <span class="n">LbyD</span> <span class="o">=</span> <span class="n">CL</span><span class="o">/</span><span class="n">CD</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_segements</span><span class="p">):</span>
+
+        <span class="n">V</span> <span class="o">=</span> <span class="p">(</span> <span class="n">weight</span><span class="o">/</span><span class="n">S</span> <span class="o">*</span> <span class="mi">2</span><span class="o">/</span><span class="n">rho_4000</span> <span class="o">*</span> <span class="mi">1</span><span class="o">/</span><span class="n">CL</span> <span class="p">)</span><span class="o">**</span><span class="mf">0.5</span> <span class="c1"># ft/s</span>
+        <span class="n">avg_V</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">V</span><span class="p">)</span>
+        <span class="n">q</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">rho_4000</span> <span class="o">*</span> <span class="n">V</span><span class="o">**</span><span class="mi">2</span> <span class="c1"># lbs/sq ft</span>
+
+        <span class="c1"># weight fraction per segment</span>
+        <span class="n">weight_fraction</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span> <span class="o">-</span> <span class="n">segment_E</span> <span class="o">*</span> <span class="n">V</span> <span class="o">*</span> <span class="n">Cbhp</span> <span class="o">/</span> <span class="mi">375</span> <span class="o">/</span> <span class="n">prop_eff_loiter</span> <span class="o">/</span> <span class="n">LbyD</span> <span class="p">)</span>
+        <span class="n">weight_fractions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">weight_fraction</span><span class="p">)</span>
+        <span class="n">weight</span> <span class="o">=</span> <span class="n">weight</span> <span class="o">*</span> <span class="n">weight_fraction</span>
+
+        <span class="c1"># Power required for the segment</span>
+        <span class="n">T</span> <span class="o">=</span> <span class="n">CD</span> <span class="o">*</span> <span class="n">q</span> <span class="o">*</span> <span class="n">S</span> <span class="o">/</span> <span class="mf">0.92</span> <span class="c1"># lbs, 0.92 for installation losses</span>
+        <span class="n">P_req</span> <span class="o">=</span> <span class="n">T</span> <span class="o">*</span> <span class="n">V</span> <span class="o">/</span> <span class="n">prop_eff_cruise</span> <span class="o">/</span> <span class="mi">550</span> <span class="c1"># hp</span>
+        <span class="n">power_req</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">P_req</span><span class="p">)</span>
+
+    <span class="n">total_weight_fraction</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">prod</span><span class="p">(</span><span class="n">weight_fractions</span><span class="p">)</span>
+    <span class="n">avg_power_req</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">power_req</span><span class="p">)</span>
+    <span class="n">avg_V</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">avg_V</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">total_weight_fraction</span><span class="p">,</span> <span class="n">avg_power_req</span><span class="p">,</span> <span class="n">avg_V</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Below code block computes the loiter weight fraction and average power required for loiter. Note that the value of power required is at loiter altitude of 4000 ft.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">W5</span> <span class="o">=</span> <span class="n">W5_W4</span> <span class="o">*</span> <span class="n">W4_W3</span> <span class="o">*</span> <span class="n">W3_W2</span> <span class="o">*</span> <span class="n">W2_W1</span> <span class="o">*</span> <span class="n">W1_W0</span> <span class="o">*</span> <span class="n">MTOW</span>
+
+<span class="n">W6_W5</span><span class="p">,</span> <span class="n">avg_power_loiter</span><span class="p">,</span> <span class="n">avg_V_loiter</span> <span class="o">=</span> <span class="n">compute_loiter_weight_fraction</span><span class="p">(</span><span class="n">W5</span><span class="p">,</span> <span class="n">E</span><span class="o">=</span><span class="mi">45</span><span class="p">,</span> <span class="n">num_segements</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Loiter weight fraction: </span><span class="si">{</span><span class="n">W6_W5</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Average power required during loiter (hp): </span><span class="si">{</span><span class="n">avg_power_loiter</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Average speed during loiter: </span><span class="si">{</span><span class="n">avg_V_loiter</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2"> ft/s&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Loiter weight fraction: 0.985
+Average power required during loiter (hp): 134
+Average speed during loiter: 143 ft/s
+</pre></div>
+</div>
+</div>
+</div>
+<p>Below code block computes maximum available power from engine at loiter altitude:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sigma</span> <span class="o">=</span> <span class="n">rho_4000</span> <span class="o">/</span> <span class="n">rho_sea_level</span>
+<span class="n">Pmax_4000</span> <span class="o">=</span> <span class="n">Pmax_sea_level</span> <span class="o">*</span> <span class="p">(</span><span class="n">sigma</span> <span class="o">-</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">sigma</span><span class="p">)</span><span class="o">/</span><span class="mf">7.75</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Maximum available power at 4000 ft (hp): </span><span class="si">{</span><span class="n">Pmax_4000</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Maximum available power at 4000 ft (hp): 521
+</pre></div>
+</div>
+</div>
+</div>
+<p>Based on the above calculation, there is sufficient power available for loiter segment.</p>
+</section>
+<section id="fuel-fraction">
+<h2>Fuel fraction<a class="headerlink" href="#fuel-fraction" title="Link to this heading">#</a></h2>
+<p>Once cruise and loiter weight fractions are computed, final weight fraction and fuel fraction can be computed. Below code block computes the final fuel fraction for the example airplane. Note that 6% extra fuel is assumed to be trapped, not usable fuel.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">W8_W0</span> <span class="o">=</span> <span class="n">W8_W7</span> <span class="o">*</span> <span class="n">W7_W6</span> <span class="o">*</span> <span class="n">W6_W5</span> <span class="o">*</span> <span class="n">W5_W4</span> <span class="o">*</span> <span class="n">W4_W3</span> <span class="o">*</span> <span class="n">W3_W2</span> <span class="o">*</span> <span class="n">W2_W1</span> <span class="o">*</span> <span class="n">W1_W0</span> <span class="c1"># weight fraction</span>
+
+<span class="n">Wf_W0</span> <span class="o">=</span> <span class="mf">1.06</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">W8_W0</span><span class="p">)</span> <span class="c1"># 6% is for trapped unusable fuel</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Fuel fraction: </span><span class="si">{</span><span class="n">Wf_W0</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fuel fraction: 0.262
+</pre></div>
+</div>
+</div>
+</div>
+<p>The computed fraction is higher than the fuel fraction of 0.198, computed in initial sizing. This implies that the maximum takeoff weight needs to be comptued again using the iterative process described in initial weight estimation, but with refined methods. This concludes the mission analysis.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./performance"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="climb.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Climb gradient</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cruise">Cruise</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#loiter">Loiter</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fuel-fraction">Fuel fraction</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By CODE Lab
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
