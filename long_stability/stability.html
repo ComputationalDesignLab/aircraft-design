@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Static roll and yaw stability derivatives &#8212; Aircraft Design</title>
+    <title>Static Stability &#8212; Aircraft Design</title>
   
   
   
@@ -59,9 +59,10 @@
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'lat_stability/statid_derivatives';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'long_stability/stability';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Longitudinal stability" href="intro.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -124,8 +125,6 @@
       
       
       
-        
-      
       <div class="bd-sidebar-primary bd-sidebar">
         
 
@@ -175,7 +174,7 @@
                 </a>
             </li>
         </ul>
-        <ul class="nav bd-sidenav">
+        <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../setup.html">Computing environment setup</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../python_basics/intro.html">Basics of Python Programming</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../python_basics/python_basics.html">Basic programming in Python and Jupyter Notebooks</a></li>
@@ -227,9 +226,8 @@
 <li class="toctree-l2"><a class="reference internal" href="../weight_and_balance/cg_travel.html">CG Travel Diagram</a></li>
 </ul>
 </details></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../long_stability/intro.html">Longitudinal stability</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="../long_stability/static_margin.html">Static Margin</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../long_stability/trim.html">Trim Analysis</a></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="intro.html">Longitudinal stability</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Static Stability</a></li>
 </ul>
 </details></li>
 </ul>
@@ -301,7 +299,7 @@
       
       
       
-      <li><a href="../_sources/lat_stability/statid_derivatives.ipynb" target="_blank"
+      <li><a href="../_sources/long_stability/stability.ipynb" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -372,7 +370,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
 </div></div>
       
     </div>
@@ -383,11 +383,21 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Static roll and yaw stability derivatives</h1>
+    <h1>Static Stability</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tail">Tail</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fuselage-pitching-moment">Fuselage Pitching moment</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#thrust-effects">Thrust Effects</a></li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -397,14 +407,152 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="static-roll-and-yaw-stability-derivatives">
-<h1>Static roll and yaw stability derivatives<a class="headerlink" href="#static-roll-and-yaw-stability-derivatives" title="Link to this heading">#</a></h1>
+  <div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rho</span> <span class="o">=</span> <span class="mf">0.96287</span> <span class="c1"># kg/m^3</span>
+<span class="n">V</span> <span class="o">=</span> <span class="mf">102.88</span> <span class="c1"># m/s</span>
+<span class="n">q</span> <span class="o">=</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">rho</span><span class="o">*</span><span class="n">V</span><span class="o">**</span><span class="mi">2</span> <span class="c1"># N/m^2</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">q</span><span class="p">)</span>
+
+<span class="n">rho</span> <span class="o">=</span> <span class="mf">0.00186850</span> <span class="c1"># slugs/cu ft, at 8000 ft</span>
+<span class="n">V</span> <span class="o">=</span> <span class="mf">337.562</span> <span class="c1"># ft/s, 200 knots</span>
+<span class="n">q</span> <span class="o">=</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">rho</span><span class="o">*</span><span class="n">V</span><span class="o">**</span><span class="mi">2</span> <span class="c1"># slugs/sq ft dynamic pressure at cruise</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">q</span><span class="o">*</span><span class="mf">32.2</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">q</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>5095.649774463999
+3427.883715723476
+106.45601601625701
+</pre></div>
+</div>
+</div>
+</div>
+<section class="tex2jax_ignore mathjax_ignore" id="static-stability">
+<h1>Static Stability<a class="headerlink" href="#static-stability" title="Link to this heading">#</a></h1>
+<p>This section demonstrates longitudinal stability analysis using example airplane. Specifically, neutral point and static margin - two important parmeters - are estimated. The neutral point denotes a CG position at which the aircraft will be neutrally stable. This implies any movement of CG beyond this point leads to aircraft being unstable. Refer to lecture notes and Section 16.3.1 and 16.3.2 in Raymer for more details.</p>
+<p>Using equation 16.9. in Raymer, the neutral point can be estimated using:</p>
 <div class="math notranslate nohighlight">
 \[
-    C_{l_\beta} = C_{l_{\beta_w}} + C_{l_{\beta_v}}
+    \bar{X}_{np} = \frac{ C_{L_\alpha} \bar{X}_{ac_w} - C_{M_{\alpha_f}} + \eta_h \dfrac{S_h}{S_w} C_{L_{\alpha_h}} \dfrac{\partial \alpha_h}{\partial \alpha} \bar{X}_{ac_h} } { C_{L_\alpha} + \eta_h \dfrac{S_h}{S_w} C_{L_{\alpha_h}} \dfrac{\partial \alpha_h}{\partial \alpha} }
 \]</div>
-<p>The main goal is to check for one-engine out operations</p>
-<p>It is difficult to perform lateral analysis at this stage of the design since it requries 6-DOF analysis and wind-tunnel data</p>
+<p>Refer to raymer for derviation of this equation.</p>
+<p>Let’s break down this long equation.</p>
+<blockquote>
+<div><p><strong><em>NOTE</em></strong>: In the above equation, effect of thrust/propulsion system are ignored. Based on the recommendation of</p>
+</div></blockquote>
+<p>First term is a contribution due to wing pitching moment <span class="math notranslate nohighlight">\(C_{L_\alpha}\)</span> is lift curve slope for wing (known) and <span class="math notranslate nohighlight">\(\bar{X}_{ac_w}\)</span> is already known</p>
+<p>Each term in this equation should be adjusted for the flap deflection (when doing takeoff and landing trim analysis)</p>
+<section id="tail">
+<h2>Tail<a class="headerlink" href="#tail" title="Link to this heading">#</a></h2>
+<p>Lift model for the tail is written as</p>
+<div class="math notranslate nohighlight">
+\[
+    C_{L_h} = C_{L_{\alpha_h}} ( \alpha + i_h - \epsilon - \alpha_{0_{L_h}} )
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(C_{L_{\alpha_h}}\)</span> is the horizontal lift curve slope, <span class="math notranslate nohighlight">\(i_h\)</span> is the tail incidence angle, and <span class="math notranslate nohighlight">\(\epsilon\)</span> refers to downwash.</p>
+<p>The <span class="math notranslate nohighlight">\(C_{L_{\alpha_h}}\)</span> is computed using the same method as described in <a class="reference internal" href="../aerodynamics/lift_curve.html"><span class="std std-doc">aerodynamics section</span></a>.</p>
+</section>
+<section id="fuselage-pitching-moment">
+<h2>Fuselage Pitching moment<a class="headerlink" href="#fuselage-pitching-moment" title="Link to this heading">#</a></h2>
+<p><span class="math notranslate nohighlight">\(C_{M_{\alpha_f}}\)</span> is the pitching moment contribution from fuselage, can be computed using Section 16.3.8 in Raymer</p>
+<p>Position of root quarter chord as percent of fuselage length = 0.37 (from position of components in CG section)</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Kfus</span> <span class="o">=</span> <span class="mf">0.014</span> <span class="c1"># from figure 16.14</span>
+<span class="n">Wf</span> <span class="o">=</span> <span class="mf">5.0</span> <span class="c1"># ft</span>
+<span class="n">Lf</span> <span class="o">=</span> <span class="mf">31.6</span> <span class="c1"># ft</span>
+<span class="n">mac</span> <span class="o">=</span> <span class="mf">4.3</span> <span class="c1"># ft</span>
+<span class="n">Sw</span> <span class="o">=</span> <span class="mi">134</span> <span class="c1"># sq ft</span>
+
+<span class="n">Cm_alpha_fuselage</span> <span class="o">=</span> <span class="n">Kfus</span> <span class="o">*</span> <span class="n">Wf</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="n">Lf</span> <span class="o">/</span> <span class="n">mac</span> <span class="o">/</span> <span class="n">Sw</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Fuselage pitching moment: </span><span class="si">{</span><span class="n">Cm_alpha_fuselage</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span> <span class="c1"># 1/deg</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fuselage pitching moment: 0.0192
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="thrust-effects">
+<h2>Thrust Effects<a class="headerlink" href="#thrust-effects" title="Link to this heading">#</a></h2>
+<p>Section 16.3.9 Raymer</p>
+<div class="math notranslate nohighlight">
+\[
+    F_{P_\alpha} = qN_BA_p \frac{\partial C_{N_{blade}}}{\partial \alpha} f(T)
+\]</div>
+<p><span class="math notranslate nohighlight">\(N_B\)</span> = number of blades = 3</p>
+<p><span class="math notranslate nohighlight">\(A_P\)</span> = area of the propeller disk</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="n">rho</span> <span class="o">=</span> <span class="mf">0.00186850</span> <span class="c1"># slugs/cu ft, at 8000 ft</span>
+<span class="n">V</span> <span class="o">=</span> <span class="mf">337.562</span> <span class="c1"># ft/s, 200 knots</span>
+<span class="n">q</span> <span class="o">=</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">rho</span><span class="o">*</span><span class="n">V</span><span class="o">**</span><span class="mi">2</span> <span class="c1"># lbs/sq ft dynamic pressure at cruise</span>
+
+<span class="n">n</span> <span class="o">=</span> <span class="mf">0.8</span><span class="o">*</span><span class="mi">2700</span><span class="o">/</span><span class="mi">60</span> <span class="c1"># rps</span>
+<span class="n">D</span> <span class="o">=</span> <span class="mf">5.8</span> <span class="c1"># ft</span>
+<span class="n">NB</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">Ap</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">D</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span><span class="mi">4</span>
+
+<span class="n">J</span> <span class="o">=</span> <span class="n">V</span><span class="o">/</span><span class="n">n</span><span class="o">/</span><span class="n">D</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">J</span><span class="p">)</span>
+
+<span class="n">dCNblade_dalpha</span> <span class="o">=</span> <span class="mf">0.055</span> <span class="c1"># 1/rad, figure 16.15</span>
+
+<span class="n">K</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">8</span><span class="o">/</span><span class="mf">0.8</span>
+
+<span class="n">CD0</span> <span class="o">=</span> <span class="mf">0.03363</span>
+
+<span class="n">W</span> <span class="o">=</span> <span class="mf">0.95</span><span class="o">*</span><span class="mi">5374</span>
+
+<span class="n">CL</span> <span class="o">=</span> <span class="n">W</span><span class="o">/</span><span class="mf">0.5</span><span class="o">/</span><span class="n">rho</span><span class="o">/</span><span class="n">V</span><span class="o">**</span><span class="mi">2</span>
+
+<span class="n">CD</span> <span class="o">=</span> <span class="n">CD0</span> <span class="o">+</span> <span class="n">K</span><span class="o">*</span><span class="n">CL</span><span class="o">**</span><span class="mi">2</span>
+
+<span class="n">D</span> <span class="o">=</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">rho</span><span class="o">*</span><span class="n">V</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="n">CD</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="mf">32.2</span><span class="o">*</span><span class="n">D</span><span class="o">/</span><span class="n">rho</span><span class="o">/</span><span class="n">V</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span><span class="n">Sw</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="n">fT</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="n">Fp_alpha</span> <span class="o">=</span> <span class="n">q</span><span class="o">*</span><span class="n">NB</span><span class="o">*</span><span class="n">Ap</span><span class="o">*</span><span class="n">dCNblade_dalpha</span><span class="o">*</span><span class="n">fT</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">Fp_alpha</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">180</span><span class="o">/</span><span class="mf">32.2</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1.616676245210728
+0.10259264220444914
+0.25154837597261187
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">de_da</span> <span class="o">=</span> <span class="mf">0.05</span>
+
+<span class="n">dap_da</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">de_da</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -420,7 +568,7 @@ document.write(`
         },
         kernelOptions: {
             name: "python3",
-            path: "./lat_stability"
+            path: "./long_stability"
         },
         predefinedOutput: true
     }
@@ -437,12 +585,38 @@ document.write(`
                 <footer class="prev-next-footer d-print-none">
                   
 <div class="prev-next-area">
+    <a class="left-prev"
+       href="intro.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Longitudinal stability</p>
+      </div>
+    </a>
 </div>
                 </footer>
               
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tail">Tail</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fuselage-pitching-moment">Fuselage Pitching moment</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#thrust-effects">Thrust Effects</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>

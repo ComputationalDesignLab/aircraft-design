@@ -1,0 +1,14 @@
+## Trade study
+
+This section demonstrates a method to refine the current design for the example airplane using classical parametric study. Specifically, a four-variable trade study is performed which consists of wing loading $W/S$, power loading $W/P$, and aspect ratio $A$ as the first three parameters. The fourth variable is usually a measure of merit such as takeoff weight, operating cost, etc. In this demonstration, maximum takeoff weight (MTOW) is used as the measure of merit. Note that one can also perform trade studies with different set of variables, as outlined in Table 19.1 in Raymer. Refer to lecture notes, Chapter 19 in Raymer, and Chapter 25 in Nicolai for more details.
+
+In this technique, a set of $A$ values are first determined for which analysis will be performed. Note that many other parameters are held constant such as fuselage and tail dimensions. For each $A$ value, a contour plot of measure of merit (MTOW in this case) is created within a predetermined range of $W/S$ and $W/P$. Note that each pair of $W/S$ and $W/P$ is a different airplane, and hence, the measure of merit needs to be computed from scratch. This will then be used for plotting the contours.
+
+In this demonstration, for each pair of $W/S$ and $W/P$, the MTOW is computed using an iterative method similar to [initial weight estimation](../initial_weight_estimation.ipynb#mtow-estimation) but with refined methods. At start, MTOW is set to a random guess value. For this MTOW, the empty weight is computed using refined weight estimation methods described in [weight and balance section](../weight_and_balance/weight.ipynb). The fuel weight is estimated using the refined mission analysis technique outlined in [performance section](../performance/mission_analysis.ipynb). Then, the total weight is estimated and compared against the guess value. This iterative process continues until the difference between computed and guessed MTOW is below a specified tolerance.
+
+Along with the measure of merit contours, the constraint lines corresponding to different requirements are plotted to indicate feasible design space. Next, the best measure of merit value is determined within the feasbile space. Note that the range of $W/S$ and $W/P$ should be large enough to contain some feasbile space. The final step involves plotting the best measure of merit for different $A$ values. This plot will essentially indicate the $A$ value that yields the best measure of merit. Note that this is a graphical analysis method, however, one can also use a modern numerical optimization techniques to find the optimized design. Once the final design is obtained, perform further analysis (such as aerodynamics and stability) to ensure that the design is viable.
+
+Following sub-sections are covered in this section:
+
+1. Code setup
+2. Trade study
