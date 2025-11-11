@@ -55,3 +55,4 @@ chapters:
       - file: performance/landing
       - file: performance/climb
       - file: performance/mission_analysis
+  - file: trade_study/intro
