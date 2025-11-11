@@ -56,3 +56,7 @@ chapters:
       - file: performance/climb
       - file: performance/mission_analysis
   - file: trade_study/intro
+    sections:
+      - file: trade_study/setup
+        sections:
+          - file: trade_study/parameters
