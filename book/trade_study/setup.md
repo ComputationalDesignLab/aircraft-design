@@ -6,7 +6,7 @@ This section describes the code used for computing the MTOW for a given wing loa
 2. Fuel estimation
 3. Empty weight estimation
 
-Refer to the above sections for more details about the modules.
+Refer to above sections for more details about the modules.
 
 <!-- > __NOTE__: If jupyter notebooks are going to be used, then jdc and nbimporter is required. Use ``pip install jdc`` and ``pip install nbimporter``. -->
 
