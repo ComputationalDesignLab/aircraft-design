@@ -60,3 +60,5 @@ chapters:
       - file: trade_study/setup
         sections:
           - file: trade_study/parameters
+          - file: trade_study/fuel
+          - file: trade_study/empty_weight
