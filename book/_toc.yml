@@ -62,3 +62,6 @@ chapters:
           - file: trade_study/parameters
           - file: trade_study/fuel
           - file: trade_study/empty_weight
+          - file: trade_study/mtow
+          - file: trade_study/constraint.ipynb
+      - file: trade_study/example_study.ipynb
