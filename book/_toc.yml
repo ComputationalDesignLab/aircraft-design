@@ -64,4 +64,4 @@ chapters:
           - file: trade_study/empty_weight
           - file: trade_study/mtow
           - file: trade_study/constraint.ipynb
-      - file: trade_study/example_study.ipynb
+      - file: trade_study/ar_study.ipynb
