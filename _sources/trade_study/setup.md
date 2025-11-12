@@ -5,6 +5,8 @@ This section describes the code used for computing the MTOW for a given wing loa
 1. Parameters
 2. Fuel estimation
 3. Empty weight estimation
+4. Takeoff weight estimation
+5. Performance estimation
 
 Refer to above sections for more details about the modules.
 

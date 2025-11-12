@@ -248,8 +248,11 @@
 <li class="toctree-l3"><a class="reference internal" href="parameters.html">Parameters</a></li>
 <li class="toctree-l3 current active"><a class="current reference internal" href="#">Fuel Weight</a></li>
 <li class="toctree-l3"><a class="reference internal" href="empty_weight.html">Empty Weight</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mtow.html">MTOW</a></li>
+<li class="toctree-l3"><a class="reference internal" href="constraint.html">Performance</a></li>
 </ul>
 </details></li>
+<li class="toctree-l2"><a class="reference internal" href="ar_study.html">Aspect ratio study</a></li>
 </ul>
 </details></li>
 </ul>
@@ -436,9 +439,9 @@ document.write(`
 <span class="sd">        weight : float</span>
 <span class="sd">            Initial weight at the beginning of cruise (lbs)</span>
 <span class="sd">        R : float</span>
-<span class="sd">            Range of cruise (nm)</span>
+<span class="sd">            Range of cruise (ft)</span>
 <span class="sd">        cruise_speed : float</span>
-<span class="sd">            speed during cruise (knots)</span>
+<span class="sd">            speed during cruise (ft/s)</span>
 <span class="sd">        num_segements : int</span>
 <span class="sd">            Number of segments to divide the cruise into</span>
 <span class="sd">        </span>
@@ -463,9 +466,8 @@ document.write(`
     <span class="n">install_loss_factor</span> <span class="o">=</span> <span class="n">parameters</span><span class="o">.</span><span class="n">install_loss_factor</span>
     <span class="n">prop_eff_cruise</span> <span class="o">=</span> <span class="n">parameters</span><span class="o">.</span><span class="n">prop_eff_cruise</span>
 
-    <span class="n">segment_range</span> <span class="o">=</span> <span class="n">R</span> <span class="o">/</span> <span class="n">num_segements</span> <span class="c1"># segment range, nmi</span>
-    <span class="n">segment_time</span> <span class="o">=</span> <span class="n">segment_range</span> <span class="o">/</span> <span class="n">cruise_speed</span> <span class="c1"># hr</span>
-    <span class="n">cruise_speed</span> <span class="o">=</span> <span class="n">cruise_speed</span> <span class="o">*</span> <span class="mf">1.68781</span>  <span class="c1"># Convert to ft/s</span>
+    <span class="n">segment_range</span> <span class="o">=</span> <span class="n">R</span> <span class="o">/</span> <span class="n">num_segements</span> <span class="c1"># segment range, ft</span>
+    <span class="n">segment_time</span> <span class="o">=</span> <span class="n">segment_range</span> <span class="o">/</span> <span class="n">cruise_speed</span> <span class="o">/</span> <span class="mi">3600</span> <span class="c1"># hr</span>
     <span class="n">q</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">rho</span> <span class="o">*</span> <span class="n">cruise_speed</span><span class="o">**</span><span class="mi">2</span> <span class="c1"># lbs/sq ft</span>
     <span class="n">K</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="n">PI</span><span class="o">/</span><span class="n">A</span><span class="o">/</span><span class="n">e</span>
 
@@ -507,7 +509,7 @@ document.write(`
 <span class="sd">        weight : float</span>
 <span class="sd">            Initial weight at the beginning of loiter (lbs)</span>
 <span class="sd">        E : float</span>
-<span class="sd">            loiter time (hr)</span>
+<span class="sd">            loiter time (sec)</span>
 <span class="sd">        num_segements : int</span>
 <span class="sd">            Number of segments to divide the loiter into</span>
 <span class="sd">        </span>
@@ -532,7 +534,7 @@ document.write(`
     <span class="n">install_loss_factor</span> <span class="o">=</span> <span class="n">parameters</span><span class="o">.</span><span class="n">install_loss_factor</span>
     <span class="n">prop_eff_loiter</span> <span class="o">=</span> <span class="n">parameters</span><span class="o">.</span><span class="n">prop_eff_loiter</span>
 
-    <span class="n">segment_time</span> <span class="o">=</span> <span class="n">E</span> <span class="o">/</span> <span class="n">num_segements</span> <span class="c1"># hr</span>
+    <span class="n">segment_time</span> <span class="o">=</span> <span class="n">E</span> <span class="o">/</span> <span class="n">num_segements</span> <span class="o">/</span> <span class="mi">3600</span> <span class="c1"># hr</span>
 
     <span class="n">K</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="n">PI</span><span class="o">/</span><span class="n">A</span><span class="o">/</span><span class="n">e</span>
     <span class="n">CL</span> <span class="o">=</span> <span class="p">(</span><span class="mi">3</span><span class="o">*</span><span class="n">CD0</span><span class="o">/</span><span class="n">K</span><span class="p">)</span><span class="o">**</span><span class="mf">0.5</span> <span class="c1"># for max endurance for a prop airplane</span>
@@ -580,14 +582,13 @@ document.write(`
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="n">R</span> <span class="o">=</span> <span class="n">parameters</span><span class="o">.</span><span class="n">range</span>
-        <span class="n">cruise_speed</span> <span class="o">=</span> <span class="n">parameters</span><span class="o">.</span><span class="n">cruise_speed</span>
         <span class="n">W1_W0</span> <span class="o">=</span> <span class="n">parameters</span><span class="o">.</span><span class="n">W1_W0</span>
         <span class="n">W2_W1</span> <span class="o">=</span> <span class="n">parameters</span><span class="o">.</span><span class="n">W2_W1</span>
         <span class="n">W4_W3</span> <span class="o">=</span> <span class="n">parameters</span><span class="o">.</span><span class="n">W4_W3</span>
 
         <span class="c1"># Compute cruise weight fraction</span>
         <span class="n">weight</span> <span class="o">=</span> <span class="n">W2_W1</span> <span class="o">*</span> <span class="n">W1_W0</span> <span class="o">*</span> <span class="n">weight</span> <span class="c1"># weight at the start of cruise</span>
-        <span class="n">W3_W2</span><span class="p">,</span> <span class="n">avg_cruise_power</span><span class="p">,</span> <span class="n">avg_cruise_CL</span> <span class="o">=</span> <span class="n">compute_cruise_weight_fraction</span><span class="p">(</span><span class="n">weight</span><span class="p">,</span> <span class="n">R</span><span class="p">,</span> <span class="n">cruise_speed</span><span class="p">)</span>
+        <span class="n">W3_W2</span><span class="p">,</span> <span class="n">avg_cruise_power</span><span class="p">,</span> <span class="n">avg_cruise_CL</span> <span class="o">=</span> <span class="n">compute_cruise_weight_fraction</span><span class="p">(</span><span class="n">parameters</span><span class="p">,</span> <span class="n">weight</span><span class="p">,</span> <span class="n">R</span><span class="p">,</span> <span class="n">parameters</span><span class="o">.</span><span class="n">cruise_speed</span><span class="p">)</span>
         <span class="n">parameters</span><span class="o">.</span><span class="n">W3_W2</span> <span class="o">=</span> <span class="n">W3_W2</span>
         <span class="n">parameters</span><span class="o">.</span><span class="n">avg_cruise_power</span> <span class="o">=</span> <span class="n">avg_cruise_power</span>
         <span class="n">parameters</span><span class="o">.</span><span class="n">avg_cruise_CL</span> <span class="o">=</span> <span class="n">avg_cruise_CL</span>
@@ -595,7 +596,7 @@ document.write(`
         <span class="c1"># Compute loiter weight fraction</span>
         <span class="n">W5_W4</span> <span class="o">=</span> <span class="n">parameters</span><span class="o">.</span><span class="n">W5_W4</span>
         <span class="n">weight</span> <span class="o">=</span> <span class="n">W5_W4</span> <span class="o">*</span> <span class="n">W4_W3</span> <span class="o">*</span> <span class="n">W3_W2</span> <span class="o">*</span> <span class="n">weight</span> <span class="c1"># weight at the start of loiter</span>
-        <span class="n">W6_W5</span><span class="p">,</span> <span class="n">avg_loiter_power</span><span class="p">,</span> <span class="n">avg_loiter_speed</span> <span class="o">=</span> <span class="n">compute_loiter_weight_fraction</span><span class="p">(</span><span class="n">weight</span><span class="p">,</span> <span class="n">R</span><span class="p">,</span> <span class="n">cruise_speed</span><span class="p">)</span>
+        <span class="n">W6_W5</span><span class="p">,</span> <span class="n">avg_loiter_power</span><span class="p">,</span> <span class="n">avg_loiter_speed</span> <span class="o">=</span> <span class="n">compute_loiter_weight_fraction</span><span class="p">(</span><span class="n">parameters</span><span class="p">,</span> <span class="n">weight</span><span class="p">,</span> <span class="n">parameters</span><span class="o">.</span><span class="n">endurance</span><span class="p">)</span>
         <span class="n">parameters</span><span class="o">.</span><span class="n">W6_W5</span> <span class="o">=</span> <span class="n">W6_W5</span>
         <span class="n">parameters</span><span class="o">.</span><span class="n">avg_loiter_power</span> <span class="o">=</span> <span class="n">avg_loiter_power</span>
         <span class="n">parameters</span><span class="o">.</span><span class="n">avg_loiter_speed</span> <span class="o">=</span> <span class="n">avg_loiter_speed</span>
@@ -609,7 +610,30 @@ document.write(`
 
         <span class="n">parameters</span><span class="o">.</span><span class="n">fuel_weight</span> <span class="o">=</span> <span class="n">Wf_W0</span> <span class="o">*</span> <span class="n">weight</span>
 
-        <span class="k">return</span> <span class="n">Wf_W0</span> <span class="c1"># fuel fraction</span>
+        <span class="k">return</span> <span class="n">Wf_W0</span> <span class="o">*</span> <span class="n">weight</span> <span class="c1"># fuel weight</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Below code block demonstrates how the fuel weight function can be used:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Parameters</span>
+<span class="n">A</span> <span class="o">=</span> <span class="mi">8</span>
+<span class="n">S</span> <span class="o">=</span> <span class="mi">134</span> <span class="c1"># sq ft</span>
+<span class="n">max_power</span> <span class="o">=</span> <span class="mi">595</span> <span class="c1"># hp</span>
+<span class="n">aircraft</span> <span class="o">=</span> <span class="n">AircraftParameters</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">max_power</span><span class="p">)</span>
+
+<span class="c1"># Weight</span>
+<span class="n">MTOW</span> <span class="o">=</span> <span class="mi">5000</span> <span class="c1"># lbs</span>
+<span class="n">fuel_weight</span> <span class="o">=</span> <span class="n">compute_fuel_weight</span><span class="p">(</span><span class="n">aircraft</span><span class="p">,</span> <span class="n">MTOW</span><span class="p">)</span> <span class="c1"># lbs</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Fuel weight for MTOW of </span><span class="si">{</span><span class="n">MTOW</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2"> lbs: </span><span class="si">{</span><span class="n">fuel_weight</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2"> lbs&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fuel weight for MTOW of 5000 lbs: 1123 lbs
 </pre></div>
 </div>
 </div>

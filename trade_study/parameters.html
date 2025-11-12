@@ -248,8 +248,11 @@
 <li class="toctree-l3 current active"><a class="current reference internal" href="#">Parameters</a></li>
 <li class="toctree-l3"><a class="reference internal" href="fuel.html">Fuel Weight</a></li>
 <li class="toctree-l3"><a class="reference internal" href="empty_weight.html">Empty Weight</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mtow.html">MTOW</a></li>
+<li class="toctree-l3"><a class="reference internal" href="constraint.html">Performance</a></li>
 </ul>
 </details></li>
+<li class="toctree-l2"><a class="reference internal" href="ar_study.html">Aspect ratio study</a></li>
 </ul>
 </details></li>
 </ul>
@@ -419,11 +422,99 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="parameters">
 <h1>Parameters<a class="headerlink" href="#parameters" title="Link to this heading">#</a></h1>
-<p>This section defines the parameter dataclass which is used for storing all the design data corresponding to the airplane. This class will be initialized before the start of every new analysis in the trade study. Below code block defines the class:</p>
+<p>This section defines the parameter dataclass which is used for storing all the design data corresponding to the airplane. This class will be initialized before the start of every new analysis in the trade study. Since the wing planform is going to change, the drag build-up should also be performed from scratch. Below code block defines a function for performing drag buildup based on given parameters:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">perform_drag_buildup</span><span class="p">(</span><span class="n">parameters</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Method to perform drag build up based on given parameters</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">M</span> <span class="o">=</span> <span class="n">parameters</span><span class="o">.</span><span class="n">cruise_mach_number</span>
+
+    <span class="c1"># functions</span>
+    <span class="n">compute_Re</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">l</span><span class="p">:</span> <span class="n">parameters</span><span class="o">.</span><span class="n">rho_cruise</span> <span class="o">*</span> <span class="n">parameters</span><span class="o">.</span><span class="n">cruise_speed</span> <span class="o">*</span> <span class="n">l</span> <span class="o">/</span> <span class="n">parameters</span><span class="o">.</span><span class="n">dyn_viscosity</span> <span class="c1"># reynolds number</span>
+    <span class="n">compute_cf_laminar</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">re</span><span class="p">:</span> <span class="mf">1.328</span><span class="o">/</span><span class="n">re</span><span class="o">**</span><span class="mf">0.5</span> <span class="c1"># Cf for laminar flow</span>
+    <span class="n">compute_cf_turbulent</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">re</span><span class="p">:</span> <span class="mf">0.455</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">re</span><span class="p">)</span><span class="o">**</span><span class="mf">2.58</span> <span class="c1"># Cf for turbulent flow</span>
+    <span class="n">compute_ff</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">xc</span><span class="p">,</span> <span class="n">tc</span><span class="p">,</span> <span class="n">sweep</span><span class="p">:</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="mf">0.6</span><span class="o">*</span><span class="n">tc</span><span class="o">/</span><span class="n">xc</span> <span class="o">+</span> <span class="mi">100</span><span class="o">*</span><span class="n">tc</span><span class="o">**</span><span class="mi">4</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.34</span><span class="o">*</span><span class="n">M</span><span class="o">**</span><span class="mf">0.18</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">sweep</span><span class="p">)</span><span class="o">**</span><span class="mf">0.28</span><span class="p">)</span> <span class="c1"># form factor</span>
+    <span class="n">compute_CDO</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">Cf</span><span class="p">,</span> <span class="n">ff</span><span class="p">,</span> <span class="n">Q</span><span class="p">,</span> <span class="n">Swet</span><span class="p">:</span> <span class="n">Cf</span> <span class="o">*</span> <span class="n">ff</span> <span class="o">*</span> <span class="n">Q</span> <span class="o">*</span> <span class="n">Swet</span> <span class="o">/</span> <span class="n">S_wing</span> <span class="c1"># CD0 component</span>
+
+    <span class="c1"># Wing Parameters</span>
+    <span class="n">S_wing</span> <span class="o">=</span> <span class="n">parameters</span><span class="o">.</span><span class="n">S</span>
+    <span class="n">tc_wing</span> <span class="o">=</span> <span class="n">parameters</span><span class="o">.</span><span class="n">tc_avg</span>
+    <span class="n">xc_wing</span> <span class="o">=</span> <span class="mf">0.3</span>
+    <span class="n">sweep_wing</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="n">parameters</span><span class="o">.</span><span class="n">sweep_qc</span><span class="p">)</span> <span class="c1"># rad</span>
+    <span class="n">Swet_wing</span> <span class="o">=</span> <span class="mf">1.7</span> <span class="o">*</span> <span class="n">S_wing</span> <span class="c1"># sq ft</span>
+    <span class="n">Q_wing</span> <span class="o">=</span> <span class="mf">1.0</span>
+
+    <span class="c1"># HT parameters</span>
+    <span class="n">S_ht</span> <span class="o">=</span> <span class="n">parameters</span><span class="o">.</span><span class="n">Sht</span>
+    <span class="n">tc_ht</span> <span class="o">=</span> <span class="n">parameters</span><span class="o">.</span><span class="n">tc_ht</span>
+    <span class="n">xc_ht</span> <span class="o">=</span> <span class="mf">0.3</span>
+    <span class="n">sweep_ht</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="n">parameters</span><span class="o">.</span><span class="n">sweep_qc_ht</span><span class="p">)</span> <span class="c1"># rad</span>
+    <span class="n">Swet_ht</span> <span class="o">=</span> <span class="mf">2.1</span> <span class="o">*</span> <span class="n">S_ht</span> <span class="c1"># sq ft</span>
+    <span class="n">Q_ht</span> <span class="o">=</span> <span class="mf">1.04</span>
+
+    <span class="c1"># VT parameters</span>
+    <span class="n">S_vt</span> <span class="o">=</span> <span class="n">parameters</span><span class="o">.</span><span class="n">Svt</span>
+    <span class="n">tc_vt</span> <span class="o">=</span> <span class="n">parameters</span><span class="o">.</span><span class="n">tc_vt</span>
+    <span class="n">xc_vt</span> <span class="o">=</span> <span class="mf">0.3</span>
+    <span class="n">sweep_vt</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="n">parameters</span><span class="o">.</span><span class="n">sweep_qc_vt</span><span class="p">)</span> <span class="c1"># rad</span>
+    <span class="n">Swet_vt</span> <span class="o">=</span> <span class="mf">2.1</span> <span class="o">*</span> <span class="n">S_vt</span> <span class="c1"># sq ft</span>
+    <span class="n">Q_vt</span> <span class="o">=</span> <span class="mf">1.04</span>
+
+    <span class="c1"># Fuselage parameters</span>
+    <span class="n">Swet_fuselage</span> <span class="o">=</span> <span class="mi">380</span> <span class="c1"># sq ft</span>
+    <span class="n">Q_fuselage</span> <span class="o">=</span> <span class="mf">1.0</span>
+    <span class="n">fuselage_max_frontal_area</span> <span class="o">=</span> <span class="n">parameters</span><span class="o">.</span><span class="n">fuselage_max_frontal_area</span> <span class="c1"># sq ft</span>
+    <span class="n">upsweep</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="n">parameters</span><span class="o">.</span><span class="n">fuselage_upsweep</span><span class="p">)</span> <span class="c1"># rad</span>
+
+    <span class="c1"># Wing CD0</span>
+    <span class="n">Cf_wing</span> <span class="o">=</span> <span class="n">compute_cf_turbulent</span><span class="p">(</span><span class="n">compute_Re</span><span class="p">(</span><span class="n">parameters</span><span class="o">.</span><span class="n">mac</span><span class="p">))</span>
+    <span class="n">ff_wing</span> <span class="o">=</span> <span class="n">compute_ff</span><span class="p">(</span><span class="n">xc_wing</span><span class="p">,</span> <span class="n">tc_wing</span><span class="p">,</span> <span class="n">sweep_wing</span><span class="p">)</span>
+    <span class="n">CD0_sf_wing</span> <span class="o">=</span> <span class="n">compute_CDO</span><span class="p">(</span><span class="n">Cf_wing</span><span class="p">,</span> <span class="n">ff_wing</span><span class="p">,</span> <span class="n">Q_wing</span><span class="p">,</span> <span class="n">Swet_wing</span><span class="p">)</span>
+
+    <span class="c1"># HT CD0</span>
+    <span class="n">Cf_ht</span> <span class="o">=</span> <span class="n">compute_cf_turbulent</span><span class="p">(</span><span class="n">compute_Re</span><span class="p">(</span><span class="n">parameters</span><span class="o">.</span><span class="n">mac_ht</span><span class="p">))</span>
+    <span class="n">ff_ht</span> <span class="o">=</span> <span class="n">compute_ff</span><span class="p">(</span><span class="n">xc_ht</span><span class="p">,</span> <span class="n">tc_ht</span><span class="p">,</span> <span class="n">sweep_ht</span><span class="p">)</span>
+    <span class="n">CD0_sf_ht</span> <span class="o">=</span> <span class="n">compute_CDO</span><span class="p">(</span><span class="n">Cf_ht</span><span class="p">,</span> <span class="n">ff_ht</span><span class="p">,</span> <span class="n">Q_ht</span><span class="p">,</span> <span class="n">Swet_ht</span><span class="p">)</span>
+
+    <span class="c1"># VT CD0</span>
+    <span class="n">Cf_vt</span> <span class="o">=</span> <span class="n">compute_cf_turbulent</span><span class="p">(</span><span class="n">compute_Re</span><span class="p">(</span><span class="n">parameters</span><span class="o">.</span><span class="n">mac_vt</span><span class="p">))</span>
+    <span class="n">ff_vt</span> <span class="o">=</span> <span class="n">compute_ff</span><span class="p">(</span><span class="n">xc_vt</span><span class="p">,</span> <span class="n">tc_vt</span><span class="p">,</span> <span class="n">sweep_vt</span><span class="p">)</span>
+    <span class="n">CD0_sf_vt</span> <span class="o">=</span> <span class="n">compute_CDO</span><span class="p">(</span><span class="n">Cf_vt</span><span class="p">,</span> <span class="n">ff_vt</span><span class="p">,</span> <span class="n">Q_vt</span><span class="p">,</span> <span class="n">Swet_vt</span><span class="p">)</span>
+
+    <span class="c1"># fuselage CD0</span>
+    <span class="n">Cf_fuselage_laminar</span> <span class="o">=</span> <span class="n">compute_cf_laminar</span><span class="p">(</span><span class="n">compute_Re</span><span class="p">(</span><span class="n">parameters</span><span class="o">.</span><span class="n">fuselage_lenth</span><span class="p">))</span>
+    <span class="n">Cf_fuselage_turbulent</span> <span class="o">=</span> <span class="n">compute_cf_turbulent</span><span class="p">(</span><span class="n">compute_Re</span><span class="p">(</span><span class="n">parameters</span><span class="o">.</span><span class="n">mac</span><span class="p">))</span>
+    <span class="n">Cf_fuselage</span> <span class="o">=</span> <span class="n">Cf_fuselage_laminar</span><span class="o">*</span><span class="mf">0.1</span> <span class="o">+</span> <span class="n">Cf_fuselage_turbulent</span><span class="o">*</span><span class="mf">0.9</span> <span class="c1"># 10% laminar + 90% turbulent</span>
+    <span class="n">ff_fuselage</span> <span class="o">=</span> <span class="mf">1.301388</span> <span class="c1"># fixed since fuselage is not changing</span>
+    <span class="n">CD0_sf_fuselage</span> <span class="o">=</span> <span class="n">compute_CDO</span><span class="p">(</span><span class="n">Cf_fuselage</span><span class="p">,</span> <span class="n">ff_fuselage</span><span class="p">,</span> <span class="n">Q_fuselage</span><span class="p">,</span> <span class="n">Swet_fuselage</span><span class="p">)</span>
+
+    <span class="c1"># Compute final CD0 without misc</span>
+    <span class="n">CD0_sf</span> <span class="o">=</span> <span class="n">CD0_sf_fuselage</span> <span class="o">+</span> <span class="n">CD0_sf_wing</span> <span class="o">+</span> <span class="n">CD0_sf_ht</span> <span class="o">+</span> <span class="n">CD0_sf_vt</span>
+
+    <span class="c1"># Miscellaneous</span>
+    <span class="n">CDmisc</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="n">D_by_q_upsweep</span> <span class="o">=</span> <span class="mf">3.83</span> <span class="o">*</span> <span class="n">upsweep</span><span class="o">**</span><span class="mf">2.5</span> <span class="o">*</span> <span class="n">fuselage_max_frontal_area</span>
+    <span class="n">CDmisc</span> <span class="o">+=</span> <span class="n">D_by_q_upsweep</span> <span class="o">/</span> <span class="n">S_wing</span>
+
+    <span class="n">D_by_q_windshield</span> <span class="o">=</span>  <span class="mf">0.07</span>
+    <span class="n">CDmisc</span> <span class="o">+=</span> <span class="n">D_by_q_windshield</span> <span class="o">*</span> <span class="mf">0.3</span> <span class="o">*</span> <span class="n">fuselage_max_frontal_area</span> <span class="o">/</span> <span class="n">S_wing</span>
+
+    <span class="c1"># Final CD0</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">CD0_sf</span> <span class="o">+</span> <span class="n">CDmisc</span><span class="p">)</span> <span class="o">*</span> <span class="mf">1.05</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Below code block defines the data class for storing all the aircraft parameters:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span>
 
 <span class="nd">@dataclass</span>
 <span class="k">class</span><span class="w"> </span><span class="nc">AircraftParameters</span><span class="p">:</span>
@@ -439,16 +530,12 @@ document.write(`
     <span class="n">P_takeoff</span><span class="p">:</span> <span class="nb">float</span>
 
     <span class="c1"># Mission details</span>
-    <span class="nb">range</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1200</span> <span class="c1"># nmi</span>
-    <span class="n">endurance</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">45</span><span class="o">/</span><span class="mi">60</span> <span class="c1"># hr</span>
-
-    <span class="c1"># Density, slugs/cu ft</span>
-    <span class="n">rho_sea_level</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.00237717</span>
-    <span class="n">rho_cruise</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.00186850</span>
-    <span class="n">rho_loiter</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.00211114</span>
-    <span class="n">dyn_viscosity</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">3.78456e-7</span>
-    <span class="n">cruise_speed</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">337.56</span> <span class="c1"># ft/s</span>
-    <span class="n">cruise_mach_number</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.3</span>
+    <span class="nb">range</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mf">6076.11549</span> <span class="o">*</span> <span class="mi">1200</span> <span class="c1"># ft</span>
+    <span class="n">endurance</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">45</span><span class="o">*</span><span class="mi">60</span> <span class="c1"># sec</span>
+    <span class="n">cruise_speed</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">200</span> <span class="o">*</span> <span class="mf">1.68781</span> <span class="c1"># ft/s</span>
+    <span class="n">cruise_altitude</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">8000</span> <span class="c1"># ft</span>
+    <span class="n">loiter_altitude</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">4000</span> <span class="c1"># ft</span>
+    <span class="n">oei_altitude</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">5000</span> <span class="c1"># ft</span>
 
     <span class="c1"># Wing parameters</span>
     <span class="n">taper_ratio_wing</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.4</span>
@@ -462,23 +549,26 @@ document.write(`
     <span class="n">Lf</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">27</span> <span class="c1"># ft, fuselage structural length without nose and tail cap</span>
     <span class="n">D</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.5</span><span class="o">/</span><span class="mi">12</span> <span class="c1"># ft, structural depth</span>
     <span class="n">Lt</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">16</span> <span class="c1"># ft, tail moment arm</span>
+    <span class="n">fuselage_lenth</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">31.6</span> <span class="c1"># ft</span>
+    <span class="n">fuselage_upsweep</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">10.0</span> <span class="c1"># deg</span>
+    <span class="n">fuselage_max_frontal_area</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">24</span> <span class="c1"># sq ft</span>
 
     <span class="c1"># H-Tail</span>
     <span class="n">Aht</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">5.5</span>
     <span class="n">taper_ratio_ht</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.75</span>
-    <span class="n">sweep_ht_qc</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">10</span> <span class="c1"># deg</span>
-    <span class="n">ht_volume_coeff</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.8</span>
-    <span class="n">ht_moment_arm</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">15</span> <span class="c1"># ft</span>
-    <span class="n">ht_tc</span> <span class="o">=</span> <span class="mf">0.12</span> <span class="c1"># from airfoil</span>
+    <span class="n">sweep_qc_ht</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">10</span> <span class="c1"># deg</span>
+    <span class="n">volume_coeff_ht</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.8</span>
+    <span class="n">moment_arm_ht</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">15</span> <span class="c1"># ft</span>
+    <span class="n">tc_ht</span> <span class="o">=</span> <span class="mf">0.12</span> <span class="c1"># from airfoil</span>
 
     <span class="c1"># V-Tail</span>
     <span class="n">Avt</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.3</span>
     <span class="n">taper_ratio_vt</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.55</span>
-    <span class="n">sweep_vt_qc</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">30</span> <span class="c1"># deg</span>
-    <span class="n">vt_volume_coeff</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.065</span>
-    <span class="n">vt_moment_arm</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">17</span> <span class="c1"># ft</span>
+    <span class="n">sweep_qc_vt</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">30</span> <span class="c1"># deg</span>
+    <span class="n">volume_coeff_vt</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.065</span>
+    <span class="n">moment_arm_vt</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">17</span> <span class="c1"># ft</span>
+    <span class="n">tc_vt</span> <span class="o">=</span> <span class="mf">0.12</span> <span class="c1"># from airfoil</span>
     <span class="n">vtail_factor</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span>
-    <span class="n">vt_tc</span> <span class="o">=</span> <span class="mf">0.12</span> <span class="c1"># from airfoil</span>
 
     <span class="c1"># Propulsion</span>
     <span class="n">num_engines</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2</span>
@@ -486,7 +576,9 @@ document.write(`
     <span class="n">prop_eff_cruise</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.8</span>
     <span class="n">prop_eff_loiter</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.7</span>
     <span class="n">Cbhp</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.4</span> <span class="c1"># lbs/hp-hr</span>
-    <span class="n">install_loss_factor</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.08</span>
+    <span class="n">install_loss_factor</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.92</span> <span class="c1"># 8% loss</span>
+    <span class="n">num_blades</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3</span>
+    <span class="n">blade_loading</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">3.8</span> <span class="c1"># lbs/sq ft</span>
 
     <span class="c1"># landing gear</span>
     <span class="n">Ngear</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">3</span> <span class="c1"># from Table 11.5</span>
@@ -502,6 +594,11 @@ document.write(`
     <span class="n">gamma_approach</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">3</span> <span class="c1">#deg</span>
     <span class="n">t_free_roll</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">1</span> <span class="c1"># sec</span>
 
+    <span class="c1"># Aerodynamics</span>
+    <span class="n">CLmax</span> <span class="o">=</span> <span class="mf">1.5</span>
+    <span class="n">CLmax_takeoff</span> <span class="o">=</span> <span class="mf">1.8</span>
+    <span class="n">CLmax_landing</span> <span class="o">=</span> <span class="mf">2.2</span>
+
     <span class="c1"># Weight fractions</span>
     <span class="n">W1_W0</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.985</span> <span class="c1"># engine start, warmup, and takeoff</span>
     <span class="n">W2_W1</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.99</span> <span class="c1"># climb</span>
@@ -515,7 +612,7 @@ document.write(`
     <span class="n">avgas_density</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">6.41</span> <span class="c1"># lbs/gallon at -40 C</span>
     <span class="n">num_passengers</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">6</span> <span class="c1"># including crew</span>
     <span class="n">Kh</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.05</span> <span class="c1"># factor used in hydraulics weight estimation</span>
-    <span class="n">g</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">32.17</span> <span class="c1"># ft/s^2</span>
+    <span class="n">g</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">32.174</span> <span class="c1"># ft/s^2</span>
     <span class="n">h_obs</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">50</span> <span class="c1"># ft</span>
     <span class="n">PI</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">3.14159</span>
 
@@ -524,12 +621,20 @@ document.write(`
 <span class="sd">            Method to compute additional quantities based on the define data</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
+        <span class="c1"># Flight conditions, slugs/cu ft</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rho_sea_level</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">isa_atmosphere</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="c1"># slugs/cu ft</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rho_cruise</span><span class="p">,</span> <span class="n">speed_sound</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dyn_viscosity</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">isa_atmosphere</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cruise_altitude</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cruise_mach_number</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cruise_speed</span> <span class="o">/</span> <span class="n">speed_sound</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rho_loiter</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">isa_atmosphere</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">loiter_altitude</span><span class="p">)</span> <span class="c1"># slugs/cu ft</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rho_oei_alt</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">isa_atmosphere</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">oei_altitude</span><span class="p">)</span>
+
         <span class="c1"># Compute wing planform</span>
         <span class="n">taper_ratio</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">taper_ratio_wing</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">b</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">A</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">S</span><span class="p">)</span><span class="o">**</span><span class="mf">0.5</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">wing_root_chord</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">S</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">b</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">taper_ratio</span><span class="p">)</span> <span class="c1"># ft</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">wing_tip_chord</span> <span class="o">=</span> <span class="n">taper_ratio</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">wing_root_chord</span> <span class="c1"># ft</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">mac</span> <span class="o">=</span> <span class="mi">2</span><span class="o">/</span><span class="mi">3</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">wing_root_chord</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">taper_ratio</span> <span class="o">+</span> <span class="n">taper_ratio</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">taper_ratio</span><span class="p">)</span> <span class="c1"># ft</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">wing_wetted_area</span> <span class="o">=</span> <span class="mf">1.7</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">S</span> <span class="c1"># sq ft</span>
 
         <span class="c1"># Powerplant - rubber engine sizing</span>
         <span class="n">p_req</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">P_takeoff</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">num_engines</span>
@@ -537,64 +642,113 @@ document.write(`
         <span class="bp">self</span><span class="o">.</span><span class="n">engine_len</span> <span class="o">=</span> <span class="mf">0.32</span><span class="o">*</span><span class="p">(</span><span class="n">p_req</span><span class="p">)</span><span class="o">**</span><span class="mf">0.424</span> <span class="c1"># ft</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">engine_width</span> <span class="o">=</span> <span class="mf">2.7</span> <span class="c1"># ft</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">engine_height</span> <span class="o">=</span> <span class="mf">2.0</span> <span class="c1"># ft</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">prop_dia</span> <span class="o">=</span> <span class="p">(</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">p_req</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">PI</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_blades</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">blade_loading</span><span class="p">)</span><span class="o">**</span><span class="mf">0.5</span> <span class="c1"># ft</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">prop_area</span> <span class="o">=</span>  <span class="bp">self</span><span class="o">.</span><span class="n">PI</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">prop_dia</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="mi">4</span>
+        <span class="n">sigma</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rho_cruise</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">rho_sea_level</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">P_cruise</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">P_takeoff</span> <span class="o">*</span> <span class="p">(</span><span class="n">sigma</span> <span class="o">-</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">sigma</span><span class="p">)</span><span class="o">/</span><span class="mf">7.75</span><span class="p">)</span>
 
-        <span class="c1"># Tail</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">Sht</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ht_volume_coeff</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">S</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">mac</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">ht_moment_arm</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">Svt</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">vt_volume_coeff</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">S</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">b</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">vt_moment_arm</span>
+        <span class="c1"># HT Tail</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Sht</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">volume_coeff_ht</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">S</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">mac</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">moment_arm_ht</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bht</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Aht</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">Sht</span><span class="p">)</span><span class="o">**</span><span class="mf">0.5</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">root_chord_ht</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">Sht</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">bht</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">taper_ratio_ht</span><span class="p">)</span> <span class="c1"># ft</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tip_chord_ht</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">taper_ratio_ht</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">root_chord_ht</span> <span class="c1"># ft</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mac_ht</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">root_chord_ht</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">taper_ratio_ht</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">taper_ratio_ht</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="mi">3</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">taper_ratio_ht</span><span class="p">)</span> <span class="c1"># ft</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">wetted_area_ht</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">Sht</span>
+
+        <span class="c1"># VT Tail</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Svt</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">volume_coeff_vt</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">S</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">b</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">moment_arm_vt</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bvt</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Avt</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">Svt</span><span class="p">)</span><span class="o">**</span><span class="mf">0.5</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">root_chord_vt</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">Svt</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">bvt</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">taper_ratio_vt</span><span class="p">)</span> <span class="c1"># ft</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tip_chord_vt</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">taper_ratio_vt</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">root_chord_vt</span> <span class="c1"># ft</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mac_vt</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">root_chord_vt</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">taper_ratio_vt</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">taper_ratio_vt</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="mi">3</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">taper_ratio_vt</span><span class="p">)</span> <span class="c1"># ft</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">wetted_area_vt</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">Svt</span>
 
         <span class="c1"># Aerodynamics</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">e</span> <span class="o">=</span> <span class="mf">1.78</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="mf">0.045</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">A</span><span class="o">**</span><span class="mf">0.68</span><span class="p">)</span> <span class="o">-</span> <span class="mf">0.64</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">CD0</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_CD0</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">e_takeoff</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">e</span> <span class="o">-</span> <span class="mf">0.05</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">e_landing</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">e</span> <span class="o">-</span> <span class="mf">0.1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">CD0</span> <span class="o">=</span> <span class="n">perform_drag_buildup</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">CD0_takeoff</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">CD0</span> <span class="o">+</span> <span class="mf">0.024011</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">CD0_landing</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">CD0</span> <span class="o">+</span> <span class="mf">0.048074</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">compute_CD0</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">isa_atmosphere</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">altitude</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">            Method to compute zero-lift drag based on given data</span>
+<span class="sd">            Method to compute density, speed of sound, and dynamic viscosity</span>
+<span class="sd">            at given altitude (in feet) using the International Standard Atmosphere (ISA) model</span>
+
+<span class="sd">            Parameters</span>
+<span class="sd">            ----------</span>
+<span class="sd">            altitude_ft : float</span>
+<span class="sd">                Altitude in feet.</span>
+
+<span class="sd">            Returns</span>
+<span class="sd">            -------</span>
+<span class="sd">            rho : float</span>
+<span class="sd">                Air density [slug/ft³]</span>
+<span class="sd">            a : float</span>
+<span class="sd">                Speed of sound [ft/s]</span>
+<span class="sd">            mu : float</span>
+<span class="sd">                Dynamic viscosity [slug/(ft·s)]</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="c1"># Parameters</span>
-        <span class="n">S</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">S</span>
-        <span class="n">M</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cruise_mach_number</span>
-        <span class="n">tc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tc_avg</span>
-        <span class="n">xc</span> <span class="o">=</span> <span class="mf">0.3</span>
-        <span class="n">sweep</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sweep_qc</span>
-        <span class="n">Swet_wing</span> <span class="o">=</span> <span class="mf">1.7</span> <span class="o">*</span> <span class="n">S</span>
+        <span class="c1"># --- Constants ---</span>
+        <span class="n">g</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">g</span>        <span class="c1"># ft/s²</span>
+        <span class="n">R</span> <span class="o">=</span> <span class="mf">1716.59</span>       <span class="c1"># ft·lbf/(slug·°R)</span>
+        <span class="n">T0</span> <span class="o">=</span> <span class="mf">518.67</span>       <span class="c1"># Rankine (sea level = 15°C)</span>
+        <span class="n">p0</span> <span class="o">=</span> <span class="mf">2116.22</span>      <span class="c1"># lbf/ft²</span>
+        <span class="n">lapse_rate</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.00356616</span>  <span class="c1"># °R/ft (≈ -6.5 K/km)</span>
+        <span class="n">gamma</span> <span class="o">=</span> <span class="mf">1.4</span>
 
-        <span class="c1"># Different terms for wing CD0</span>
-        <span class="n">Re</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rho_cruise</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">cruise_speed</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">mac</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">dyn_viscosity</span>
-        <span class="n">Cf_wing</span> <span class="o">=</span> <span class="mf">0.455</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">Re</span><span class="p">)</span><span class="o">**</span><span class="mf">2.58</span> 
-        <span class="n">ff_wing</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="mf">0.6</span><span class="o">*</span><span class="n">tc</span><span class="o">/</span><span class="n">xc</span> <span class="o">+</span> <span class="mi">100</span><span class="o">*</span><span class="n">tc</span><span class="o">**</span><span class="mi">4</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.34</span><span class="o">*</span><span class="n">M</span><span class="o">**</span><span class="mf">0.18</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="n">sweep</span><span class="p">))</span><span class="o">**</span><span class="mf">0.28</span><span class="p">)</span>
-        <span class="n">Q_wing</span> <span class="o">=</span> <span class="mf">1.0</span>
+        <span class="c1"># --- Temperature and pressure ---</span>
+        <span class="k">if</span> <span class="n">altitude</span> <span class="o">&lt;=</span> <span class="mi">36089</span><span class="p">:</span>  <span class="c1"># Troposphere</span>
+            <span class="n">T</span> <span class="o">=</span> <span class="n">T0</span> <span class="o">+</span> <span class="n">lapse_rate</span> <span class="o">*</span> <span class="n">altitude</span>
+            <span class="n">p</span> <span class="o">=</span> <span class="n">p0</span> <span class="o">*</span> <span class="p">(</span><span class="n">T</span> <span class="o">/</span> <span class="n">T0</span><span class="p">)</span> <span class="o">**</span> <span class="p">(</span><span class="o">-</span><span class="n">g</span> <span class="o">/</span> <span class="p">(</span><span class="n">lapse_rate</span> <span class="o">*</span> <span class="n">R</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>  <span class="c1"># Lower stratosphere</span>
+            <span class="n">T_trop</span> <span class="o">=</span> <span class="n">T0</span> <span class="o">+</span> <span class="n">lapse_rate</span> <span class="o">*</span> <span class="mi">36089</span>
+            <span class="n">p_trop</span> <span class="o">=</span> <span class="n">p0</span> <span class="o">*</span> <span class="p">(</span><span class="n">T_trop</span> <span class="o">/</span> <span class="n">T0</span><span class="p">)</span> <span class="o">**</span> <span class="p">(</span><span class="o">-</span><span class="n">g</span> <span class="o">/</span> <span class="p">(</span><span class="n">lapse_rate</span> <span class="o">*</span> <span class="n">R</span><span class="p">))</span>
+            <span class="n">p</span> <span class="o">=</span> <span class="n">p_trop</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">g</span> <span class="o">*</span> <span class="p">(</span><span class="n">altitude</span> <span class="o">-</span> <span class="mi">36089</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">R</span> <span class="o">*</span> <span class="n">T_trop</span><span class="p">))</span>
+            <span class="n">T</span> <span class="o">=</span> <span class="n">T_trop</span>
 
-        <span class="c1"># Compute final CD0</span>
-        <span class="n">CD0_wing</span> <span class="o">=</span> <span class="mf">1.05</span> <span class="o">*</span> <span class="n">Cf_wing</span> <span class="o">*</span> <span class="n">ff_wing</span> <span class="o">*</span> <span class="n">Q_wing</span> <span class="o">*</span> <span class="n">Swet_wing</span> <span class="o">/</span> <span class="n">S</span>
-        <span class="n">CDO_remaining</span> <span class="o">=</span> <span class="mf">0.024899</span> <span class="c1"># Other components are fixed</span>
-        <span class="n">CD0</span> <span class="o">=</span> <span class="n">CDO_remaining</span> <span class="o">+</span> <span class="n">CD0_wing</span>
+        <span class="c1"># --- Density (slug/ft³) ---</span>
+        <span class="n">rho</span> <span class="o">=</span> <span class="n">p</span> <span class="o">/</span> <span class="p">(</span><span class="n">R</span> <span class="o">*</span> <span class="n">T</span><span class="p">)</span>
 
-        <span class="k">return</span> <span class="n">CD0</span>
+        <span class="c1"># --- Speed of sound (ft/s) ---</span>
+        <span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">gamma</span> <span class="o">*</span> <span class="n">R</span> <span class="o">*</span> <span class="n">T</span><span class="p">)</span>
+
+        <span class="c1"># --- Dynamic viscosity using Sutherland&#39;s law ---</span>
+        <span class="c1"># Reference values in FPS units:</span>
+        <span class="c1"># μ0 = 3.737e-7 slug/(ft·s) at T0 = 518.67 R</span>
+        <span class="c1"># Sutherland constant = 198.72 R</span>
+        <span class="n">mu_ref</span> <span class="o">=</span> <span class="mf">3.737e-7</span>      <span class="c1"># slug/(ft·s)</span>
+        <span class="n">T_ref</span> <span class="o">=</span> <span class="mf">518.67</span>         <span class="c1"># Rankine</span>
+        <span class="n">S</span> <span class="o">=</span> <span class="mf">198.72</span>             <span class="c1"># Rankine</span>
+
+        <span class="n">mu</span> <span class="o">=</span> <span class="n">mu_ref</span> <span class="o">*</span> <span class="p">(</span><span class="n">T</span> <span class="o">/</span> <span class="n">T_ref</span><span class="p">)</span> <span class="o">**</span> <span class="mf">1.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">T_ref</span> <span class="o">+</span> <span class="n">S</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">T</span> <span class="o">+</span> <span class="n">S</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">rho</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">mu</span>
 </pre></div>
 </div>
 </div>
 </div>
-<p>Note the post initialization method which computes further quantites based on the defined data. While initializing this class, the aspect ratio, wing reference area, and maximum takeoff power are <strong>required</strong>. Rest all parameters can be changed in class definition as desired. Below code block shows how one can instantiate the above class:</p>
+<p>Note the post initialization method which computes further quantites based on the defined data. While initializing this class, the aspect ratio, wing reference area, and maximum takeoff power are <strong>required</strong>. Rest all parameters are optional and can be set during initialization. Below code block shows how one can instantiate the above class:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">A</span> <span class="o">=</span> <span class="mi">8</span>
 <span class="n">S</span> <span class="o">=</span> <span class="mi">134</span> <span class="c1"># sq ft</span>
-<span class="n">max_power</span> <span class="o">=</span> <span class="mi">595</span> <span class="c1"># hp</span>
-<span class="n">R</span> <span class="o">=</span> <span class="mi">1500</span> <span class="c1"># nmi</span>
+<span class="n">P_takeoff</span> <span class="o">=</span> <span class="mi">595</span> <span class="c1"># hp</span>
 
-<span class="n">aircraft</span> <span class="o">=</span> <span class="n">AircraftParameters</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">max_power</span><span class="p">,</span> <span class="nb">range</span><span class="o">=</span><span class="n">R</span><span class="p">)</span>
+<span class="n">aircraft</span> <span class="o">=</span> <span class="n">AircraftParameters</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">P_takeoff</span><span class="p">)</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Aspect ratio: </span><span class="si">{</span><span class="n">aircraft</span><span class="o">.</span><span class="n">A</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Wing span: </span><span class="si">{</span><span class="n">aircraft</span><span class="o">.</span><span class="n">b</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2"> ft&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Range: </span><span class="si">{</span><span class="n">aircraft</span><span class="o">.</span><span class="n">range</span><span class="si">}</span><span class="s2"> nmi&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Zero-lift drag coefficient: </span><span class="si">{</span><span class="n">aircraft</span><span class="o">.</span><span class="n">CD0</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Aspect ratio: 8
 Wing span: 33 ft
-Range: 1500 nmi
+Zero-lift drag coefficient: 0.0363
 </pre></div>
 </div>
 </div>
