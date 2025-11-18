@@ -65,3 +65,4 @@ chapters:
           - file: trade_study/mtow
           - file: trade_study/constraint.ipynb
       - file: trade_study/ar_study.ipynb
+  - file: trade_study/payload_range.ipynb
