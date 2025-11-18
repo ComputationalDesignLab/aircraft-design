@@ -506,12 +506,10 @@ document.write(`
     <span class="n">engine_weight</span> <span class="o">=</span> <span class="n">parameters</span><span class="o">.</span><span class="n">engine_weight</span>
     <span class="n">num_engines</span> <span class="o">=</span> <span class="n">parameters</span><span class="o">.</span><span class="n">num_engines</span>
     <span class="n">num_fuel_tanks</span> <span class="o">=</span> <span class="n">parameters</span><span class="o">.</span><span class="n">num_fuel_tanks</span>
-    <span class="n">fuel_weight</span> <span class="o">=</span> <span class="n">parameters</span><span class="o">.</span><span class="n">fuel_weight</span>
-    <span class="n">avgas_density</span> <span class="o">=</span> <span class="n">parameters</span><span class="o">.</span><span class="n">avgas_density</span>
+    <span class="n">Vt</span> <span class="o">=</span> <span class="n">parameters</span><span class="o">.</span><span class="n">fuel_tank_volume</span> <span class="c1"># gallons</span>
 
     <span class="n">Winst_eng</span> <span class="o">=</span> <span class="mf">2.575</span> <span class="o">*</span> <span class="n">engine_weight</span><span class="o">**</span><span class="mf">0.922</span> <span class="o">*</span> <span class="n">num_engines</span> <span class="c1"># lbs</span>
-
-    <span class="n">Vt</span> <span class="o">=</span> <span class="n">fuel_weight</span> <span class="o">/</span> <span class="n">avgas_density</span>
+    
     <span class="n">Vi</span> <span class="o">=</span> <span class="n">Vt</span>
 
     <span class="n">Wfuel_system</span> <span class="o">=</span> <span class="mf">2.49</span> <span class="o">*</span> <span class="n">Vt</span><span class="o">**</span><span class="mf">0.726</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">Vi</span><span class="o">/</span><span class="n">Vt</span><span class="p">)</span><span class="o">**-</span><span class="mf">0.363</span> <span class="o">*</span> <span class="n">num_fuel_tanks</span><span class="o">**</span><span class="mf">0.242</span> <span class="o">*</span> <span class="n">num_engines</span><span class="o">**</span><span class="mf">0.157</span> <span class="c1"># lbs</span>
@@ -592,12 +590,14 @@ document.write(`
 
 <span class="n">fuel_weight</span> <span class="o">=</span> <span class="n">compute_fuel_weight</span><span class="p">(</span><span class="n">aircraft</span><span class="p">,</span> <span class="n">MTOW</span><span class="p">)</span> <span class="c1"># lbs</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Fuel weight for MTOW of </span><span class="si">{</span><span class="n">MTOW</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2"> lbs: </span><span class="si">{</span><span class="n">fuel_weight</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2"> lbs&quot;</span><span class="p">)</span>
+<span class="n">empty_weight</span> <span class="o">=</span> <span class="n">compute_empty_weight</span><span class="p">(</span><span class="n">aircraft</span><span class="p">,</span> <span class="n">MTOW</span><span class="p">)</span> <span class="c1"># lbs</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Fuel weight for MTOW of </span><span class="si">{</span><span class="n">MTOW</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2"> lbs: </span><span class="si">{</span><span class="n">empty_weight</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2"> lbs&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fuel weight for MTOW of 5000 lbs: 1123 lbs
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fuel weight for MTOW of 5000 lbs: 3015 lbs
 </pre></div>
 </div>
 </div>

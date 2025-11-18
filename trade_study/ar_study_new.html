@@ -59,10 +59,9 @@
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'trade_study/ar_study';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'trade_study/ar_study_new';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="prev" title="Performance" href="constraint.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -125,6 +124,8 @@
       
       
       
+        
+      
       <div class="bd-sidebar-primary bd-sidebar">
         
 
@@ -174,7 +175,7 @@
                 </a>
             </li>
         </ul>
-        <ul class="current nav bd-sidenav">
+        <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../setup.html">Computing environment setup</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../python_basics/intro.html">Basics of Python Programming</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../python_basics/python_basics.html">Basic programming in Python and Jupyter Notebooks</a></li>
@@ -244,7 +245,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../performance/mission_analysis.html">Mission analysis</a></li>
 </ul>
 </details></li>
-<li class="toctree-l1 current active has-children"><a class="reference internal" href="intro.html">Trade study</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l1 has-children"><a class="reference internal" href="intro.html">Trade study</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2 has-children"><a class="reference internal" href="setup.html">Code setup</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l3"><a class="reference internal" href="parameters.html">Parameters</a></li>
 <li class="toctree-l3"><a class="reference internal" href="fuel.html">Fuel Weight</a></li>
@@ -253,7 +254,7 @@
 <li class="toctree-l3"><a class="reference internal" href="constraint.html">Performance</a></li>
 </ul>
 </details></li>
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">Aspect ratio study</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ar_study.html">Aspect ratio study</a></li>
 </ul>
 </details></li>
 </ul>
@@ -325,7 +326,7 @@
       
       
       
-      <li><a href="../_sources/trade_study/ar_study.ipynb" target="_blank"
+      <li><a href="../_sources/trade_study/ar_study_new.ipynb" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -437,7 +438,7 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="aspect-ratio-study">
 <h1>Aspect ratio study<a class="headerlink" href="#aspect-ratio-study" title="Link to this heading">#</a></h1>
-<p>This section demonstrates a simple trade study for the example airplane using wing loading, power loading, aspect ratio, and maximum takeoff weight (MTOW). The goal of the study is to determine a value of aspect ratio that will yield the lowest MTOW. The aspect ratio is set to 7, 8, 9, 10, and 11. The wing loading is varied from 30 <span class="math notranslate nohighlight">\(\text{lbs}/\text{ft}^2\)</span> to 60 <span class="math notranslate nohighlight">\(\text{lbs}/\text{ft}^2\)</span>, while the power loading is varied from 6 lbs/hp to 12 lbs/hp. The MTOW and performance constraints are evaluated using the functions defined in <a class="reference internal" href="setup.html"><span class="std std-doc">code setup section</span></a>. Below code block imports required packages and defines required performance metrics:</p>
+<p>This section demonstrates a simple trade study for the example airplane using wing loading, power loading, aspect ratio, and maximum takeoff weight (MTOW). The goal of the study is to determine a value of aspect ratio that will yield the lowest MTOW. The aspect ratio is set to 7, 8, 9, 10, 11, and 12. The wing loading is varied from 30 <span class="math notranslate nohighlight">\(\text{lbs}/\text{ft}^2\)</span> to 60 <span class="math notranslate nohighlight">\(\text{lbs}/\text{ft}^2\)</span>, while the power loading is varied from 6 lbs/hp to 12 lbs/hp. The MTOW and performance constraints are evaluated using the functions defined in <a class="reference internal" href="setup.html"><span class="std std-doc">code setup section</span></a>. Below code block imports required packages and defines required performance metrics:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">nbimporter</span>
@@ -461,7 +462,7 @@ document.write(`
 <span class="sd">        Function to create a trade study plot for a given A</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">num_pts</span> <span class="o">=</span> <span class="mi">80</span>
+    <span class="n">num_pts</span> <span class="o">=</span> <span class="mi">20</span> <span class="c1"># 80</span>
     <span class="n">wing_loading</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="n">num_pts</span><span class="p">)</span> <span class="c1"># lbs/sq ft</span>
     <span class="n">power_loading</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="n">num_pts</span><span class="p">)</span> <span class="c1"># lbs/hp</span>
 
@@ -568,7 +569,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/e0e3eda9503c820b14a7d1e5a95c913ab8c98d88cd51ca570dcd09795db7d621.png" src="../_images/e0e3eda9503c820b14a7d1e5a95c913ab8c98d88cd51ca570dcd09795db7d621.png" />
+<img alt="../_images/ecdb2fd95cc14c9fd566567c31835f0abe7999cdef2781c577b8983a6bfad17b.png" src="../_images/ecdb2fd95cc14c9fd566567c31835f0abe7999cdef2781c577b8983a6bfad17b.png" />
 </div>
 </div>
 </section>
@@ -587,7 +588,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/187dafb665f63df876a2e8a0b6c4a9961b62f86e6d26220adbea398199602b0d.png" src="../_images/187dafb665f63df876a2e8a0b6c4a9961b62f86e6d26220adbea398199602b0d.png" />
+<img alt="../_images/62552c4ede0d36e840b56b90da2da052db885337d4845c8f02694bc364063cfd.png" src="../_images/62552c4ede0d36e840b56b90da2da052db885337d4845c8f02694bc364063cfd.png" />
 </div>
 </div>
 </section>
@@ -606,7 +607,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/4ff64081e5801c04b70442787d3f2d6e7fa697c5f0eff048b796d76dcf8e0202.png" src="../_images/4ff64081e5801c04b70442787d3f2d6e7fa697c5f0eff048b796d76dcf8e0202.png" />
+<img alt="../_images/8df0c61424ba1c9c5fc62e24502d78dac3ea630dbe0941b887228b2049c670e0.png" src="../_images/8df0c61424ba1c9c5fc62e24502d78dac3ea630dbe0941b887228b2049c670e0.png" />
 </div>
 </div>
 </section>
@@ -625,7 +626,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/a6daf58fefe5ac2bea9822fe6240e0c77f700bc991eb04a13b001c5f4d6abe00.png" src="../_images/a6daf58fefe5ac2bea9822fe6240e0c77f700bc991eb04a13b001c5f4d6abe00.png" />
+<img alt="../_images/1425d9f86b75b31aebb9b23796fe37ca35d30c756dccdb887b20a96d7d7bb447.png" src="../_images/1425d9f86b75b31aebb9b23796fe37ca35d30c756dccdb887b20a96d7d7bb447.png" />
 </div>
 </div>
 </section>
@@ -644,7 +645,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/0979fe5dc1078f029d457d1e26b541b7df503dbbb967e1f236c125d506db838f.png" src="../_images/0979fe5dc1078f029d457d1e26b541b7df503dbbb967e1f236c125d506db838f.png" />
+<img alt="../_images/5ece58c7446b2f1c68327e7aabe48190c6d9e79d096274f2c1209751a09587b9.png" src="../_images/5ece58c7446b2f1c68327e7aabe48190c6d9e79d096274f2c1209751a09587b9.png" />
 </div>
 </div>
 <p>Based on the above graph, it can be seen that cruise speed, OEI climb gradient, and wing fuel volume are the driving constraints for the design. Below code block plots the best MTOW as the aspect ratio is varied:</p>
@@ -736,15 +737,6 @@ Wing span: 36 ft
                 <footer class="prev-next-footer d-print-none">
                   
 <div class="prev-next-area">
-    <a class="left-prev"
-       href="constraint.html"
-       title="previous page">
-      <i class="fa-solid fa-angle-left"></i>
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Performance</p>
-      </div>
-    </a>
 </div>
                 </footer>
               

@@ -498,16 +498,16 @@ document.write(`
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">mtow</span><span class="w"> </span><span class="kn">import</span> <span class="n">compute_takeoff_weight</span>
 
-<span class="n">A</span> <span class="o">=</span> <span class="mi">10</span>
-<span class="n">WS</span> <span class="o">=</span> <span class="mi">48</span> <span class="c1"># lbs/sq ft</span>
-<span class="n">WP</span> <span class="o">=</span> <span class="mf">8.5</span> <span class="c1"># lbs/hp</span>
+<span class="n">A</span> <span class="o">=</span> <span class="mi">11</span>
+<span class="n">WS</span> <span class="o">=</span> <span class="mf">46.7</span> <span class="c1"># lbs/sq ft</span>
+<span class="n">WP</span> <span class="o">=</span> <span class="mf">9.3</span> <span class="c1"># lbs/hp</span>
 <span class="n">MTOW</span><span class="p">,</span> <span class="n">aircraft</span> <span class="o">=</span> <span class="n">compute_takeoff_weight</span><span class="p">(</span><span class="n">WS</span><span class="p">,</span> <span class="n">WP</span><span class="p">,</span> <span class="n">A</span><span class="p">)</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="n">MTOW</span><span class="p">)</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="n">aircraft</span><span class="o">.</span><span class="n">fuel_weight</span><span class="p">)</span>
+<span class="c1"># print(aircraft.fuel_weight)</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="n">aircraft</span><span class="o">.</span><span class="n">P_takeoff</span><span class="p">)</span>
+<span class="c1"># print(aircraft.P_takeoff)</span>
 
 <span class="n">S</span> <span class="o">=</span> <span class="n">aircraft</span><span class="o">.</span><span class="n">S</span>
 <span class="n">b</span> <span class="o">=</span> <span class="n">aircraft</span><span class="o">.</span><span class="n">b</span>
@@ -516,33 +516,27 @@ document.write(`
 <span class="n">taper_ratio</span> <span class="o">=</span> <span class="n">aircraft</span><span class="o">.</span><span class="n">taper_ratio_wing</span>
 <span class="n">tau</span> <span class="o">=</span> <span class="n">tc_tip</span> <span class="o">/</span> <span class="n">tc_root</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+<span class="c1"># print(b)</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="n">S</span><span class="p">)</span>
+<span class="c1"># print(S)</span>
 
 <span class="n">wing_fuel_volume</span> <span class="o">=</span> <span class="mf">0.54</span> <span class="o">*</span> <span class="n">S</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="n">tc_root</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">taper_ratio</span> <span class="o">*</span> <span class="n">tau</span><span class="o">**</span><span class="mf">0.5</span> <span class="o">+</span> <span class="n">tau</span> <span class="o">*</span> <span class="n">taper_ratio</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="n">b</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">taper_ratio</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="mf">7.48051948</span> <span class="c1"># US gallons</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="n">wing_fuel_volume</span><span class="p">)</span> <span class="c1"># US gallons</span>
 
-<span class="n">max_fuel_mass</span> <span class="o">=</span> <span class="n">aircraft</span><span class="o">.</span><span class="n">avgas_density</span> <span class="o">*</span> <span class="n">wing_fuel_volume</span>
+<span class="n">max_fuel_volume</span> <span class="o">=</span> <span class="n">aircraft</span><span class="o">.</span><span class="n">fuel_weight</span> <span class="o">/</span> <span class="mf">6.01</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="n">max_fuel_mass</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">max_fuel_volume</span><span class="p">)</span>
 
-<span class="nb">print</span><span class="p">((</span><span class="n">max_fuel_mass</span> <span class="o">-</span> <span class="n">aircraft</span><span class="o">.</span><span class="n">fuel_weight</span><span class="p">)</span><span class="o">/</span><span class="n">aircraft</span><span class="o">.</span><span class="n">fuel_weight</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">((</span><span class="n">wing_fuel_volume</span> <span class="o">-</span> <span class="n">max_fuel_volume</span><span class="p">)</span><span class="o">/</span><span class="n">wing_fuel_volume</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>5515.714254529519
-0.007922159760710201
-5515.714254529519
-1181.322495790711
-648.9066273376186
-33.89845845920381
-114.91054859103663
-196.93709845366183
-1262.3668010879724
-0.06860472528546484
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>6283.125490230001
+237.89140290693985
+279.927786184588
+-0.1767040875121169
 </pre></div>
 </div>
 </div>
