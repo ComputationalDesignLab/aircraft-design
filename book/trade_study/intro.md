@@ -1,4 +1,4 @@
-## Trade study
+# Trade study
 
 This section demonstrates a method to refine the current design for the example airplane using classical parametric study. Specifically, a four-variable trade study is performed which consists of wing loading $W/S$, power loading $W/P$, and aspect ratio $A$ as the first three parameters. The fourth variable is usually a measure of merit such as takeoff weight, operating cost, etc. In this demonstration, maximum takeoff weight (MTOW) is used as the measure of merit. Note that one can also perform trade studies with different set of variables, as outlined in Table 19.1 in Raymer. Refer to lecture notes, Chapter 19 in Raymer, and Chapter 25 in Nicolai for more details.
 
