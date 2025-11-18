@@ -396,7 +396,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
 </div></div>
       
     </div>
@@ -412,6 +414,20 @@ document.write(`
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-7">A = 7</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-8">A = 8</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-9">A = 9</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-10">A = 10</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-11">A = 11</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-12">A = 12</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-13">A = 13</a></li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -475,7 +491,8 @@ document.write(`
             <span class="n">cruise_speed_req</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">final_parameters</span><span class="o">.</span><span class="n">avg_cruise_power</span> <span class="o">-</span> <span class="n">final_parameters</span><span class="o">.</span><span class="n">P_cruise</span>
 
     <span class="c1"># Plotting</span>
-    <span class="n">levels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">4600</span><span class="p">,</span> <span class="mi">5000</span><span class="p">,</span> <span class="mi">5400</span><span class="p">,</span> <span class="mi">6000</span><span class="p">,</span> <span class="mi">6600</span><span class="p">])</span>
+    <span class="c1"># levels = np.array([4600, 5000, 5400, 6000, 6600])</span>
+    <span class="n">levels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">5600</span><span class="p">,</span> <span class="mi">6000</span><span class="p">,</span> <span class="mi">6500</span><span class="p">,</span> <span class="mi">7400</span><span class="p">])</span>
     <span class="n">fs</span> <span class="o">=</span> <span class="mi">11</span>
     <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
 
@@ -517,32 +534,146 @@ document.write(`
     <span class="n">ax</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s2">&quot;OEI&quot;</span><span class="p">,</span> <span class="p">(</span><span class="mi">32</span><span class="p">,</span><span class="mf">10.8</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;g&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">fs</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s2">&quot;left&quot;</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">ax</span>
+
+<span class="c1"># Initialize empty array</span>
+<span class="n">A</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">best_wing_loading</span> <span class="o">=</span> <span class="p">[]</span> <span class="c1"># lbs/sq ft</span>
+<span class="n">best_power_loading</span> <span class="o">=</span> <span class="p">[]</span> <span class="c1"># lbs/hp</span>
 </pre></div>
 </div>
 </div>
 </div>
-<p>Below code block creates MTOW contours and overlays performance requirement lines for the selected range of aspect ratio values:</p>
+<p>Below code blocks create MTOW contours and overlays performance requirement lines for the selected range of aspect ratio values:</p>
+<section id="a-7">
+<h2>A = 7<a class="headerlink" href="#a-7" title="Link to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># A values</span>
-<span class="n">A</span> <span class="o">=</span> <span class="p">[</span><span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">12</span><span class="p">]</span>
-<span class="n">best_wing_loading</span> <span class="o">=</span> <span class="p">[</span><span class="mf">42.5</span><span class="p">,</span> <span class="mf">44.8</span><span class="p">,</span> <span class="mf">46.6</span><span class="p">,</span> <span class="mf">48.0</span><span class="p">,</span> <span class="mf">49.4</span><span class="p">,</span> <span class="mf">50.2</span><span class="p">]</span> <span class="c1"># lbs/sq ft</span>
-<span class="n">best_power_loading</span> <span class="o">=</span> <span class="p">[</span><span class="mf">8.2</span><span class="p">,</span> <span class="mf">8.3</span><span class="p">,</span> <span class="mf">8.4</span><span class="p">,</span> <span class="mf">8.5</span><span class="p">,</span> <span class="mf">8.55</span><span class="p">,</span> <span class="mf">8.6</span><span class="p">]</span> <span class="c1"># lbs/hp</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">A</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span>
+<span class="n">best_wing_loading</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">40</span><span class="p">)</span> <span class="c1"># lbs/sq ft</span>
+<span class="n">best_power_loading</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mf">8.9</span><span class="p">)</span> <span class="c1"># lbs/hp</span>
 
-<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">A</span><span class="p">):</span>
-    <span class="n">ax</span> <span class="o">=</span> <span class="n">plot_trade_study</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">best_wing_loading</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">best_power_loading</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Optimum point&quot;</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">plot_trade_study</span><span class="p">(</span><span class="n">A</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">best_wing_loading</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">best_power_loading</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Optimum point&quot;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/20508f740af11866f29495e41eb512b962334d395285a8122e5b8dec7e29a2d5.png" src="../_images/20508f740af11866f29495e41eb512b962334d395285a8122e5b8dec7e29a2d5.png" />
-<img alt="../_images/8e1e109527a2b71b528f7d2672f16ca2b24093cd81e693cd09d8dd9be72dfcd2.png" src="../_images/8e1e109527a2b71b528f7d2672f16ca2b24093cd81e693cd09d8dd9be72dfcd2.png" />
-<img alt="../_images/ae01b0e51bff2515c4fe150fa61bd9de1dfe6d384af8c47661d21547d9f861b7.png" src="../_images/ae01b0e51bff2515c4fe150fa61bd9de1dfe6d384af8c47661d21547d9f861b7.png" />
-<img alt="../_images/c8584949031921a4b9d39f1b6459ebe5c0f4e59fd2eb643e4ed2833e2a1b836f.png" src="../_images/c8584949031921a4b9d39f1b6459ebe5c0f4e59fd2eb643e4ed2833e2a1b836f.png" />
-<img alt="../_images/889615689673d765be3e94366ee32096731f258184a3f0b28141883e3d5103ab.png" src="../_images/889615689673d765be3e94366ee32096731f258184a3f0b28141883e3d5103ab.png" />
-<img alt="../_images/047434c124ded7bb9dc1387b80efaaabe433f143563ac207379c6ab016b6d079.png" src="../_images/047434c124ded7bb9dc1387b80efaaabe433f143563ac207379c6ab016b6d079.png" />
+<img alt="../_images/d5377e60ad95bb40528fb36523d67dfc8999dbb561f6eb1d7124321df7624332.png" src="../_images/d5377e60ad95bb40528fb36523d67dfc8999dbb561f6eb1d7124321df7624332.png" />
+</div>
+</div>
+</section>
+<section id="a-8">
+<h2>A = 8<a class="headerlink" href="#a-8" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">A</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
+<span class="n">best_wing_loading</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mf">42.5</span><span class="p">)</span> <span class="c1"># lbs/sq ft</span>
+<span class="n">best_power_loading</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mf">9.0</span><span class="p">)</span> <span class="c1"># lbs/hp</span>
+
+<span class="n">ax</span> <span class="o">=</span> <span class="n">plot_trade_study</span><span class="p">(</span><span class="n">A</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">best_wing_loading</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">best_power_loading</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Optimum point&quot;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/8c336e560d7bf094eead7d0570fbf7af7b5548147e4e4d735e554a532a2ecab9.png" src="../_images/8c336e560d7bf094eead7d0570fbf7af7b5548147e4e4d735e554a532a2ecab9.png" />
+</div>
+</div>
+</section>
+<section id="a-9">
+<h2>A = 9<a class="headerlink" href="#a-9" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">A</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">9</span><span class="p">)</span>
+<span class="n">best_wing_loading</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mf">44.0</span><span class="p">)</span> <span class="c1"># lbs/sq ft</span>
+<span class="n">best_power_loading</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mf">9.1</span><span class="p">)</span> <span class="c1"># lbs/hp</span>
+
+<span class="n">ax</span> <span class="o">=</span> <span class="n">plot_trade_study</span><span class="p">(</span><span class="n">A</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">best_wing_loading</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">best_power_loading</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Optimum point&quot;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/a840b90faed5f766e4f57930b9a1d819d6b71a6a61800aa8e7a487534162f0d2.png" src="../_images/a840b90faed5f766e4f57930b9a1d819d6b71a6a61800aa8e7a487534162f0d2.png" />
+</div>
+</div>
+</section>
+<section id="a-10">
+<h2>A = 10<a class="headerlink" href="#a-10" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">A</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">best_wing_loading</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mf">45.7</span><span class="p">)</span> <span class="c1"># lbs/sq ft</span>
+<span class="n">best_power_loading</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mf">9.2</span><span class="p">)</span> <span class="c1"># lbs/hp</span>
+
+<span class="n">ax</span> <span class="o">=</span> <span class="n">plot_trade_study</span><span class="p">(</span><span class="n">A</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">best_wing_loading</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">best_power_loading</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Optimum point&quot;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/f00a85fcd655a331c72358d401b3819faf79edc5b31f846a95cc708cf32840a2.png" src="../_images/f00a85fcd655a331c72358d401b3819faf79edc5b31f846a95cc708cf32840a2.png" />
+</div>
+</div>
+</section>
+<section id="a-11">
+<h2>A = 11<a class="headerlink" href="#a-11" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">A</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span>
+<span class="n">best_wing_loading</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mf">46.7</span><span class="p">)</span> <span class="c1"># lbs/sq ft</span>
+<span class="n">best_power_loading</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mf">9.3</span><span class="p">)</span> <span class="c1"># lbs/hp</span>
+
+<span class="n">ax</span> <span class="o">=</span> <span class="n">plot_trade_study</span><span class="p">(</span><span class="n">A</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">best_wing_loading</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">best_power_loading</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Optimum point&quot;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/411f40c2a45d1c444a324dadbff39bd5f5aeb968658a23a7174d883ecd273fe1.png" src="../_images/411f40c2a45d1c444a324dadbff39bd5f5aeb968658a23a7174d883ecd273fe1.png" />
+</div>
+</div>
+</section>
+<section id="a-12">
+<h2>A = 12<a class="headerlink" href="#a-12" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">A</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">best_wing_loading</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mf">47.9</span><span class="p">)</span> <span class="c1"># lbs/sq ft</span>
+<span class="n">best_power_loading</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mf">9.35</span><span class="p">)</span> <span class="c1"># lbs/hp</span>
+
+<span class="n">ax</span> <span class="o">=</span> <span class="n">plot_trade_study</span><span class="p">(</span><span class="n">A</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">best_wing_loading</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">best_power_loading</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Optimum point&quot;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/bdce0ad64b28a10a74787c1764ee6270c6bb4a7a5b4ddb54dc30293d03f8caa2.png" src="../_images/bdce0ad64b28a10a74787c1764ee6270c6bb4a7a5b4ddb54dc30293d03f8caa2.png" />
+</div>
+</div>
+</section>
+<section id="a-13">
+<h2>A = 13<a class="headerlink" href="#a-13" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">A</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">13</span><span class="p">)</span>
+<span class="n">best_wing_loading</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">48</span><span class="p">)</span> <span class="c1"># lbs/sq ft</span>
+<span class="n">best_power_loading</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mf">9.4</span><span class="p">)</span> <span class="c1"># lbs/hp</span>
+
+<span class="n">ax</span> <span class="o">=</span> <span class="n">plot_trade_study</span><span class="p">(</span><span class="n">A</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">best_wing_loading</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">best_power_loading</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Optimum point&quot;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/179c47667bb4ddcaaf3d404429f4e4edec05823fe4c13cfd4f6567302e5afbbb.png" src="../_images/179c47667bb4ddcaaf3d404429f4e4edec05823fe4c13cfd4f6567302e5afbbb.png" />
 </div>
 </div>
 <p>Bsed on the above graph, it can be seen that cruise speed and OEI climb gradient are the driving constraints for the design.</p>
@@ -572,10 +703,38 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/0e9d4abfc469c4fc17716ed404a6866782c4599eab3b40375a087a1fdd3182e7.png" src="../_images/0e9d4abfc469c4fc17716ed404a6866782c4599eab3b40375a087a1fdd3182e7.png" />
+<img alt="../_images/ca664467f59931f8765fb52c897fd599b6141b90df6e4b3ecbb5a8d56f0bf4b6.png" src="../_images/ca664467f59931f8765fb52c897fd599b6141b90df6e4b3ecbb5a8d56f0bf4b6.png" />
 </div>
 </div>
-<p>There is no tangible improvement in MTOW for aspect ratio of 10 or more. Moreover, larger aspect ratio usually leads to larger structural wing mass. Hence, the aspect ratio for the example airplane is determined to be <strong>10</strong>. The MTOW of the airplane at this aspect ratio is <strong>5510 lbs</strong>. This concludes the simple trade study example for the airplane. Similar studies can be performed for determining thickness ratio, taper ratio, etc. Note that further analysis (such as aerodynamics, high lift devices and stability) should be performed to ensure that the design is viable.</p>
+<p>There is no tangible improvement in MTOW for aspect ratio of 11 or more. Moreover, larger aspect ratio usually leads to larger structural wing mass. Hence, the aspect ratio for the example airplane is determined to be <strong>11</strong>. The MTOW of the airplane at this aspect ratio is <strong>6283 lbs</strong>. Below code block prints some major quantities for the final selected airplane:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">MTOW</span><span class="p">,</span> <span class="n">aircraft</span> <span class="o">=</span> <span class="n">compute_takeoff_weight</span><span class="p">(</span><span class="n">best_wing_loading</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span> <span class="n">best_power_loading</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span> <span class="n">A</span><span class="p">[</span><span class="mi">4</span><span class="p">])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Major parameters for selected airplane:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Maximum takeoff weight: </span><span class="si">{</span><span class="n">MTOW</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2"> lbs&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Empty weight: </span><span class="si">{</span><span class="n">aircraft</span><span class="o">.</span><span class="n">empty_weight</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2"> lbs&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Fuel weight: </span><span class="si">{</span><span class="n">aircraft</span><span class="o">.</span><span class="n">fuel_weight</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2"> lbs&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Maximum takeoff power: </span><span class="si">{</span><span class="n">aircraft</span><span class="o">.</span><span class="n">P_takeoff</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2"> hp&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Wing surface area: </span><span class="si">{</span><span class="n">aircraft</span><span class="o">.</span><span class="n">S</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2"> sq ft&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Wing span: </span><span class="si">{</span><span class="n">aircraft</span><span class="o">.</span><span class="n">b</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2"> ft&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Major parameters for selected airplane:
+Maximum takeoff weight: 6283 lbs
+Empty weight: 3401 lbs
+Fuel weight: 1682 lbs
+Maximum takeoff power: 676 hp
+Wing surface area: 135 sq ft
+Wing span: 38 ft
+</pre></div>
+</div>
+</div>
+</div>
+<p>This concludes the simple trade study example for the airplane. Similar studies can be performed for determining thickness ratio, taper ratio, etc. Note that further analysis (such as aerodynamics, high lift devices and stability) should be performed to ensure that the design is viable.</p>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -623,6 +782,27 @@ document.write(`
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-7">A = 7</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-8">A = 8</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-9">A = 9</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-10">A = 10</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-11">A = 11</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-12">A = 12</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-13">A = 13</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>
