@@ -248,6 +248,8 @@
 <li class="toctree-l3"><a class="reference internal" href="parameters.html">Parameters</a></li>
 <li class="toctree-l3"><a class="reference internal" href="fuel.html">Fuel Weight</a></li>
 <li class="toctree-l3"><a class="reference internal" href="empty_weight.html">Empty Weight</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mtow.html">MTOW</a></li>
+<li class="toctree-l3"><a class="reference internal" href="constraint.html">Performance</a></li>
 </ul>
 </details></li>
 </ul>
@@ -430,17 +432,46 @@ document.write(`
   <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">nbimporter</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mtow</span><span class="w"> </span><span class="kn">import</span> <span class="n">compute_takeoff_weight</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">aspect_ratio_study</span><span class="w"> </span><span class="kn">import</span> <span class="n">TestA</span>
+<span class="n">num_pts</span> <span class="o">=</span> <span class="mi">15</span>
+<span class="n">wing_loading</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="n">num_pts</span><span class="p">)</span> <span class="c1"># lbs/sq ft</span>
+<span class="n">power_loading</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="n">num_pts</span><span class="p">)</span> <span class="c1"># lbs/hp</span>
 
-<span class="n">TestA</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">A</span> <span class="o">=</span> <span class="mi">8</span>
+
+<span class="n">X</span><span class="p">,</span> <span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">wing_loading</span><span class="p">,</span> <span class="n">power_loading</span><span class="p">)</span>
+
+<span class="n">mtow</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_pts</span><span class="p">):</span>
+
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_pts</span><span class="p">):</span>
+
+        <span class="n">WS</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span>
+        <span class="n">WP</span> <span class="o">=</span> <span class="n">Y</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span>
+
+        <span class="n">mtow</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">],</span> <span class="n">_</span> <span class="o">=</span> <span class="n">compute_takeoff_weight</span><span class="p">(</span><span class="n">WS</span><span class="p">,</span> <span class="n">WP</span><span class="p">,</span> <span class="n">A</span><span class="p">)</span> <span class="c1"># lbs</span>
+
+<span class="n">levels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">4000</span><span class="p">,</span> <span class="mi">9000</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+
+<span class="n">fs</span> <span class="o">=</span> <span class="mi">11</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+
+<span class="n">cp</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">contour</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">mtow</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="n">levels</span><span class="p">,</span> <span class="n">colors</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">clabel</span><span class="p">(</span><span class="n">cp</span><span class="p">,</span> <span class="n">cp</span><span class="o">.</span><span class="n">levels</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">fs</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>5
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;a list of 9 text.Text objects&gt;
 </pre></div>
 </div>
+<img alt="../_images/6b57127af770c836fd905981282b5b37aab1facfe62cb4f5d5f3416431a962f0.png" src="../_images/6b57127af770c836fd905981282b5b37aab1facfe62cb4f5d5f3416431a962f0.png" />
 </div>
 </div>
 

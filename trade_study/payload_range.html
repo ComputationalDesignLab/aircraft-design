@@ -60,6 +60,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'trade_study/payload_range';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Aspect ratio study" href="ar_study.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -122,8 +123,6 @@
       
       
       
-        
-      
       <div class="bd-sidebar-primary bd-sidebar">
         
 
@@ -173,7 +172,7 @@
                 </a>
             </li>
         </ul>
-        <ul class="nav bd-sidenav">
+        <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../setup.html">Computing environment setup</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../python_basics/intro.html">Basics of Python Programming</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../python_basics/python_basics.html">Basic programming in Python and Jupyter Notebooks</a></li>
@@ -255,6 +254,7 @@
 <li class="toctree-l2"><a class="reference internal" href="ar_study.html">Aspect ratio study</a></li>
 </ul>
 </details></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Payload-Range diagram</a></li>
 </ul>
 
     </div>
@@ -395,7 +395,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
 </div></div>
       
     </div>
@@ -411,6 +413,17 @@ document.write(`
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#point-b">Point B</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#point-c">Point C</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#point-d">Point D</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#final-plot">Final plot</a></li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -422,168 +435,198 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="payload-range-diagram">
 <h1>Payload-Range diagram<a class="headerlink" href="#payload-range-diagram" title="Link to this heading">#</a></h1>
-<p>This section describes how to create a payload-range diagram for the example airplane.</p>
-<p>There are four critical points that essentially define the diagram:</p>
-<ol class="arabic simple">
-<li><p>Full payload + zero range: This point defines the point from the payload range diagram starts on y-axis.</p></li>
-<li><p>Full payload + fuel at MTOW: this point refers to the design point</p></li>
-<li><p>MTOW + max fuel: at this point, the plane is filled with maximum fuel based on the fuel tank capacity. Note that fuel at MTOW with full payload is less than the maximum allowable fuel.</p></li>
-<li><p>No payload + maximum fuel: this point refers to a case where the airplane is flying no payload, essentially the ferry range</p></li>
-</ol>
-<p>The first two points are known, only points 3 and 4 requires some computation.</p>
-<p>Note that the one should include the reserve mission fuel while computing the range</p>
-<p>Fuel should take into account the reserve mission</p>
-<p>Only thing that changes is the fuel weight, it is varied from zero fuel for the range segment to fuel at MTOW to the maximum fuel capacity of tanks.</p>
-<p>So you need to compute the fuel capacity of the tanks.</p>
-<p>Defined by the four points on the graph:</p>
-<ol class="arabic simple">
-<li><p>Full payload with zero range (known)</p></li>
-<li><p>full payload with fuel to yield Max TO (known)</p></li>
-<li><p>Full fuel with not full payload but still at MAx TO</p></li>
-<li><p>Full fuel but no payload (but with crews)</p></li>
-</ol>
-<p>Few things to determine</p>
-<ol class="arabic simple">
-<li><p>Volume of the fuel tanks</p></li>
-<li><p>Amount of fuel that will be spent for cruise segment</p></li>
-</ol>
+<p>This section describes how to create a simple payload-range diagram for the example airplane. This diagram should be created towards the end of conceptual design i.e. after performing trade studies and other major design activities such as weight and balance, and stability. The quantities like maximum takeoff weight and maximum fuel tank capacity should be known to create this diagram. There are four points that essentially define the diagram:</p>
+<p><strong>Point A</strong>: This point refers to a scenario where the airplane is at maximum payload but has zero cruise range. It defines the point on the y-axis since the range is zero. Note that this point is available since the maximum payload is known.</p>
+<p><strong>Point B</strong>: This point denotes the mission for which airplane is sized i.e. airplane is fully loaded and contains fuel for flying the design mission. This point is known from the design mission.</p>
+<p><strong>Point C</strong>: At this point, the fuel tanks are completely filled. Hence, the payload weight has to be reduced so that the total weight is still equal to the maximum takeoff weight. Note that the fuel for design mission will be less than the maximum capacity of the fuel tanks.</p>
+<p><strong>Point D</strong>: Finally, this point refers to ferry range i.e. the distane flown by the airplane when it is carrying maximum fuel and no passengers.</p>
+<p>Only point C and D are unknown. The first step is to compute the maximum fuel tank capacity. This is already computed within <code class="docutils literal notranslate"><span class="pre">AircraftParamters</span></code> class. This will yield the fuel weight for point C and D, and is used to determine the decrease in payload at point C. Then, a nonlinear equation is solved numerically to find the cruise range of the airplane for a given takeoff weight and fuel weight. Once these four points are known, final step is to plot them.</p>
+<blockquote>
+<div><p><strong>NOTE</strong>: For any point on the payload-range diagram, the range should be computed while accounting for the reserve mission. Also, any cruise requirement, such as speed or time, should be met.</p>
+</div></blockquote>
+<p>Below code block imports required libraries and defines a function for computing the fuel weight for a given airplane parameters, takeoff weight, and cruise range. This function is coupled with a nonlinear solver to determine a value of cruise range so that fuel weight returned by this method is same as the fuel weight at Point C or D.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">nbimporter</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">mtow</span><span class="w"> </span><span class="kn">import</span> <span class="n">compute_takeoff_weight</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">parameters</span><span class="w"> </span><span class="kn">import</span> <span class="n">AircraftParameters</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">fuel</span><span class="w"> </span><span class="kn">import</span> <span class="n">compute_fuel_weight</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">empty_weight</span><span class="w"> </span><span class="kn">import</span> <span class="n">compute_empty_weight</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">fuel</span><span class="w"> </span><span class="kn">import</span> <span class="n">compute_cruise_weight_fraction</span><span class="p">,</span> <span class="n">compute_loiter_weight_fraction</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.optimize</span><span class="w"> </span><span class="kn">import</span> <span class="n">fsolve</span>
 
-<span class="n">A</span> <span class="o">=</span> <span class="mi">10</span>
-<span class="n">WS</span> <span class="o">=</span> <span class="mi">48</span> <span class="c1"># lbs/sq ft</span>
-<span class="n">WP</span> <span class="o">=</span> <span class="mf">8.5</span> <span class="c1"># lbs/hp</span>
-<span class="n">MTOW</span> <span class="o">=</span> <span class="mf">5515.714254529519</span> <span class="c1"># lbs</span>
-<span class="n">S</span> <span class="o">=</span> <span class="mf">114.91</span>
-<span class="n">takeoff_power</span> <span class="o">=</span> <span class="mf">648.9066273376186</span>
+<span class="c1"># from trade studies</span>
+<span class="n">A</span> <span class="o">=</span> <span class="mi">9</span>
+<span class="n">S</span> <span class="o">=</span> <span class="mi">145</span> <span class="c1"># sq ft</span>
+<span class="n">takeoff_power</span> <span class="o">=</span> <span class="mi">701</span> <span class="c1"># hp</span>
+<span class="n">MTOW</span> <span class="o">=</span> <span class="mi">6376</span> <span class="c1"># lbs</span>
+<span class="n">fuel_weight</span> <span class="o">=</span> <span class="mi">1727</span> <span class="c1"># lbs</span>
 
+<span class="c1"># other parameters</span>
+<span class="n">max_payload</span> <span class="o">=</span> <span class="mi">1000</span> <span class="c1"># lbs does not include crew</span>
+<span class="n">x0</span> <span class="o">=</span> <span class="mi">1000</span> <span class="o">*</span> <span class="mf">6076.11549</span> <span class="c1"># ft, starting value of range while solve nonlinear eqn</span>
+
+<span class="c1"># Initialize parameter class</span>
 <span class="n">aircraft</span> <span class="o">=</span> <span class="n">AircraftParameters</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">takeoff_power</span><span class="p">)</span>
 
-<span class="n">compute_fuel_weight</span><span class="p">(</span><span class="n">aircraft</span><span class="p">,</span> <span class="n">MTOW</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">compute_fuel_weight</span><span class="p">(</span><span class="n">parameters</span><span class="p">:</span> <span class="n">AircraftParameters</span><span class="p">,</span> <span class="n">weight</span><span class="p">,</span> <span class="n">cruise_range</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Method to compute fuel weight for a given maximum takeoff weight to</span>
+<span class="sd">        complete the mission profile, inlcludng the reserver mission.</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="n">aircraft</span><span class="o">.</span><span class="n">fuel_weight</span><span class="p">)</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ---------</span>
+<span class="sd">        parameters: </span>
+<span class="sd">            AircraftParameters object that defines various aircraft parameters</span>
 
-<span class="n">compute_empty_weight</span><span class="p">(</span><span class="n">aircraft</span><span class="p">,</span> <span class="n">MTOW</span><span class="p">)</span>
+<span class="sd">        weight: float</span>
+<span class="sd">            maximum takeoff weight for which mission fuel needs to be comptued, lbs</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="n">aircraft</span><span class="o">.</span><span class="n">empty_weight</span><span class="o">/</span><span class="n">MTOW</span><span class="p">)</span>
+<span class="sd">        cruise_range: float</span>
+<span class="sd">            the range for which airplane will be cruising, ft</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="n">aircraft</span><span class="o">.</span><span class="n">fuel_weight</span><span class="o">/</span><span class="n">MTOW</span><span class="p">)</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="mi">1200</span><span class="o">/</span><span class="n">MTOW</span><span class="p">)</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        fuel_weight: float</span>
+<span class="sd">            the fuel weight required for given takeoff weight and cruise range</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">W0</span> <span class="o">=</span> <span class="n">weight</span>
+    <span class="n">W1_W0</span> <span class="o">=</span> <span class="n">parameters</span><span class="o">.</span><span class="n">W1_W0</span>
+    <span class="n">W2_W1</span> <span class="o">=</span> <span class="n">parameters</span><span class="o">.</span><span class="n">W2_W1</span>
+    <span class="n">W4_W3</span> <span class="o">=</span> <span class="n">parameters</span><span class="o">.</span><span class="n">W4_W3</span>
+
+    <span class="c1"># Compute cruise weight fraction</span>
+    <span class="n">weight</span> <span class="o">=</span> <span class="n">W2_W1</span> <span class="o">*</span> <span class="n">W1_W0</span> <span class="o">*</span> <span class="n">weight</span> <span class="c1"># weight at the start of cruise</span>
+    <span class="n">W3_W2</span><span class="p">,</span> <span class="n">avg_cruise_power</span><span class="p">,</span> <span class="n">avg_cruise_CL</span> <span class="o">=</span> <span class="n">compute_cruise_weight_fraction</span><span class="p">(</span><span class="n">parameters</span><span class="p">,</span> <span class="n">weight</span><span class="p">,</span> <span class="n">cruise_range</span><span class="p">,</span> <span class="n">parameters</span><span class="o">.</span><span class="n">cruise_speed</span><span class="p">,</span> <span class="n">num_segements</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+    <span class="n">parameters</span><span class="o">.</span><span class="n">W3_W2</span> <span class="o">=</span> <span class="n">W3_W2</span>
+    <span class="n">parameters</span><span class="o">.</span><span class="n">avg_cruise_power</span> <span class="o">=</span> <span class="n">avg_cruise_power</span>
+    <span class="n">parameters</span><span class="o">.</span><span class="n">avg_cruise_CL</span> <span class="o">=</span> <span class="n">avg_cruise_CL</span>
+
+    <span class="c1"># Compute loiter weight fraction</span>
+    <span class="n">W5_W4</span> <span class="o">=</span> <span class="n">parameters</span><span class="o">.</span><span class="n">W5_W4</span>
+    <span class="n">weight</span> <span class="o">=</span> <span class="n">W5_W4</span> <span class="o">*</span> <span class="n">W4_W3</span> <span class="o">*</span> <span class="n">W3_W2</span> <span class="o">*</span> <span class="n">weight</span> <span class="c1"># weight at the start of loiter</span>
+    <span class="n">W6_W5</span><span class="p">,</span> <span class="n">avg_loiter_power</span><span class="p">,</span> <span class="n">avg_loiter_speed</span> <span class="o">=</span> <span class="n">compute_loiter_weight_fraction</span><span class="p">(</span><span class="n">parameters</span><span class="p">,</span> <span class="n">weight</span><span class="p">,</span> <span class="n">parameters</span><span class="o">.</span><span class="n">endurance</span><span class="p">,</span> <span class="n">num_segements</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+    <span class="n">parameters</span><span class="o">.</span><span class="n">W6_W5</span> <span class="o">=</span> <span class="n">W6_W5</span>
+    <span class="n">parameters</span><span class="o">.</span><span class="n">avg_loiter_power</span> <span class="o">=</span> <span class="n">avg_loiter_power</span>
+    <span class="n">parameters</span><span class="o">.</span><span class="n">avg_loiter_speed</span> <span class="o">=</span> <span class="n">avg_loiter_speed</span>
+
+    <span class="n">W7_W6</span> <span class="o">=</span> <span class="n">parameters</span><span class="o">.</span><span class="n">W7_W6</span>
+    <span class="n">W8_W7</span> <span class="o">=</span> <span class="n">parameters</span><span class="o">.</span><span class="n">W8_W7</span>
+
+    <span class="c1"># compute final weight fraction</span>
+    <span class="n">W8_W0</span> <span class="o">=</span> <span class="n">W8_W7</span> <span class="o">*</span> <span class="n">W7_W6</span> <span class="o">*</span> <span class="n">W6_W5</span> <span class="o">*</span> <span class="n">W5_W4</span> <span class="o">*</span> <span class="n">W4_W3</span> <span class="o">*</span> <span class="n">W3_W2</span> <span class="o">*</span> <span class="n">W2_W1</span> <span class="o">*</span> <span class="n">W1_W0</span> <span class="c1"># mission weight fraction</span>
+    <span class="n">Wf_W0</span> <span class="o">=</span> <span class="mf">1.06</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">W8_W0</span><span class="p">)</span> <span class="c1"># 6% is for trapped unusable fuel</span>
+
+    <span class="n">parameters</span><span class="o">.</span><span class="n">fuel_weight</span> <span class="o">=</span> <span class="n">Wf_W0</span> <span class="o">*</span> <span class="n">W0</span>
+    
+    <span class="k">return</span> <span class="n">parameters</span><span class="o">.</span><span class="n">fuel_weight</span> <span class="c1"># fuel weight</span>
+
+<span class="c1"># Equation which needs to be solved to find the range for a given fuel weight</span>
+<span class="n">eqn</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">takeoff_weight</span><span class="p">,</span> <span class="n">fuel</span><span class="p">:</span> <span class="n">compute_fuel_weight</span><span class="p">(</span><span class="n">aircraft</span><span class="p">,</span> <span class="n">takeoff_weight</span><span class="p">,</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">-</span> <span class="n">fuel</span>
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.2842534444203326
-1179.4056414017055
-1179.4056414017055
-0.5682389457126862
-0.21382645782151866
-0.21756021879026036
-</pre></div>
 </div>
-</div>
-</div>
+<section id="point-b">
+<h2>Point B<a class="headerlink" href="#point-b" title="Link to this heading">#</a></h2>
+<p>Below code block computes the range at Point B i.e. airplane is at maixmum takeoff weight with fuel to fly the design mission (including reserves). Even though the range is known at Point B, the range is computed to validate that the nonlinear solver. The calculated range should be same as the design range.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">nbimporter</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">mtow</span><span class="w"> </span><span class="kn">import</span> <span class="n">compute_takeoff_weight</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">range_pointB</span> <span class="o">=</span> <span class="n">fsolve</span><span class="p">(</span><span class="n">eqn</span><span class="p">,</span> <span class="n">x0</span><span class="o">=</span><span class="n">x0</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">MTOW</span><span class="p">,</span> <span class="n">fuel_weight</span><span class="p">))</span><span class="o">.</span><span class="n">item</span><span class="p">()</span><span class="o">/</span><span class="mf">6076.11549</span> <span class="c1"># nmi</span>
 
-<span class="n">A</span> <span class="o">=</span> <span class="mi">11</span>
-<span class="n">WS</span> <span class="o">=</span> <span class="mf">46.7</span> <span class="c1"># lbs/sq ft</span>
-<span class="n">WP</span> <span class="o">=</span> <span class="mf">9.3</span> <span class="c1"># lbs/hp</span>
-<span class="n">MTOW</span><span class="p">,</span> <span class="n">aircraft</span> <span class="o">=</span> <span class="n">compute_takeoff_weight</span><span class="p">(</span><span class="n">WS</span><span class="p">,</span> <span class="n">WP</span><span class="p">,</span> <span class="n">A</span><span class="p">)</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="n">MTOW</span><span class="p">)</span>
-
-<span class="c1"># print(aircraft.fuel_weight)</span>
-
-<span class="c1"># print(aircraft.P_takeoff)</span>
-
-<span class="n">S</span> <span class="o">=</span> <span class="n">aircraft</span><span class="o">.</span><span class="n">S</span>
-<span class="n">b</span> <span class="o">=</span> <span class="n">aircraft</span><span class="o">.</span><span class="n">b</span>
-<span class="n">tc_root</span> <span class="o">=</span> <span class="n">aircraft</span><span class="o">.</span><span class="n">tc_root</span>
-<span class="n">tc_tip</span> <span class="o">=</span> <span class="mf">0.09</span>
-<span class="n">taper_ratio</span> <span class="o">=</span> <span class="n">aircraft</span><span class="o">.</span><span class="n">taper_ratio_wing</span>
-<span class="n">tau</span> <span class="o">=</span> <span class="n">tc_tip</span> <span class="o">/</span> <span class="n">tc_root</span>
-
-<span class="c1"># print(b)</span>
-
-<span class="c1"># print(S)</span>
-
-<span class="n">wing_fuel_volume</span> <span class="o">=</span> <span class="mf">0.54</span> <span class="o">*</span> <span class="n">S</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="n">tc_root</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">taper_ratio</span> <span class="o">*</span> <span class="n">tau</span><span class="o">**</span><span class="mf">0.5</span> <span class="o">+</span> <span class="n">tau</span> <span class="o">*</span> <span class="n">taper_ratio</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="n">b</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">taper_ratio</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="mf">7.48051948</span> <span class="c1"># US gallons</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="n">wing_fuel_volume</span><span class="p">)</span> <span class="c1"># US gallons</span>
-
-<span class="n">max_fuel_volume</span> <span class="o">=</span> <span class="n">aircraft</span><span class="o">.</span><span class="n">fuel_weight</span> <span class="o">/</span> <span class="mf">6.01</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="n">max_fuel_volume</span><span class="p">)</span>
-
-<span class="nb">print</span><span class="p">((</span><span class="n">wing_fuel_volume</span> <span class="o">-</span> <span class="n">max_fuel_volume</span><span class="p">)</span><span class="o">/</span><span class="n">wing_fuel_volume</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Range at point B: </span><span class="si">{</span><span class="n">range_pointB</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2"> nmi&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>6283.125490230001
-237.89140290693985
-279.927786184588
--0.1767040875121169
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Range at point B: 1200 nmi
 </pre></div>
 </div>
 </div>
 </div>
-<p>Cruise fuel</p>
+<p>Based on the above calculation, the cruise range is same as the design mission range which validates the code.</p>
+</section>
+<section id="point-c">
+<h2>Point C<a class="headerlink" href="#point-c" title="Link to this heading">#</a></h2>
+<p>Below code block computes the range at Point C:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">aircraft</span><span class="o">.</span><span class="n">W1_W0</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">max_fuel_weight</span> <span class="o">=</span> <span class="n">aircraft</span><span class="o">.</span><span class="n">fuel_tank_volume</span> <span class="o">*</span> <span class="n">aircraft</span><span class="o">.</span><span class="n">avgas_density</span> <span class="c1"># lbs</span>
+<span class="n">payload_pointC</span> <span class="o">=</span> <span class="n">max_payload</span> <span class="o">-</span> <span class="p">(</span><span class="n">max_fuel_weight</span> <span class="o">-</span> <span class="n">fuel_weight</span><span class="p">)</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="n">aircraft</span><span class="o">.</span><span class="n">W2_W1</span><span class="p">)</span>
+<span class="n">range_pointC</span> <span class="o">=</span> <span class="n">fsolve</span><span class="p">(</span><span class="n">eqn</span><span class="p">,</span> <span class="n">x0</span><span class="o">=</span><span class="n">x0</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">MTOW</span><span class="p">,</span> <span class="n">max_fuel_weight</span><span class="p">))</span><span class="o">.</span><span class="n">item</span><span class="p">()</span><span class="o">/</span><span class="mf">6076.11549</span> <span class="c1"># nmi</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="n">aircraft</span><span class="o">.</span><span class="n">W3_W2</span><span class="p">)</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="n">aircraft</span><span class="o">.</span><span class="n">W4_W3</span><span class="p">)</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="n">aircraft</span><span class="o">.</span><span class="n">W5_W4</span><span class="p">)</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="n">aircraft</span><span class="o">.</span><span class="n">W6_W5</span><span class="p">)</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="n">aircraft</span><span class="o">.</span><span class="n">W7_W6</span><span class="p">)</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="n">aircraft</span><span class="o">.</span><span class="n">W8_W7</span><span class="p">)</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="n">aircraft</span><span class="o">.</span><span class="n">W3_W2</span> <span class="o">*</span> <span class="n">aircraft</span><span class="o">.</span><span class="n">W2_W1</span> <span class="o">*</span> <span class="n">aircraft</span><span class="o">.</span><span class="n">W1_W0</span><span class="p">)</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="n">aircraft</span><span class="o">.</span><span class="n">W8_W7</span> <span class="o">*</span> <span class="n">aircraft</span><span class="o">.</span><span class="n">W7_W6</span> <span class="o">*</span> <span class="n">aircraft</span><span class="o">.</span><span class="n">W6_W5</span> <span class="o">*</span> <span class="n">aircraft</span><span class="o">.</span><span class="n">W5_W4</span> <span class="o">*</span> <span class="n">aircraft</span><span class="o">.</span><span class="n">W4_W3</span> <span class="o">*</span> <span class="n">aircraft</span><span class="o">.</span><span class="n">W3_W2</span> <span class="o">*</span> <span class="n">aircraft</span><span class="o">.</span><span class="n">W2_W1</span> <span class="o">*</span> <span class="n">aircraft</span><span class="o">.</span><span class="n">W1_W0</span><span class="p">)</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="n">MTOW</span> <span class="o">-</span> <span class="n">aircraft</span><span class="o">.</span><span class="n">W3_W2</span> <span class="o">*</span> <span class="n">aircraft</span><span class="o">.</span><span class="n">W2_W1</span> <span class="o">*</span> <span class="n">aircraft</span><span class="o">.</span><span class="n">W1_W0</span> <span class="o">*</span> <span class="n">MTOW</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Range at point B: </span><span class="si">{</span><span class="n">range_pointC</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2"> nmi&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.985
-0.99
-0.784750500577933
-0.992
-0.99
-0.9886274860896618
-0.992
-0.992
-0.7652494506385714
-0.7311490469361861
-1294.8169513714674
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Range at point B: 1241 nmi
 </pre></div>
 </div>
 </div>
 </div>
+</section>
+<section id="point-d">
+<h2>Point D<a class="headerlink" href="#point-d" title="Link to this heading">#</a></h2>
+<p>Below code block computes the range at Point D:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">takeoff_weight</span> <span class="o">=</span> <span class="n">MTOW</span> <span class="o">-</span> <span class="n">payload_pointC</span>
+
+<span class="n">range_pointD</span> <span class="o">=</span> <span class="n">fsolve</span><span class="p">(</span><span class="n">eqn</span><span class="p">,</span> <span class="n">x0</span><span class="o">=</span><span class="n">x0</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">takeoff_weight</span><span class="p">,</span> <span class="n">max_fuel_weight</span><span class="p">))</span><span class="o">.</span><span class="n">item</span><span class="p">()</span><span class="o">/</span><span class="mf">6076.11549</span> <span class="c1"># nmi</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Range at point D: </span><span class="si">{</span><span class="n">range_pointD</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2"> nmi&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Range at point D: 1375 nmi
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="final-plot">
+<h2>Final plot<a class="headerlink" href="#final-plot" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">payload</span> <span class="o">=</span> <span class="p">[</span><span class="n">max_payload</span><span class="p">,</span> <span class="n">max_payload</span><span class="p">,</span> <span class="n">payload_pointC</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">]</span>
+<span class="nb">range</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">range_pointB</span><span class="p">,</span> <span class="n">range_pointC</span><span class="p">,</span> <span class="n">range_pointD</span><span class="p">]</span>
+<span class="n">fs</span> <span class="o">=</span> <span class="mi">12</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="nb">range</span><span class="p">,</span> <span class="n">payload</span><span class="p">,</span> <span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;o&quot;</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Range (nmi)&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">fs</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Payload (lbs)&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">fs</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="n">left</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="n">bottom</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">top</span><span class="o">=</span><span class="mi">1250</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">950</span><span class="p">),</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">fs</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s2">&quot;B&quot;</span><span class="p">,</span> <span class="p">(</span><span class="mi">1150</span><span class="p">,</span><span class="mi">950</span><span class="p">),</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">fs</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s2">&quot;C&quot;</span><span class="p">,</span> <span class="p">(</span><span class="mi">1250</span><span class="p">,</span><span class="mi">900</span><span class="p">),</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">fs</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s2">&quot;D&quot;</span><span class="p">,</span> <span class="p">(</span><span class="mi">1390</span><span class="p">,</span><span class="mi">50</span><span class="p">),</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">fs</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">xy</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">max_payload</span><span class="o">-</span><span class="mi">100</span><span class="p">),</span> <span class="n">xytext</span><span class="o">=</span><span class="p">(</span><span class="n">range_pointB</span><span class="p">,</span><span class="n">max_payload</span><span class="o">-</span><span class="mi">100</span><span class="p">),</span> <span class="n">arrowprops</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">arrowstyle</span><span class="o">=</span><span class="s1">&#39;|-|&#39;</span><span class="p">),</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.75</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">xy</span><span class="o">=</span><span class="p">(</span><span class="n">range_pointB</span><span class="p">,</span> <span class="n">max_payload</span><span class="o">+</span><span class="mi">100</span><span class="p">),</span> <span class="n">xytext</span><span class="o">=</span><span class="p">(</span><span class="n">range_pointC</span><span class="p">,</span> <span class="n">max_payload</span><span class="o">+</span><span class="mi">100</span><span class="p">),</span> <span class="n">arrowprops</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">arrowstyle</span><span class="o">=</span><span class="s1">&#39;|-|&#39;</span><span class="p">),</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.75</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">xy</span><span class="o">=</span><span class="p">(</span><span class="n">range_pointC</span><span class="p">,</span> <span class="n">max_payload</span><span class="o">-</span><span class="mi">400</span><span class="p">),</span> <span class="n">xytext</span><span class="o">=</span><span class="p">(</span><span class="n">range_pointD</span><span class="p">,</span> <span class="n">max_payload</span><span class="o">-</span><span class="mi">400</span><span class="p">),</span> <span class="n">arrowprops</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">arrowstyle</span><span class="o">=</span><span class="s1">&#39;|-|&#39;</span><span class="p">),</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.75</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s2">&quot;Maximum Payload&quot;</span><span class="p">,</span> <span class="p">(</span><span class="n">range_pointB</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">max_payload</span><span class="o">/</span><span class="mf">1.25</span><span class="p">),</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">fs</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s2">&quot;MTOW&quot;</span><span class="p">,</span> <span class="p">((</span><span class="n">range_pointB</span><span class="o">+</span><span class="n">range_pointC</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">max_payload</span><span class="o">/</span><span class="mf">0.85</span><span class="p">),</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">fs</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s2">&quot;Maximum Fuel&quot;</span><span class="p">,</span> <span class="p">((</span><span class="n">range_pointC</span><span class="o">+</span><span class="n">range_pointD</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">max_payload</span><span class="o">/</span><span class="mf">1.9</span><span class="p">),</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">fs</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/82b4dd280d824578d48975a25bbe647216e3ef2544b46fc6df0de92b94f6d578.png" src="../_images/82b4dd280d824578d48975a25bbe647216e3ef2544b46fc6df0de92b94f6d578.png" />
+</div>
+</div>
+<blockquote>
+<div><p><strong>NOTE</strong>: The Point B and C are close since the fuel weight for design mission is comparable to the maximum fuel that the tanks can hold. Refer to <a class="reference internal" href="ar_study.html"><span class="std std-doc">aspect ratio trade study</span></a> for more details. The wing fuel volume is one of the driving constraints for the design.</p>
+</div></blockquote>
+<p>This concludes the payload-range diagram section.</p>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -616,12 +659,39 @@ document.write(`
                 <footer class="prev-next-footer d-print-none">
                   
 <div class="prev-next-area">
+    <a class="left-prev"
+       href="ar_study.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Aspect ratio study</p>
+      </div>
+    </a>
 </div>
                 </footer>
               
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#point-b">Point B</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#point-c">Point C</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#point-d">Point D</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#final-plot">Final plot</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>
