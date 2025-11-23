@@ -67,4 +67,6 @@ chapters:
       - file: trade_study/ar_study.ipynb
   - file: trade_study/payload_range.ipynb
   - file: cost/intro
-  - file: cost/unit_cost
+    sections:
+    - file: cost/unit_cost
+    - file: cost/operating_cost
