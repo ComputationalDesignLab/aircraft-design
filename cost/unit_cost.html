@@ -1,0 +1,927 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Unit cost &#8212; Aircraft Design</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'cost/unit_cost';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Cost analysis" href="intro.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Aircraft Design</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    Introduction
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../setup.html">Computing environment setup</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../python_basics/intro.html">Basics of Python Programming</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../python_basics/python_basics.html">Basic programming in Python and Jupyter Notebooks</a></li>
+
+
+
+
+
+
+<li class="toctree-l2"><a class="reference internal" href="../python_basics/plotting.html">Basic plotting in Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../python_basics/resources.html">Python and Jupyter notebook resources</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../example_aircraft.html">Example Aircraft</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../initial_weight_estimation.html">Initial Weight Estimation</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../constraint_analysis/intro.html">Constraint Analysis</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../constraint_analysis/takeoff.html">Takeoff Distance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../constraint_analysis/landing.html">Landing Distance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../constraint_analysis/climb.html">Climb Gradient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../constraint_analysis/cruise.html">Cruise Speed</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../constraint_analysis/final.html">Matching process</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../baseline.html">Initial Design Summary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../configuration.html">Aircraft Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../wing_layout.html">Wing Planform Sizing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tail_sizing.html">Tail Sizing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../fuselage.html">Fuselage Sizing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../landing_gear.html">Landing Gear Sizing</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../powerplant/intro.html">Propulsion System</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../powerplant/engine_propeller.html">Engine and Propeller Selection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../powerplant/installation_thrust.html">Installation Thrust</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../aerodynamics/intro.html">Aerodynamics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../aerodynamics/lift_curve.html">Lift</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../aerodynamics/drag_buildup.html">Parasitic (Zero-lift) drag</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../aerodynamics/drag_polar_induced_drag.html">Drag Polar</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../hl_devices/intro.html">High-Lift Devices</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../hl_devices/takeoff.html">Takeoff</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../hl_devices/landing.html">Landing</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../weight_and_balance/intro.html">Weight and Balance</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../weight_and_balance/weight.html">Weights</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../weight_and_balance/cg.html">Center of gravity</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../weight_and_balance/cg_travel.html">CG Travel Diagram</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../long_stability/intro.html">Longitudinal stability</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../long_stability/static_margin.html">Static Margin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../long_stability/trim.html">Trim Analysis</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../lat_stability/intro.html">Lateral stability</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../lat_stability/yaw_derivative.html">Static yaw stability derivative</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lat_stability/roll_derivative.html">Static roll stability derivative</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lat_stability/trim.html">Lateral trim</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../performance/intro.html">Performance</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../performance/takeoff.html">Takeoff</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../performance/landing.html">Landing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../performance/climb.html">Climb gradient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../performance/mission_analysis.html">Mission analysis</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../trade_study/intro.html">Trade study</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../trade_study/setup.html">Code setup</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../trade_study/parameters.html">Parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../trade_study/fuel.html">Fuel Weight</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../trade_study/empty_weight.html">Empty Weight</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../trade_study/mtow.html">MTOW</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../trade_study/constraint.html">Performance</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../trade_study/ar_study.html">Aspect ratio study</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../trade_study/payload_range.html">Payload-Range diagram</a></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="intro.html">Cost analysis</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Unit cost</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/ComputationalDesignLab/aircraft-design" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/cost/unit_cost.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Unit cost</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#work-hours">Work hours</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fixed-cost">Fixed cost</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#variable-cost">Variable cost</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#unit-cost-selling-price">Unit cost &amp; Selling price</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#break-even">Break-even</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="unit-cost">
+<h1>Unit cost<a class="headerlink" href="#unit-cost" title="Link to this heading">#</a></h1>
+<p>This section computes engineering, tooling, manufacturing labour, and many other costs associated with developing, certifying, and producing the example airplane. These costs are combined to compute minimum selling price for the airplane. Finally, a break-even analysis is performed to determine an appropriate unit cost for the airplane. The first step is to estimate the number of work hours for engineering, tooling, and manufacturing using the statistical relations. Then, the dollar amount can be computed by multiplying the number of hours by appropriate rates in dollars per hour. Refer to section 2.2 in Gudmundsson for more details. The following subsections compute the work hours and the corresponding costs.</p>
+<p>Various quantities are required for computing the cost. Below table summarizes the quantities used in cost estimation. Note that the structural weight of the airframe consists of empty weight minus engine, avionics, seats, furnishings, control systems, and other components. In this demonstration, it is computed as 65% of the empty weight but it can be directly obtained from weight and balance studies. The testing and certification cost depends on the number of prototypes built before actual production starts. In this section, the number of prototypes is assumed to be 3.</p>
+<p>The cost relations outlined in Gudmundsson are referenced at 2012 dollar value. This needs to be updated to current dollar value using consumer price index (CPI) which measures average change in price over time. The CPI factor is calculated using US Bureau of Labor Statistics’ <a class="reference external" href="https://www.bls.gov/data/inflation_calculator.htm">inflation calculator</a>. Finally, the dollar rate per hour for engineering, tooling, and manufacturing is set to 92, 61, and 53 dollars/hr, respectively, based on the values provided in Gudmundsson’s book.</p>
+<div style="width:75%; margin: auto;">
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter</p></th>
+<th class="head text-center"><p>Value</p></th>
+<th class="head text-center"><p>Source</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Airframe weight</p></td>
+<td class="text-center"><p>2250 lbs</p></td>
+<td class="text-center"><p>computed</p></td>
+</tr>
+<tr class="row-odd"><td><p>Max level speed</p></td>
+<td class="text-center"><p>210 kts</p></td>
+<td class="text-center"><p>V-n diagram</p></td>
+</tr>
+<tr class="row-even"><td><p>Aircraft produced in 5-year period</p></td>
+<td class="text-center"><p>1000</p></td>
+<td class="text-center"><p>assumed</p></td>
+</tr>
+<tr class="row-odd"><td><p>Consumer price index</p></td>
+<td class="text-center"><p>1.4</p></td>
+<td class="text-center"><p>computed</p></td>
+</tr>
+<tr class="row-even"><td><p>Number of prototypes</p></td>
+<td class="text-center"><p>3</p></td>
+<td class="text-center"><p>assumed</p></td>
+</tr>
+<tr class="row-odd"><td><p>Number of engines</p></td>
+<td class="text-center"><p>2</p></td>
+<td class="text-center"><p>mission requirement</p></td>
+</tr>
+<tr class="row-even"><td><p>Max engine power</p></td>
+<td class="text-center"><p>350 hp</p></td>
+<td class="text-center"><p>from trade study</p></td>
+</tr>
+<tr class="row-odd"><td><p>Propeller diameter</p></td>
+<td class="text-center"><p>6.25 ft</p></td>
+<td class="text-center"><p>from trade study</p></td>
+</tr>
+<tr class="row-even"><td><p>Engineering rate</p></td>
+<td class="text-center"><p>$92/hr</p></td>
+<td class="text-center"><p>Gudmundsson, section 2.2.2</p></td>
+</tr>
+<tr class="row-odd"><td><p>Tooling rate</p></td>
+<td class="text-center"><p>$61/hr</p></td>
+<td class="text-center"><p>Gudmundsson, section 2.2.2</p></td>
+</tr>
+<tr class="row-even"><td><p>Manufacturing rate</p></td>
+<td class="text-center"><p>$53/hr</p></td>
+<td class="text-center"><p>Gudmundsson, section 2.2.2</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Below code block imports required libraries and defines above variables:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="c1"># Variables</span>
+<span class="n">W_airframe</span> <span class="o">=</span> <span class="mi">2250</span> <span class="c1"># lbs, get this value from weights</span>
+<span class="n">VH</span> <span class="o">=</span> <span class="mi">210</span> <span class="c1"># ktas</span>
+
+<span class="n">N</span> <span class="o">=</span> <span class="mi">1000</span> <span class="c1"># units for next 5 year</span>
+<span class="n">Qm</span> <span class="o">=</span> <span class="n">N</span><span class="o">/</span><span class="mi">60</span> <span class="c1"># production rate, per month</span>
+<span class="n">Np</span> <span class="o">=</span> <span class="mi">3</span> <span class="c1"># number of prototypes</span>
+
+<span class="n">N_engine</span> <span class="o">=</span> <span class="mi">2</span> <span class="c1"># number of engines</span>
+<span class="n">Pbhp</span> <span class="o">=</span> <span class="mi">701</span> <span class="o">/</span> <span class="n">N_engine</span> <span class="c1"># bhp</span>
+<span class="n">Dp</span> <span class="o">=</span> <span class="mf">6.25</span> <span class="c1"># ft</span>
+
+<span class="n">CPI</span> <span class="o">=</span> <span class="mf">1.4</span> <span class="c1"># CPI factor</span>
+<span class="n">R_engg</span> <span class="o">=</span> <span class="mi">92</span> <span class="c1"># $/hr</span>
+<span class="n">R_tool</span> <span class="o">=</span> <span class="mi">61</span> <span class="c1"># $/hr</span>
+<span class="n">R_manf</span> <span class="o">=</span> <span class="mi">53</span> <span class="c1"># $/hr</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="work-hours">
+<h2>Work hours<a class="headerlink" href="#work-hours" title="Link to this heading">#</a></h2>
+<p>The work hours are estimated using equation 2.2, 2.3, and 2.4 from Gudmundsson’s book. For brevity, equations are not reproduced here. In these equations, several fudge factors are used to accomodate factors such as amount of composites in airframe and certification type. Below code block defines these factors, refer to section 2.2.2 in Gudmundsson’s book for further details.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Fudges factors for work hour calculations</span>
+<span class="n">F_cert</span> <span class="o">=</span> <span class="mi">1</span> <span class="c1"># 14 CFR Part 23</span>
+<span class="n">F_cf</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">F_comp</span> <span class="o">=</span> <span class="mi">1</span> <span class="c1"># all aluminium frame</span>
+<span class="n">F_press</span> <span class="o">=</span> <span class="mi">1</span> <span class="c1"># no pressurization</span>
+<span class="n">F_taper</span> <span class="o">=</span> <span class="mi">1</span> <span class="c1"># taper wing</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Below code block computes work hours for engineering, tooling, and manufacturing. It also computes average time required to build an airplane. Note that this average is computed over a 5-year period, it may take a lot longer to build a single plane during early days of production.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># engineering hours</span>
+<span class="n">H_eng</span> <span class="o">=</span> <span class="mf">0.0396</span> <span class="o">*</span> <span class="n">W_airframe</span><span class="o">**</span><span class="mf">0.791</span> <span class="o">*</span> <span class="n">VH</span><span class="o">**</span><span class="mf">1.526</span> <span class="o">*</span> <span class="n">N</span><span class="o">**</span><span class="mf">0.183</span> <span class="o">*</span> <span class="n">F_cert</span> <span class="o">*</span> <span class="n">F_cf</span> <span class="o">*</span> <span class="n">F_comp</span> <span class="o">*</span> <span class="n">F_press</span>
+
+<span class="c1"># tooling hours</span>
+<span class="n">H_tool</span> <span class="o">=</span> <span class="mf">1.0032</span> <span class="o">*</span> <span class="n">W_airframe</span><span class="o">**</span><span class="mf">0.764</span> <span class="o">*</span> <span class="n">VH</span><span class="o">**</span><span class="mf">0.899</span> <span class="o">*</span> <span class="n">N</span><span class="o">**</span><span class="mf">0.178</span> <span class="o">*</span> <span class="n">Qm</span><span class="o">**</span><span class="mf">0.066</span> <span class="o">*</span> <span class="n">F_taper</span> <span class="o">*</span> <span class="n">F_cf</span> <span class="o">*</span> <span class="n">F_comp</span> <span class="o">*</span> <span class="n">F_press</span>
+
+<span class="c1"># manufacturing hours</span>
+<span class="n">H_manf</span> <span class="o">=</span> <span class="mf">9.6613</span> <span class="o">*</span> <span class="n">W_airframe</span><span class="o">**</span><span class="mf">0.74</span> <span class="o">*</span> <span class="n">VH</span><span class="o">**</span><span class="mf">0.543</span> <span class="o">*</span> <span class="n">N</span><span class="o">**</span><span class="mf">0.524</span> <span class="o">*</span> <span class="n">F_cert</span> <span class="o">*</span> <span class="n">F_cf</span> <span class="o">*</span> <span class="n">F_comp</span>
+
+<span class="c1"># average time</span>
+<span class="n">avg_build_time_unit</span> <span class="o">=</span> <span class="n">H_manf</span> <span class="o">/</span> <span class="n">N</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Engineering hours: </span><span class="si">{</span><span class="nb">int</span><span class="p">(</span><span class="n">H_eng</span><span class="p">)</span><span class="si">:</span><span class="s2">,</span><span class="si">}</span><span class="s2"> hrs&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Tooling hours: </span><span class="si">{</span><span class="nb">int</span><span class="p">(</span><span class="n">H_tool</span><span class="p">)</span><span class="si">:</span><span class="s2">,</span><span class="si">}</span><span class="s2"> hrs&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Manufacturing hours: </span><span class="si">{</span><span class="nb">int</span><span class="p">(</span><span class="n">H_manf</span><span class="p">)</span><span class="si">:</span><span class="s2">,</span><span class="si">}</span><span class="s2"> hrs&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Average build time for an airplane: </span><span class="si">{</span><span class="nb">int</span><span class="p">(</span><span class="n">avg_build_time_unit</span><span class="p">)</span><span class="si">:</span><span class="s2">,</span><span class="si">}</span><span class="s2"> hrs&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Engineering hours: 219,774 hrs
+Tooling hours: 183,980 hrs
+Manufacturing hours: 1,988,912 hrs
+Average build time for an airplane: 1,988 hrs
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="fixed-cost">
+<h2>Fixed cost<a class="headerlink" href="#fixed-cost" title="Link to this heading">#</a></h2>
+<p>Based on the work hours comptued in previous section, different costs are computed using equations 2.5 - 2.13 in Gudmundsson’s book. Below code block computes <strong>fixed</strong> cost i.e the cost associated with engineering, development, flight testing, and tooling. These costs are also known as <strong>non-recurring</strong> costs.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># engineering cost</span>
+<span class="n">C_engg</span> <span class="o">=</span> <span class="mf">2.0969</span> <span class="o">*</span> <span class="n">H_eng</span> <span class="o">*</span> <span class="n">R_engg</span> <span class="o">*</span> <span class="n">CPI</span>
+
+<span class="c1"># development cost</span>
+<span class="n">C_dev</span> <span class="o">=</span> <span class="mf">0.06458</span> <span class="o">*</span> <span class="n">W_airframe</span><span class="o">**</span><span class="mf">0.873</span> <span class="o">*</span> <span class="n">VH</span><span class="o">**</span><span class="mf">1.89</span> <span class="o">*</span> <span class="n">Np</span><span class="o">**</span><span class="mf">0.346</span> <span class="o">*</span> <span class="n">CPI</span> \
+    <span class="o">*</span> <span class="n">F_cert</span> <span class="o">*</span> <span class="n">F_cf</span> <span class="o">*</span> <span class="n">F_comp</span> <span class="o">*</span> <span class="n">F_press</span>
+
+<span class="c1"># flight test operations cost</span>
+<span class="n">C_ft</span> <span class="o">=</span> <span class="mf">0.009646</span> <span class="o">*</span> <span class="n">W_airframe</span><span class="o">**</span><span class="mf">1.16</span> <span class="o">*</span> <span class="n">VH</span><span class="o">**</span><span class="mf">1.3718</span> <span class="o">*</span> <span class="n">Np</span><span class="o">**</span><span class="mf">1.281</span> <span class="o">*</span> <span class="n">CPI</span> <span class="o">*</span> <span class="n">F_cert</span>
+
+<span class="c1"># tooling cost</span>
+<span class="n">C_tool</span> <span class="o">=</span> <span class="mf">2.0969</span> <span class="o">*</span> <span class="n">H_tool</span> <span class="o">*</span> <span class="n">R_tool</span> <span class="o">*</span> <span class="n">CPI</span>
+
+<span class="c1"># fixed cost or certification cost</span>
+<span class="n">C_cert</span> <span class="o">=</span> <span class="n">C_engg</span> <span class="o">+</span> <span class="n">C_dev</span> <span class="o">+</span> <span class="n">C_ft</span> <span class="o">+</span> <span class="n">C_tool</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Engineering cost: $</span><span class="si">{</span><span class="nb">int</span><span class="p">(</span><span class="n">C_engg</span><span class="p">)</span><span class="si">:</span><span class="s2">,</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Development support cost: $</span><span class="si">{</span><span class="nb">int</span><span class="p">(</span><span class="n">C_dev</span><span class="p">)</span><span class="si">:</span><span class="s2">,</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Flight test operations cost: $</span><span class="si">{</span><span class="nb">int</span><span class="p">(</span><span class="n">C_ft</span><span class="p">)</span><span class="si">:</span><span class="s2">,</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Tooling cost: $</span><span class="si">{</span><span class="nb">int</span><span class="p">(</span><span class="n">C_tool</span><span class="p">)</span><span class="si">:</span><span class="s2">,</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Total fixed cost: $</span><span class="si">{</span><span class="nb">int</span><span class="p">(</span><span class="n">C_cert</span><span class="p">)</span><span class="si">:</span><span class="s2">,</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Engineering cost: $59,356,978
+Development support cost: $2,733,756
+Flight test operations cost: $654,364
+Tooling cost: $32,946,381
+Total fixed cost: $95,691,480
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="variable-cost">
+<h2>Variable cost<a class="headerlink" href="#variable-cost" title="Link to this heading">#</a></h2>
+<p>Below code block computes variable costs i.e. the cost which depends on the number of units produced. These costs are also known as <strong>recurring</strong> costs. It also computes the variable cost per unit airplane produced.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># manufacturing cost</span>
+<span class="n">C_manf</span> <span class="o">=</span> <span class="mf">2.0969</span> <span class="o">*</span> <span class="n">H_manf</span> <span class="o">*</span> <span class="n">R_manf</span> <span class="o">*</span> <span class="n">CPI</span>
+
+<span class="c1"># quality control cost</span>
+<span class="n">C_qc</span> <span class="o">=</span> <span class="mf">0.13</span> <span class="o">*</span> <span class="n">C_manf</span> <span class="o">*</span> <span class="n">F_cert</span> <span class="o">*</span> <span class="n">F_comp</span>
+
+<span class="c1"># material cost</span>
+<span class="n">C_mat</span> <span class="o">=</span> <span class="mf">24.896</span> <span class="o">*</span> <span class="n">W_airframe</span><span class="o">**</span><span class="mf">0.689</span> <span class="o">*</span> <span class="n">VH</span><span class="o">**</span><span class="mf">0.624</span> <span class="o">*</span> <span class="n">N</span><span class="o">**</span><span class="mf">0.792</span> <span class="o">*</span> <span class="n">CPI</span> <span class="o">*</span> <span class="n">F_cert</span> <span class="o">*</span> <span class="n">F_cf</span> <span class="o">*</span> <span class="n">F_press</span>
+
+<span class="c1">### per aircraft cost</span>
+
+<span class="c1"># avionics</span>
+<span class="n">C_avionics</span> <span class="o">=</span> <span class="n">CPI</span> <span class="o">*</span> <span class="mi">15000</span> 
+
+<span class="c1"># engine</span>
+<span class="n">C_engine</span> <span class="o">=</span> <span class="mi">174</span> <span class="o">*</span> <span class="n">N_engine</span> <span class="o">*</span> <span class="n">Pbhp</span> <span class="o">*</span> <span class="n">CPI</span>
+
+<span class="c1"># propellor</span>
+<span class="n">C_prop</span> <span class="o">=</span> <span class="mf">209.66</span> <span class="o">*</span> <span class="n">N_engine</span> <span class="o">*</span> <span class="n">CPI</span> <span class="o">*</span> <span class="n">Dp</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">Pbhp</span><span class="o">/</span><span class="n">Dp</span><span class="p">)</span><span class="o">**</span><span class="mf">0.12</span>
+
+<span class="c1"># avg unit cost</span>
+<span class="n">unit_var_cost</span> <span class="o">=</span> <span class="p">(</span><span class="n">C_manf</span> <span class="o">+</span> <span class="n">C_qc</span> <span class="o">+</span> <span class="n">C_mat</span><span class="p">)</span> <span class="o">/</span> <span class="n">N</span> <span class="o">+</span> <span class="n">C_engine</span> <span class="o">+</span> <span class="n">C_prop</span> <span class="o">+</span> <span class="n">C_avionics</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Manufacturing labor cost: $</span><span class="si">{</span><span class="nb">int</span><span class="p">(</span><span class="n">C_manf</span><span class="p">)</span><span class="si">:</span><span class="s2">,</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Quality control cost: $</span><span class="si">{</span><span class="nb">int</span><span class="p">(</span><span class="n">C_qc</span><span class="p">)</span><span class="si">:</span><span class="s2">,</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Material cost: $</span><span class="si">{</span><span class="nb">int</span><span class="p">(</span><span class="n">C_mat</span><span class="p">)</span><span class="si">:</span><span class="s2">,</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Avionics cost for each unit: $</span><span class="si">{</span><span class="nb">int</span><span class="p">(</span><span class="n">C_avionics</span><span class="p">)</span><span class="si">:</span><span class="s2">,</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Engine cost for each unit: $</span><span class="si">{</span><span class="nb">int</span><span class="p">(</span><span class="n">C_engine</span><span class="p">)</span><span class="si">:</span><span class="s2">,</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Propeller cost for each unit: $</span><span class="si">{</span><span class="nb">int</span><span class="p">(</span><span class="n">C_prop</span><span class="p">)</span><span class="si">:</span><span class="s2">,</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unit variable cost: $</span><span class="si">{</span><span class="nb">int</span><span class="p">(</span><span class="n">unit_var_cost</span><span class="p">)</span><span class="si">:</span><span class="s2">,</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Manufacturing labor cost: $309,454,878
+Quality control cost: $40,229,134
+Material cost: $47,530,918
+Avionics cost for each unit: $21,000
+Engine cost for each unit: $170,763
+Propeller cost for each unit: $37,178
+Unit variable cost: $626,156
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="unit-cost-selling-price">
+<h2>Unit cost &amp; Selling price<a class="headerlink" href="#unit-cost-selling-price" title="Link to this heading">#</a></h2>
+<p>Once fixed and variable costs are computed, next step is to estimate the minimum selling price. The total unit cost (also known as the minimum cost to produce an airplane) is simply the sum of the unit fixed and variable cost. The minimum selling price is obtained by adding manufacturer liability insurance to this unit total cost. Based on the values provided in Gudmundsson, approximately 15% liability insurance is assumed.</p>
+<p>Below code block computes unit cost and minimum selling price:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># total_unit_cost</span>
+<span class="n">total_unit_cost</span> <span class="o">=</span> <span class="n">C_cert</span> <span class="o">/</span> <span class="n">N</span> <span class="o">+</span> <span class="n">unit_var_cost</span>
+
+<span class="c1"># liability insurance</span>
+<span class="n">liability_ins</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="mf">0.15</span> <span class="o">*</span> <span class="n">total_unit_cost</span><span class="p">,</span><span class="o">-</span><span class="mi">4</span><span class="p">)</span>
+
+<span class="c1"># minimum selling price</span>
+<span class="n">min_selling_price</span> <span class="o">=</span> <span class="n">total_unit_cost</span> <span class="o">+</span> <span class="n">liability_ins</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unit total cost: $</span><span class="si">{</span><span class="nb">int</span><span class="p">(</span><span class="n">total_unit_cost</span><span class="p">)</span><span class="si">:</span><span class="s2">,</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Liability insurance: $</span><span class="si">{</span><span class="nb">int</span><span class="p">(</span><span class="n">liability_ins</span><span class="p">)</span><span class="si">:</span><span class="s2">,</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Minimum selling price: $</span><span class="si">{</span><span class="nb">int</span><span class="p">(</span><span class="n">min_selling_price</span><span class="p">)</span><span class="si">:</span><span class="s2">,</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Unit total cost: $721,848
+Liability insurance: $110,000
+Minimum selling price: $831,848
+</pre></div>
+</div>
+</div>
+</div>
+<p>Below table summarizes the cost analysis for the example airplane:</p>
+<div style="width:55%; margin: auto;">
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter</p></th>
+<th class="head text-center"><p>Cost/unit ($)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Engineering</p></td>
+<td class="text-center"><p>59,357</p></td>
+</tr>
+<tr class="row-odd"><td><p>Development support</p></td>
+<td class="text-center"><p>2,734</p></td>
+</tr>
+<tr class="row-even"><td><p>Flight test operations</p></td>
+<td class="text-center"><p>654</p></td>
+</tr>
+<tr class="row-odd"><td><p>Tooling</p></td>
+<td class="text-center"><p>32,946</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Fixed cost</strong></p></td>
+<td class="text-center"><p>95,691</p></td>
+</tr>
+<tr class="row-odd"><td><p>Manufacturing labor</p></td>
+<td class="text-center"><p>309,455</p></td>
+</tr>
+<tr class="row-even"><td><p>Quality control</p></td>
+<td class="text-center"><p>40,229</p></td>
+</tr>
+<tr class="row-odd"><td><p>Material</p></td>
+<td class="text-center"><p>47,531</p></td>
+</tr>
+<tr class="row-even"><td><p>Avionics</p></td>
+<td class="text-center"><p>21,000</p></td>
+</tr>
+<tr class="row-odd"><td><p>Engines</p></td>
+<td class="text-center"><p>170,763</p></td>
+</tr>
+<tr class="row-even"><td><p>Propeller</p></td>
+<td class="text-center"><p>37,178</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Variable cost</strong></p></td>
+<td class="text-center"><p>626,156</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Total cost to produce</strong></p></td>
+<td class="text-center"><p>721,847</p></td>
+</tr>
+<tr class="row-odd"><td><p>Manufacturer’s liability insurance</p></td>
+<td class="text-center"><p>110,000</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Minimum selling price</strong></p></td>
+<td class="text-center"><p>831,847</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="break-even">
+<h2>Break-even<a class="headerlink" href="#break-even" title="Link to this heading">#</a></h2>
+<p>Once fixed and variable costs are known, break-even analysis can be performed. The number of units to be sold for break-even can be computed as</p>
+<div class="math notranslate nohighlight">
+\[
+    N_{BE} = \frac{\text{total fixed cost}}{\text{unit sales price} - \text{unit cost}}.
+\]</div>
+<p>The total fixed cost is already known. The unit cost is simply the sum of the unit variable cost and liability insurance. Using above equation, <span class="math notranslate nohighlight">\(N_{BE}\)</span> can be computed by determining a suitable unit sales price. Below code block graphically illustrates <span class="math notranslate nohighlight">\(N_{BE}\)</span> for three different unit sales prices based on a profit margin of 0%, 10%, and 20%:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Variables</span>
+<span class="n">num_aircraft</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">N</span><span class="p">,</span><span class="n">N</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+<span class="n">total_cost</span> <span class="o">=</span> <span class="n">C_cert</span> <span class="o">+</span> <span class="p">(</span><span class="n">unit_var_cost</span> <span class="o">+</span> <span class="n">liability_ins</span><span class="p">)</span> <span class="o">*</span> <span class="n">num_aircraft</span>
+<span class="n">total_cost</span> <span class="o">=</span> <span class="n">total_cost</span><span class="o">/</span><span class="mf">1e6</span>
+<span class="n">profit</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">])</span>
+<span class="n">unit_price</span> <span class="o">=</span> <span class="n">min_selling_price</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mf">1.1</span><span class="p">,</span><span class="mf">1.2</span><span class="p">])</span>
+
+<span class="n">colors</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="s2">&quot;g&quot;</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">]</span>
+<span class="n">fs</span> <span class="o">=</span> <span class="mi">11</span>
+<span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.8</span>
+
+<span class="c1"># Plotting</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">C_cert</span><span class="o">/</span><span class="mf">1e6</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="n">alpha</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">num_aircraft</span><span class="p">,</span> <span class="n">total_cost</span><span class="p">,</span> <span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="n">alpha</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">price</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">unit_price</span><span class="p">):</span>
+    <span class="n">total_revenue</span> <span class="o">=</span> <span class="n">price</span> <span class="o">*</span> <span class="n">num_aircraft</span> <span class="o">/</span> <span class="mf">1e6</span>
+    <span class="n">N_BE</span> <span class="o">=</span> <span class="n">C_cert</span> <span class="o">/</span> <span class="p">(</span><span class="n">price</span> <span class="o">-</span> <span class="p">(</span><span class="n">unit_var_cost</span> <span class="o">+</span> <span class="n">liability_ins</span><span class="p">))</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">num_aircraft</span><span class="p">,</span> <span class="n">total_revenue</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">colors</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="si">}</span><span class="s2">--&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;$</span><span class="si">{</span><span class="nb">int</span><span class="p">(</span><span class="n">price</span><span class="p">)</span><span class="si">:</span><span class="s2">,</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="nb">int</span><span class="p">(</span><span class="n">profit</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">*</span><span class="mi">100</span><span class="p">)</span><span class="si">:</span><span class="s2">,</span><span class="si">}</span><span class="s2">%)&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="n">alpha</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">N_BE</span><span class="p">,</span> <span class="n">N_BE</span><span class="o">*</span><span class="n">price</span><span class="o">/</span><span class="mf">1e6</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">colors</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s2">&quot;$N_</span><span class="si">{BE}</span><span class="s2">$ = &quot;</span> <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">int</span><span class="p">(</span><span class="n">N_BE</span><span class="p">)</span><span class="si">:</span><span class="s2">,</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="p">(</span><span class="n">N_BE</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span><span class="n">N_BE</span><span class="o">*</span><span class="n">price</span><span class="o">/</span><span class="mf">1e6</span><span class="p">),</span> <span class="n">ha</span><span class="o">=</span><span class="s2">&quot;right&quot;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s2">&quot;bottom&quot;</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+<span class="c1"># Annotations</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s2">&quot;Fixed cost&quot;</span><span class="p">,</span> <span class="p">(</span><span class="mi">800</span><span class="p">,</span><span class="n">C_cert</span><span class="o">/</span><span class="mf">1e6</span><span class="o">-</span><span class="mi">25</span><span class="p">),</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">fs</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s2">&quot;Total cost&quot;</span><span class="p">,</span> <span class="p">(</span><span class="mi">150</span><span class="p">,</span><span class="mi">250</span><span class="p">),</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">fs</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s2">&quot;right&quot;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s2">&quot;top&quot;</span><span class="p">)</span>
+
+<span class="c1"># Asthetics</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="n">fs</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="n">left</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">right</span><span class="o">=</span><span class="n">N</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="n">bottom</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Break-even analysis for different profit margin&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">fs</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Number of units produced, $N$&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">fs</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Revenue, in millions of $&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">fs</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/a43e8b7e4bf31e5b0bc11c88adaa26134beef786c1a3f3434ca0acff9382f662.png" src="../_images/a43e8b7e4bf31e5b0bc11c88adaa26134beef786c1a3f3434ca0acff9382f662.png" />
+</div>
+</div>
+<p>When there is no profit i.e. aircraft is sold at its minimum selling price, the <span class="math notranslate nohighlight">\(N_{BE}\)</span> is equal to the number of airplanes assumed to be produced over 5-year period. As the profit margin increases, the number of units for break-even also decreases. However, one should carefully determine the selling price based on market conditions. Based on the above analysis, for a unit price of $900,000, the number of aircraft to be sold for recovering the cost wil be approximately 550. This concludes the unit cost estimation, next step is to determine the operating costs.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./cost"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="intro.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Cost analysis</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#work-hours">Work hours</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fixed-cost">Fixed cost</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#variable-cost">Variable cost</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#unit-cost-selling-price">Unit cost &amp; Selling price</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#break-even">Break-even</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By CODE Lab
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

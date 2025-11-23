@@ -256,6 +256,10 @@
 </ul>
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="payload_range.html">Payload-Range diagram</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../cost/intro.html">Cost analysis</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../cost/unit_cost.html">Unit cost</a></li>
+</ul>
+</details></li>
 </ul>
 
     </div>
@@ -502,7 +506,7 @@ document.write(`
 
     <span class="c1"># braking distance distance</span>
     <span class="n">KT</span> <span class="o">=</span> <span class="o">-</span> <span class="n">mu</span> <span class="c1"># zero thrust</span>
-    <span class="n">KA</span> <span class="o">=</span> <span class="n">rho</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">/</span> <span class="n">wing_loading</span> <span class="o">/</span> <span class="n">S</span> <span class="o">*</span> <span class="p">(</span><span class="n">mu</span><span class="o">*</span><span class="n">CL</span> <span class="o">-</span> <span class="n">CD0</span> <span class="o">-</span> <span class="n">Keff</span><span class="o">*</span><span class="n">CL</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">KA</span> <span class="o">=</span> <span class="n">rho</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">/</span> <span class="n">wing_loading</span> <span class="o">*</span> <span class="p">(</span><span class="n">mu</span><span class="o">*</span><span class="n">CL</span> <span class="o">-</span> <span class="n">CD0</span> <span class="o">-</span> <span class="n">Keff</span><span class="o">*</span><span class="n">CL</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
     <span class="n">Sb</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span> <span class="n">KT</span> <span class="o">/</span> <span class="p">(</span><span class="n">KT</span> <span class="o">+</span> <span class="n">KA</span><span class="o">*</span><span class="n">Vtd</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="p">)</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">/</span> <span class="n">parameters</span><span class="o">.</span><span class="n">g</span> <span class="o">/</span> <span class="n">KA</span>
     <span class="n">Sfr</span> <span class="o">=</span> <span class="n">Vtd</span> <span class="o">*</span> <span class="n">parameters</span><span class="o">.</span><span class="n">t_free_roll</span> <span class="c1"># ft</span>
     
@@ -573,9 +577,9 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Takeoff ground roll: 1107 ft
-Landing ground roll: 754 ft
-CGR in OEI condition: 0.0160
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Takeoff ground roll: 1103 ft
+Landing ground roll: 743 ft
+CGR in OEI condition: 0.0193
 </pre></div>
 </div>
 </div>
