@@ -494,7 +494,7 @@ document.write(`
             <span class="n">takeoff_req</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">compute_takeoff_groundroll</span><span class="p">(</span><span class="n">final_parameters</span><span class="p">)</span> <span class="o">-</span> <span class="n">max_ground_roll</span>
             <span class="n">landing_req</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">compute_landing_groundroll</span><span class="p">(</span><span class="n">final_parameters</span><span class="p">)</span> <span class="o">-</span> <span class="n">max_ground_roll</span>
             <span class="n">cgr_req</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">min_oei_cgr</span> <span class="o">-</span> <span class="n">compute_climb_gradient</span><span class="p">(</span><span class="n">final_parameters</span><span class="p">)</span>
-            <span class="n">cruise_speed_req</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">final_parameters</span><span class="o">.</span><span class="n">avg_cruise_power</span> <span class="o">-</span> <span class="n">final_parameters</span><span class="o">.</span><span class="n">P_cruise</span>
+            <span class="n">cruise_speed_req</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">final_parameters</span><span class="o">.</span><span class="n">avg_cruise_power</span> <span class="o">-</span> <span class="mf">0.9</span><span class="o">*</span><span class="n">final_parameters</span><span class="o">.</span><span class="n">P_cruise</span>
             <span class="n">fuel_req</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">final_parameters</span><span class="o">.</span><span class="n">fuel_weight</span> <span class="o">/</span> <span class="n">final_parameters</span><span class="o">.</span><span class="n">avgas_density</span> <span class="o">-</span> <span class="n">final_parameters</span><span class="o">.</span><span class="n">fuel_tank_volume</span>
 
     <span class="c1"># Plotting</span>
@@ -565,8 +565,11 @@ document.write(`
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">idx</span> <span class="o">=</span> <span class="mi">0</span> <span class="c1"># index of the array</span>
-<span class="n">best_wing_loading</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="mi">40</span> <span class="c1"># lbs/sq ft</span>
-<span class="n">best_power_loading</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="mf">8.9</span> <span class="c1"># lbs/hp</span>
+<span class="n">best_wing_loading</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="mf">38.7</span> <span class="c1"># lbs/sq ft</span>
+<span class="n">best_power_loading</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="mf">9.3</span> <span class="c1"># lbs/hp</span>
+
+<span class="n">best_wing_loading</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="mi">43</span> <span class="c1"># lbs/sq ft</span>
+<span class="n">best_power_loading</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="mf">8.5</span> <span class="c1"># lbs/hp</span>
 
 <span class="n">ax</span> <span class="o">=</span> <span class="n">plot_trade_study</span><span class="p">(</span><span class="n">A</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">best_wing_loading</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="n">best_power_loading</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Optimum point&quot;</span><span class="p">)</span>
@@ -575,7 +578,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/e0e3eda9503c820b14a7d1e5a95c913ab8c98d88cd51ca570dcd09795db7d621.png" src="../_images/e0e3eda9503c820b14a7d1e5a95c913ab8c98d88cd51ca570dcd09795db7d621.png" />
+<img alt="../_images/7254623b4dc5675284761b185e1bc16f4ccf6e3c5d30c0e3899ba8ed65d718ea.png" src="../_images/7254623b4dc5675284761b185e1bc16f4ccf6e3c5d30c0e3899ba8ed65d718ea.png" />
 </div>
 </div>
 </section>
@@ -584,8 +587,11 @@ document.write(`
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">idx</span> <span class="o">=</span> <span class="mi">1</span> <span class="c1"># index of the array</span>
-<span class="n">best_wing_loading</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="mf">42.5</span> <span class="c1"># lbs/sq ft</span>
-<span class="n">best_power_loading</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="mf">9.0</span> <span class="c1"># lbs/hp</span>
+<span class="n">best_wing_loading</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="mi">41</span> <span class="c1"># lbs/sq ft</span>
+<span class="n">best_power_loading</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="mf">9.4</span> <span class="c1"># lbs/hp</span>
+
+<span class="n">best_wing_loading</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="mf">45.5</span> <span class="c1"># lbs/sq ft</span>
+<span class="n">best_power_loading</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="mf">8.6</span> <span class="c1"># lbs/hp</span>
 
 <span class="n">ax</span> <span class="o">=</span> <span class="n">plot_trade_study</span><span class="p">(</span><span class="n">A</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">best_wing_loading</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="n">best_power_loading</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Optimum point&quot;</span><span class="p">)</span>
@@ -594,7 +600,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/187dafb665f63df876a2e8a0b6c4a9961b62f86e6d26220adbea398199602b0d.png" src="../_images/187dafb665f63df876a2e8a0b6c4a9961b62f86e6d26220adbea398199602b0d.png" />
+<img alt="../_images/b6bf8817628b9a862f53f62b14796db72d11f9277c9e921e521fad7b1e6b78d3.png" src="../_images/b6bf8817628b9a862f53f62b14796db72d11f9277c9e921e521fad7b1e6b78d3.png" />
 </div>
 </div>
 </section>
@@ -603,8 +609,11 @@ document.write(`
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">idx</span> <span class="o">=</span> <span class="mi">2</span> <span class="c1"># index of the array</span>
-<span class="n">best_wing_loading</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="mi">44</span> <span class="c1"># lbs/sq ft</span>
-<span class="n">best_power_loading</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="mf">9.1</span> <span class="c1"># lbs/hp</span>
+<span class="n">best_wing_loading</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="mf">42.8</span> <span class="c1"># lbs/sq ft</span>
+<span class="n">best_power_loading</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="mf">9.5</span> <span class="c1"># lbs/hp</span>
+
+<span class="n">best_wing_loading</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="mf">45.3</span> <span class="c1"># lbs/sq ft</span>
+<span class="n">best_power_loading</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="mf">8.7</span> <span class="c1"># lbs/hp</span>
 
 <span class="n">ax</span> <span class="o">=</span> <span class="n">plot_trade_study</span><span class="p">(</span><span class="n">A</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">best_wing_loading</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="n">best_power_loading</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Optimum point&quot;</span><span class="p">)</span>
@@ -613,7 +622,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/4ff64081e5801c04b70442787d3f2d6e7fa697c5f0eff048b796d76dcf8e0202.png" src="../_images/4ff64081e5801c04b70442787d3f2d6e7fa697c5f0eff048b796d76dcf8e0202.png" />
+<img alt="../_images/41fdb3216614cbb2cdf53d76b715fa5bc88916169fdaa4edd78b2685f097079a.png" src="../_images/41fdb3216614cbb2cdf53d76b715fa5bc88916169fdaa4edd78b2685f097079a.png" />
 </div>
 </div>
 </section>
@@ -622,8 +631,11 @@ document.write(`
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">idx</span> <span class="o">=</span> <span class="mi">3</span> <span class="c1"># index of the array</span>
-<span class="n">best_wing_loading</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="mi">43</span> <span class="c1"># lbs/sq ft</span>
-<span class="n">best_power_loading</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="mf">9.2</span> <span class="c1"># lbs/hp</span>
+<span class="n">best_wing_loading</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="mf">43.1</span> <span class="c1"># lbs/sq ft</span>
+<span class="n">best_power_loading</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="mf">9.6</span> <span class="c1"># lbs/hp</span>
+
+<span class="n">best_wing_loading</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="mi">44</span> <span class="c1"># lbs/sq ft</span>
+<span class="n">best_power_loading</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="mf">8.8</span> <span class="c1"># lbs/hp</span>
 
 <span class="n">ax</span> <span class="o">=</span> <span class="n">plot_trade_study</span><span class="p">(</span><span class="n">A</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">best_wing_loading</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="n">best_power_loading</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Optimum point&quot;</span><span class="p">)</span>
@@ -632,7 +644,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/a6daf58fefe5ac2bea9822fe6240e0c77f700bc991eb04a13b001c5f4d6abe00.png" src="../_images/a6daf58fefe5ac2bea9822fe6240e0c77f700bc991eb04a13b001c5f4d6abe00.png" />
+<img alt="../_images/66761ed1a74a7ecefeaf8a9851ff8a23912c3c49760b864c9f7e2c52ec2300c4.png" src="../_images/66761ed1a74a7ecefeaf8a9851ff8a23912c3c49760b864c9f7e2c52ec2300c4.png" />
 </div>
 </div>
 </section>
@@ -642,7 +654,10 @@ document.write(`
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">idx</span> <span class="o">=</span> <span class="mi">4</span> <span class="c1"># index of the array</span>
 <span class="n">best_wing_loading</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="mi">42</span> <span class="c1"># lbs/sq ft</span>
-<span class="n">best_power_loading</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="mf">9.2</span> <span class="c1"># lbs/hp</span>
+<span class="n">best_power_loading</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="mf">9.7</span> <span class="c1"># lbs/hp</span>
+
+<span class="n">best_wing_loading</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="mi">43</span> <span class="c1"># lbs/sq ft</span>
+<span class="n">best_power_loading</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="mf">8.9</span> <span class="c1"># lbs/hp</span>
 
 <span class="n">ax</span> <span class="o">=</span> <span class="n">plot_trade_study</span><span class="p">(</span><span class="n">A</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">best_wing_loading</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="n">best_power_loading</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Optimum point&quot;</span><span class="p">)</span>
@@ -651,7 +666,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/0979fe5dc1078f029d457d1e26b541b7df503dbbb967e1f236c125d506db838f.png" src="../_images/0979fe5dc1078f029d457d1e26b541b7df503dbbb967e1f236c125d506db838f.png" />
+<img alt="../_images/fd6d4f1c13e4381b33025f01d5ef9da67c59a07051475e732ac60bb23d79df04.png" src="../_images/fd6d4f1c13e4381b33025f01d5ef9da67c59a07051475e732ac60bb23d79df04.png" />
 </div>
 </div>
 <p>Based on the above graph, it can be seen that cruise speed, OEI climb gradient, and wing fuel volume are the driving constraints for the design. Below code block plots the best MTOW as the aspect ratio is varied:</p>
@@ -677,7 +692,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/bd4602b36e0ef3e701ae0a3af637ae7e1b3d7a87b59c4f7fe4d1bc3cb5c8e05d.png" src="../_images/bd4602b36e0ef3e701ae0a3af637ae7e1b3d7a87b59c4f7fe4d1bc3cb5c8e05d.png" />
+<img alt="../_images/760a8a2bd5ced53f7beee54451c026e9f9c7c68c9455eb6fe74889e20e0ad1ba.png" src="../_images/760a8a2bd5ced53f7beee54451c026e9f9c7c68c9455eb6fe74889e20e0ad1ba.png" />
 </div>
 </div>
 <p>Based on the above plot, the aspect ratio of 9 yileds the lowest weight for the example airplane. Note that the maxmium wing fuel volume is one of the driving the constraints along with cruise speed. Below code block prints some major quantities for the final selected airplane:</p>
@@ -698,13 +713,13 @@ document.write(`
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Major parameters for selected airplane:
-Maximum takeoff weight: 6376 lbs
-Empty weight: 3449 lbs
-Fuel weight: 1727 lbs
-Maximum takeoff power: 701 hp
+Maximum takeoff weight: 6258 lbs
+Empty weight: 3437 lbs
+Fuel weight: 1620 lbs
+Maximum takeoff power: 719 hp
 Aspect ratio: 9
-Wing surface area: 145 sq ft
-Wing span: 36 ft
+Wing surface area: 138 sq ft
+Wing span: 35 ft
 </pre></div>
 </div>
 </div>

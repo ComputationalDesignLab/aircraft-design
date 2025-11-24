@@ -494,7 +494,7 @@ document.write(`
 
     <span class="c1"># fuselage CD0</span>
     <span class="n">Cf_fuselage_laminar</span> <span class="o">=</span> <span class="n">compute_cf_laminar</span><span class="p">(</span><span class="n">compute_Re</span><span class="p">(</span><span class="n">parameters</span><span class="o">.</span><span class="n">fuselage_lenth</span><span class="p">))</span>
-    <span class="n">Cf_fuselage_turbulent</span> <span class="o">=</span> <span class="n">compute_cf_turbulent</span><span class="p">(</span><span class="n">compute_Re</span><span class="p">(</span><span class="n">parameters</span><span class="o">.</span><span class="n">mac</span><span class="p">))</span>
+    <span class="n">Cf_fuselage_turbulent</span> <span class="o">=</span> <span class="n">compute_cf_turbulent</span><span class="p">(</span><span class="n">compute_Re</span><span class="p">(</span><span class="n">parameters</span><span class="o">.</span><span class="n">fuselage_lenth</span><span class="p">))</span>
     <span class="n">Cf_fuselage</span> <span class="o">=</span> <span class="n">Cf_fuselage_laminar</span><span class="o">*</span><span class="mf">0.1</span> <span class="o">+</span> <span class="n">Cf_fuselage_turbulent</span><span class="o">*</span><span class="mf">0.9</span> <span class="c1"># 10% laminar + 90% turbulent</span>
     <span class="n">ff_fuselage</span> <span class="o">=</span> <span class="mf">1.301388</span> <span class="c1"># fixed since fuselage is not changing</span>
     <span class="n">CD0_sf_fuselage</span> <span class="o">=</span> <span class="n">compute_CDO</span><span class="p">(</span><span class="n">Cf_fuselage</span><span class="p">,</span> <span class="n">ff_fuselage</span><span class="p">,</span> <span class="n">Q_fuselage</span><span class="p">,</span> <span class="n">Swet_fuselage</span><span class="p">)</span>
@@ -758,7 +758,7 @@ document.write(`
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Aspect ratio: 8
 Wing span: 33 ft
-Zero-lift drag coefficient: 0.0363
+Zero-lift drag coefficient: 0.0334
 </pre></div>
 </div>
 </div>

@@ -482,7 +482,7 @@ document.write(`
 <p>The fuel cost is computed based on the specific fuel consumption, flight hours flown in a year, average power during cruise, and cost for a gallon of fuel. The specific fuel consumption can be obtained from the engine selected, however, it is set to 0.4 lbs/hp/hr in this section. The flight hours in a year is already determined in maintenance cost section and the average power during cruise is obtained from trade studies. Finally, the average cost for a gallon of fuel (100 Avgas) is set to $6.4. Below code block computes annual fuel cost for the example airplane:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Pcruise</span> <span class="o">=</span> <span class="mi">530</span> <span class="c1"># hp, for both engine combined</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Pcruise</span> <span class="o">=</span> <span class="mi">545</span> <span class="c1"># hp, for both engine combined</span>
 <span class="n">fuel_density</span> <span class="o">=</span> <span class="mi">6</span> <span class="c1"># lbs/gallon</span>
 <span class="n">Cbhp</span> <span class="o">=</span> <span class="mf">0.4</span> <span class="c1"># lbs/hp/hr</span>
 <span class="n">fuel_cost_gallon</span> <span class="o">=</span> <span class="mf">6.4</span> <span class="c1"># $, cost for 1 gallon of fuel</span>
@@ -496,7 +496,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Annual fuel cost: $67,840
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Annual fuel cost: $69,760
 </pre></div>
 </div>
 </div>
@@ -580,8 +580,8 @@ Annual loan payment: $0
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Total yearly operating cost: $93,020
-Operating cost per flight hour: $310
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Total yearly operating cost: $94,940
+Operating cost per flight hour: $316
 </pre></div>
 </div>
 </div>
@@ -599,7 +599,7 @@ Operating cost per flight hour: $310
 <td class="text-center"><p>4,680</p></td>
 </tr>
 <tr class="row-odd"><td><p>Fuel</p></td>
-<td class="text-center"><p>67,840</p></td>
+<td class="text-center"><p>69,760</p></td>
 </tr>
 <tr class="row-even"><td><p>Insurance</p></td>
 <td class="text-center"><p>14,000</p></td>
@@ -617,7 +617,7 @@ Operating cost per flight hour: $310
 <td class="text-center"><p>0</p></td>
 </tr>
 <tr class="row-odd"><td><p><strong>Total</strong></p></td>
-<td class="text-center"><p><strong>93,020</strong></p></td>
+<td class="text-center"><p><strong>94,940</strong></p></td>
 </tr>
 </tbody>
 </table>

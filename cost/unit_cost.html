@@ -457,7 +457,7 @@ document.write(`
 </thead>
 <tbody>
 <tr class="row-even"><td><p>Airframe weight</p></td>
-<td class="text-center"><p>2250 lbs</p></td>
+<td class="text-center"><p>2234 lbs</p></td>
 <td class="text-center"><p>computed</p></td>
 </tr>
 <tr class="row-odd"><td><p>Max level speed</p></td>
@@ -481,7 +481,7 @@ document.write(`
 <td class="text-center"><p>mission requirement</p></td>
 </tr>
 <tr class="row-even"><td><p>Max engine power</p></td>
-<td class="text-center"><p>350 hp</p></td>
+<td class="text-center"><p>360 hp</p></td>
 <td class="text-center"><p>from trade study</p></td>
 </tr>
 <tr class="row-odd"><td><p>Propeller diameter</p></td>
@@ -511,7 +511,7 @@ document.write(`
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 
 <span class="c1"># Variables</span>
-<span class="n">W_airframe</span> <span class="o">=</span> <span class="mi">2250</span> <span class="c1"># lbs, get this value from weights</span>
+<span class="n">W_airframe</span> <span class="o">=</span> <span class="mi">2234</span> <span class="c1"># lbs, get this value from weights</span>
 <span class="n">VH</span> <span class="o">=</span> <span class="mi">210</span> <span class="c1"># ktas</span>
 
 <span class="n">N</span> <span class="o">=</span> <span class="mi">1000</span> <span class="c1"># units for next 5 year</span>
@@ -519,8 +519,8 @@ document.write(`
 <span class="n">Np</span> <span class="o">=</span> <span class="mi">3</span> <span class="c1"># number of prototypes</span>
 
 <span class="n">N_engine</span> <span class="o">=</span> <span class="mi">2</span> <span class="c1"># number of engines</span>
-<span class="n">Pbhp</span> <span class="o">=</span> <span class="mi">701</span> <span class="o">/</span> <span class="n">N_engine</span> <span class="c1"># bhp</span>
-<span class="n">Dp</span> <span class="o">=</span> <span class="mf">6.25</span> <span class="c1"># ft</span>
+<span class="n">Pbhp</span> <span class="o">=</span> <span class="mi">720</span> <span class="o">/</span> <span class="n">N_engine</span> <span class="c1"># bhp</span>
+<span class="n">Dp</span> <span class="o">=</span> <span class="mf">6.34</span> <span class="c1"># ft</span>
 
 <span class="n">CPI</span> <span class="o">=</span> <span class="mf">1.4</span> <span class="c1"># CPI factor</span>
 <span class="n">R_engg</span> <span class="o">=</span> <span class="mi">92</span> <span class="c1"># $/hr</span>
@@ -568,10 +568,10 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Engineering hours: 219,774 hrs
-Tooling hours: 183,980 hrs
-Manufacturing hours: 1,988,912 hrs
-Average build time for an airplane: 1,988 hrs
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Engineering hours: 218,537 hrs
+Tooling hours: 182,980 hrs
+Manufacturing hours: 1,978,436 hrs
+Average build time for an airplane: 1,978 hrs
 </pre></div>
 </div>
 </div>
@@ -607,11 +607,11 @@ Average build time for an airplane: 1,988 hrs
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Engineering cost: $59,356,978
-Development support cost: $2,733,756
-Flight test operations cost: $654,364
-Tooling cost: $32,946,381
-Total fixed cost: $95,691,480
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Engineering cost: $59,022,853
+Development support cost: $2,716,777
+Flight test operations cost: $648,969
+Tooling cost: $32,767,236
+Total fixed cost: $95,155,837
 </pre></div>
 </div>
 </div>
@@ -656,13 +656,13 @@ Total fixed cost: $95,691,480
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Manufacturing labor cost: $309,454,878
-Quality control cost: $40,229,134
-Material cost: $47,530,918
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Manufacturing labor cost: $307,824,948
+Quality control cost: $40,017,243
+Material cost: $47,297,779
 Avionics cost for each unit: $21,000
-Engine cost for each unit: $170,763
-Propeller cost for each unit: $37,178
-Unit variable cost: $626,156
+Engine cost for each unit: $175,392
+Propeller cost for each unit: $38,314
+Unit variable cost: $629,845
 </pre></div>
 </div>
 </div>
@@ -690,9 +690,9 @@ Unit variable cost: $626,156
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Unit total cost: $721,848
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Unit total cost: $725,001
 Liability insurance: $110,000
-Minimum selling price: $831,848
+Minimum selling price: $835,001
 </pre></div>
 </div>
 </div>
@@ -707,49 +707,49 @@ Minimum selling price: $831,848
 </thead>
 <tbody>
 <tr class="row-even"><td><p>Engineering</p></td>
-<td class="text-center"><p>59,357</p></td>
+<td class="text-center"><p>59,023</p></td>
 </tr>
 <tr class="row-odd"><td><p>Development support</p></td>
-<td class="text-center"><p>2,734</p></td>
+<td class="text-center"><p>2,717</p></td>
 </tr>
 <tr class="row-even"><td><p>Flight test operations</p></td>
-<td class="text-center"><p>654</p></td>
+<td class="text-center"><p>649</p></td>
 </tr>
 <tr class="row-odd"><td><p>Tooling</p></td>
-<td class="text-center"><p>32,946</p></td>
+<td class="text-center"><p>32,767</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>Fixed cost</strong></p></td>
-<td class="text-center"><p><strong>95,691</strong></p></td>
+<td class="text-center"><p><strong>95,156</strong></p></td>
 </tr>
 <tr class="row-odd"><td><p>Manufacturing labor</p></td>
-<td class="text-center"><p>309,455</p></td>
+<td class="text-center"><p>307,825</p></td>
 </tr>
 <tr class="row-even"><td><p>Quality control</p></td>
-<td class="text-center"><p>40,229</p></td>
+<td class="text-center"><p>40,017</p></td>
 </tr>
 <tr class="row-odd"><td><p>Material</p></td>
-<td class="text-center"><p>47,531</p></td>
+<td class="text-center"><p>47,298</p></td>
 </tr>
 <tr class="row-even"><td><p>Avionics</p></td>
 <td class="text-center"><p>21,000</p></td>
 </tr>
 <tr class="row-odd"><td><p>Engines</p></td>
-<td class="text-center"><p>170,763</p></td>
+<td class="text-center"><p>175,392</p></td>
 </tr>
 <tr class="row-even"><td><p>Propeller</p></td>
-<td class="text-center"><p>37,178</p></td>
+<td class="text-center"><p>38,314</p></td>
 </tr>
 <tr class="row-odd"><td><p><strong>Variable cost</strong></p></td>
-<td class="text-center"><p><strong>626,156</strong></p></td>
+<td class="text-center"><p><strong>629,845</strong></p></td>
 </tr>
 <tr class="row-even"><td><p><strong>Total cost to produce</strong></p></td>
-<td class="text-center"><p><strong>721,847</strong></p></td>
+<td class="text-center"><p><strong>725,001</strong></p></td>
 </tr>
 <tr class="row-odd"><td><p>Manufacturer’s liability insurance</p></td>
 <td class="text-center"><p>110,000</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>Minimum selling price</strong></p></td>
-<td class="text-center"><p><strong>831,847</strong></p></td>
+<td class="text-center"><p><strong>835,001</strong></p></td>
 </tr>
 </tbody>
 </table>
@@ -805,7 +805,7 @@ Minimum selling price: $831,848
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/08da74d3a6cc16bbfcdf12478eaebeb03280d5e50db0e565fba2c49631d21a64.png" src="../_images/08da74d3a6cc16bbfcdf12478eaebeb03280d5e50db0e565fba2c49631d21a64.png" />
+<img alt="../_images/c582c3e18d79c80ae9ff973c6cd861f13d6062e79e82421ac9074f800ab30597.png" src="../_images/c582c3e18d79c80ae9ff973c6cd861f13d6062e79e82421ac9074f800ab30597.png" />
 </div>
 </div>
 <p>When there is no profit i.e. aircraft is sold at its minimum selling price, the <span class="math notranslate nohighlight">\(N_{BE}\)</span> is equal to the number of airplanes assumed to be produced over 5-year period. As the profit margin increases, the number of units for break-even also decreases. However, one should carefully determine the selling price based on market conditions. Based on the above analysis, for a unit price of $900,000, the number of aircraft to be sold for recovering the cost wil be approximately 550. This concludes the unit cost estimation, next step is to determine the operating costs.</p>
