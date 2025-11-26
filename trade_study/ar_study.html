@@ -258,6 +258,7 @@
 </ul>
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="payload_range.html">Payload-Range diagram</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vn_diagram.html">V-n Diagram</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../cost/intro.html">Cost analysis</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../cost/unit_cost.html">Unit cost</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../cost/operating_cost.html">Operating cost</a></li>
@@ -695,7 +696,7 @@ document.write(`
 <img alt="../_images/760a8a2bd5ced53f7beee54451c026e9f9c7c68c9455eb6fe74889e20e0ad1ba.png" src="../_images/760a8a2bd5ced53f7beee54451c026e9f9c7c68c9455eb6fe74889e20e0ad1ba.png" />
 </div>
 </div>
-<p>Based on the above plot, the aspect ratio of 9 yileds the lowest weight for the example airplane. Note that the maxmium wing fuel volume is one of the driving the constraints along with cruise speed. Below code block prints some major quantities for the final selected airplane:</p>
+<p>Based on the above plot, the aspect ratio of 9 yields the lowest weight for the example airplane. Note that the maxmium wing fuel volume is one of the driving the constraints along with cruise speed. Below code block prints some major quantities for the final selected airplane:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">MTOW</span><span class="p">,</span> <span class="n">aircraft</span> <span class="o">=</span> <span class="n">compute_takeoff_weight</span><span class="p">(</span><span class="n">best_wing_loading</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">best_power_loading</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">A</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>

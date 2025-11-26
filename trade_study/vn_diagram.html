@@ -62,6 +62,8 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'trade_study/vn_diagram';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Cost analysis" href="../cost/intro.html" />
+    <link rel="prev" title="Payload-Range diagram" href="payload_range.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -124,8 +126,6 @@
       
       
       
-        
-      
       <div class="bd-sidebar-primary bd-sidebar">
         
 
@@ -175,7 +175,7 @@
                 </a>
             </li>
         </ul>
-        <ul class="nav bd-sidenav">
+        <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../setup.html">Computing environment setup</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../python_basics/intro.html">Basics of Python Programming</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../python_basics/python_basics.html">Basic programming in Python and Jupyter Notebooks</a></li>
@@ -258,6 +258,7 @@
 </ul>
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="payload_range.html">Payload-Range diagram</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">V-n Diagram</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../cost/intro.html">Cost analysis</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../cost/unit_cost.html">Unit cost</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../cost/operating_cost.html">Operating cost</a></li>
@@ -427,6 +428,11 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#load-factor">Load factor</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#speeds">Speeds</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#stall-lines">Stall lines</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#initial-plot">Initial plot</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gusts">Gusts</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#final-plot">Final plot</a></li>
 </ul>
             </nav>
         </div>
@@ -440,8 +446,9 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="v-n-diagram">
 <h1>V-n Diagram<a class="headerlink" href="#v-n-diagram" title="Link to this heading">#</a></h1>
-<p>This section illustrates how to create a V-n diagram for the example airplane. This diagram relates airspeed to structural loads experienced by the airframe, which are later used for structural analysis. Essentially, it defines operating envelope for the airplane in terms of the maximum maneuvers and speeds. Refer to <a class="reference external" href="https://www.ecfr.gov/current/title-14/chapter-I/subchapter-C/part-23/subpart-C">FAR Part 23 Subpart C</a> for regulations related to airplane structures.</p>
-<div style="width:90%; margin: auto;">
+<p>This section illustrates how to create a V-n diagram for the example airplane. This diagram relates equivalent airspeed to the structural loads experienced by the airframe, which are later used in structural analysis. Essentially, it defines the operating envelope for the airplane in terms of the maximum maneuvers and speeds. Refer to <a class="reference external" href="https://www.ecfr.gov/current/title-14/chapter-I/subchapter-C/part-23/subpart-C">FAR Part 23 Subpart C</a> for regulations related to airplane structures. Refer to lecture notes, Raymer section 14.3.1 and 14.3.2, and Roskam Part 5 section 4.2 for more details.</p>
+<p>In this demonstration, the V-n diagram is created at sea-level conditions and in clean configuration, and aircraft is at MTOW. Below table outlines various quantities used for creating the V-n diagram. The wing loading, wing reference area, and mean aerodynamic chord can be obtained by initializing the <code class="docutils literal notranslate"><span class="pre">AircraftParameters</span></code> class using the best aspect ratio, wing loading and power loading obtained from trade studies. The maximum positive and negative (clean) lift coefficient are obtained using the method described in <a class="reference internal" href="../aerodynamics/lift_curve.html"><span class="std std-doc">aerodynamics section</span></a>.</p>
+<div style="width:70%; margin: auto;">
 <div class="pst-scrollable-table-container"><table class="table">
 <thead>
 <tr class="row-odd"><th class="head"><p>Parameter</p></th>
@@ -450,54 +457,43 @@ document.write(`
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>Wing loading, $$W/S</p></td>
-<td class="text-center"><p>44 lbs/<span class="math notranslate nohighlight">\(\text{ft}^2\)</span></p></td>
+<tr class="row-even"><td><p>Wing loading, <span class="math notranslate nohighlight">\(W/S\)</span></p></td>
+<td class="text-center"><p>42.8 lbs/<span class="math notranslate nohighlight">\(\text{ft}^2\)</span></p></td>
 <td class="text-center"><p>trade study</p></td>
 </tr>
 <tr class="row-odd"><td><p>Wing area, S</p></td>
-<td class="text-center"><p>145 <span class="math notranslate nohighlight">\(\text{ft}^2\)</span></p></td>
+<td class="text-center"><p>138 <span class="math notranslate nohighlight">\(\text{ft}^2\)</span></p></td>
 <td class="text-center"><p>computed</p></td>
 </tr>
 <tr class="row-even"><td><p>Mean aerodynamic chord, <span class="math notranslate nohighlight">\(\bar{c}\)</span></p></td>
-<td class="text-center"><p>4.26 ft</p></td>
+<td class="text-center"><p>4.16 ft</p></td>
 <td class="text-center"><p>computed</p></td>
 </tr>
 <tr class="row-odd"><td><p>Max positive lift coefficient, <span class="math notranslate nohighlight">\(C_{L_{max^+}}\)</span></p></td>
-<td class="text-center"><p>1.44</p></td>
+<td class="text-center"><p>1.5</p></td>
 <td class="text-center"><p>computed</p></td>
 </tr>
 <tr class="row-even"><td><p>Max negative lift coefficient, <span class="math notranslate nohighlight">\(C_{L_{max^-}}\)</span></p></td>
 <td class="text-center"><p>-1.1</p></td>
 <td class="text-center"><p>computed</p></td>
 </tr>
-<tr class="row-odd"><td><p>Max steady level airspeed, <span class="math notranslate nohighlight">\(V_H\)</span></p></td>
-<td class="text-center"><p></p></td>
-<td class="text-center"><p>Computed</p></td>
-</tr>
 </tbody>
 </table>
 </div>
 </div>
-<p>Note that this diagram is created for clean configuration and aircraft is at MTOW.</p>
-<p>The first step is to compute four different speeds:</p>
-<ol class="arabic simple">
-<li><p>1g stall speed, <span class="math notranslate nohighlight">\(V_s\)</span></p></li>
-<li><p>design cruise speed, <span class="math notranslate nohighlight">\(V_c\)</span></p></li>
-<li><p>design diving speed,</p></li>
-<li><p>design maneuvering speed</p></li>
-</ol>
-<p>Refer to lecture notes, Raymer section 14.3.1 and 14.3.2, and Roskam Part 5 section 4.2 for more details.</p>
+<p>Below code block imports required packages and defines some variables:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">nbimporter</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">mtow</span><span class="w"> </span><span class="kn">import</span> <span class="n">compute_takeoff_weight</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">scipy.optimize</span><span class="w"> </span><span class="kn">import</span> <span class="n">fsolve</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 
 <span class="c1"># From trade study</span>
 <span class="n">A</span> <span class="o">=</span> <span class="mi">9</span>
-<span class="n">wing_loading</span> <span class="o">=</span> <span class="mi">44</span> <span class="c1"># lbs/sq ft</span>
-<span class="n">power_loading</span> <span class="o">=</span> <span class="mf">9.1</span> <span class="c1"># lbs/hp</span>
+<span class="n">wing_loading</span> <span class="o">=</span> <span class="mf">45.3</span> <span class="c1"># lbs/sq ft</span>
+<span class="n">power_loading</span> <span class="o">=</span> <span class="mf">8.7</span> <span class="c1"># lbs/hp</span>
 
 <span class="c1"># Size the aircraft</span>
 <span class="n">MTOW</span><span class="p">,</span> <span class="n">aircraft</span> <span class="o">=</span> <span class="n">compute_takeoff_weight</span><span class="p">(</span><span class="n">wing_loading</span><span class="p">,</span> <span class="n">power_loading</span><span class="p">,</span> <span class="n">A</span><span class="p">)</span>
@@ -511,7 +507,61 @@ document.write(`
 <span class="n">e</span> <span class="o">=</span> <span class="n">aircraft</span><span class="o">.</span><span class="n">e</span>
 <span class="n">S</span> <span class="o">=</span> <span class="n">aircraft</span><span class="o">.</span><span class="n">S</span> <span class="c1"># sq ft</span>
 <span class="n">CD0</span> <span class="o">=</span> <span class="n">aircraft</span><span class="o">.</span><span class="n">CD0</span>
-<span class="n">CLmax</span> <span class="o">=</span> <span class="mf">1.44</span> <span class="c1"># aircraft.CLmax</span>
+<span class="n">CLmax</span> <span class="o">=</span> <span class="mf">1.5</span>
+<span class="n">CLmax_neg</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.1</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="load-factor">
+<h2>Load factor<a class="headerlink" href="#load-factor" title="Link to this heading">#</a></h2>
+<p>The first step is to determine the limit load factor <span class="math notranslate nohighlight">\(n\)</span> using</p>
+<div class="math notranslate nohighlight">
+\[
+    n_+ \geq 2.1 + \frac{24000}{W + 10000} \quad \text{and} \quad n_- \leq -0.4 n_+
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(W\)</span> is the weight, <span class="math notranslate nohighlight">\(n_+\)</span> and <span class="math notranslate nohighlight">\(n_-\)</span> are the positive and negative limit load factor, respectively. Note that this positive load factor is used for computing ultimate load factor while estimating <a class="reference internal" href="../weight_and_balance/weight.html"><span class="std std-doc">weights</span></a> of different components.</p>
+<p>Below code block computes these two load factors:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load factor</span>
+<span class="n">nplus</span> <span class="o">=</span> <span class="mf">2.1</span> <span class="o">+</span> <span class="mi">24000</span> <span class="o">/</span> <span class="p">(</span><span class="n">MTOW</span> <span class="o">+</span> <span class="mi">10000</span><span class="p">)</span>
+<span class="n">nminus</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.4</span><span class="o">*</span><span class="n">nplus</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Positive load factor: </span><span class="si">{</span><span class="n">nplus</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Negative load factor: </span><span class="si">{</span><span class="n">nminus</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Positive load factor: 3.58
+Negative load factor: -1.43
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="speeds">
+<h2>Speeds<a class="headerlink" href="#speeds" title="Link to this heading">#</a></h2>
+<p>Next step is to determine the important speeds used in V-n diagram:</p>
+<ol class="arabic simple">
+<li><p>1g stall speed, <span class="math notranslate nohighlight">\(V_S\)</span></p></li>
+<li><p>Design cruise speed, <span class="math notranslate nohighlight">\(V_C\)</span></p></li>
+<li><p>Maximum level flight speed, <span class="math notranslate nohighlight">\(V_H\)</span></p></li>
+<li><p>Design dive speed, <span class="math notranslate nohighlight">\(V_D\)</span></p></li>
+</ol>
+<p>The <span class="math notranslate nohighlight">\(V_S\)</span> and <span class="math notranslate nohighlight">\(V_C\)</span> are known while <span class="math notranslate nohighlight">\(V_H\)</span> can be computed based on the maximum available cruise power. The <span class="math notranslate nohighlight">\(V_D\)</span> is a design choice which can be set by the designer. Ensure that the lower limit for <span class="math notranslate nohighlight">\(V_C\)</span> and <span class="math notranslate nohighlight">\(V_D\)</span> are satisfied. Note that all these speeds should be in equivalent airspeeds.</p>
+<p>Below code block computes/defines these speeds. It also defines a function for computing equivalent airspeed for a given true airspeed and density.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Compute equivalent air speed</span>
+<span class="n">compute_Ve</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">rho</span><span class="p">:</span> <span class="p">(</span><span class="n">rho</span><span class="o">/</span><span class="n">rho_sealevel</span><span class="p">)</span><span class="o">**</span><span class="mf">0.5</span> <span class="o">*</span> <span class="n">x</span> <span class="c1"># rho should be in slugs/cu ft</span>
+
+<span class="c1"># Speed</span>
+<span class="n">VS</span> <span class="o">=</span> <span class="p">(</span><span class="n">wing_loading</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">/</span> <span class="n">rho_sealevel</span> <span class="o">/</span> <span class="n">CLmax</span> <span class="p">)</span><span class="o">**</span><span class="mf">0.5</span> <span class="o">/</span> <span class="mf">1.688</span> <span class="c1"># kts, equivalent airspeed</span>
+<span class="n">VS_neg</span> <span class="o">=</span> <span class="p">(</span><span class="n">wing_loading</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">/</span> <span class="n">rho_sealevel</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">CLmax_neg</span><span class="p">)</span> <span class="p">)</span><span class="o">**</span><span class="mf">0.5</span> <span class="o">/</span> <span class="mf">1.688</span> <span class="c1"># kts, equivalent airspeed</span>
+<span class="n">VC</span> <span class="o">=</span> <span class="n">compute_Ve</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="n">rho_cruise</span><span class="p">)</span> <span class="c1"># kts, equivalent airspeed</span>
+<span class="n">VD</span> <span class="o">=</span> <span class="mi">240</span> <span class="c1"># kts, equivalent airspeed</span>
 
 <span class="k">def</span><span class="w"> </span><span class="nf">compute_power</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">weight</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">CD0</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
@@ -535,120 +585,246 @@ document.write(`
 
 <span class="n">x0</span> <span class="o">=</span> <span class="mi">350</span> <span class="c1"># ft/s</span>
 
-<span class="n">VH</span> <span class="o">=</span> <span class="n">fsolve</span><span class="p">(</span><span class="n">eqn</span><span class="p">,</span> <span class="n">x0</span><span class="o">=</span><span class="n">x0</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">MTOW</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">CD0</span><span class="p">))</span><span class="o">.</span><span class="n">item</span><span class="p">()</span> <span class="o">/</span> <span class="mf">1.68781</span> <span class="c1"># kts</span>
+<span class="n">VH</span> <span class="o">=</span> <span class="n">fsolve</span><span class="p">(</span><span class="n">eqn</span><span class="p">,</span> <span class="n">x0</span><span class="o">=</span><span class="n">x0</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">MTOW</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">CD0</span><span class="p">))</span><span class="o">.</span><span class="n">item</span><span class="p">()</span> <span class="o">/</span> <span class="mf">1.68781</span> <span class="c1"># kts, true airspeed</span>
+<span class="n">VH</span> <span class="o">=</span> <span class="n">compute_Ve</span><span class="p">(</span><span class="n">VH</span><span class="p">,</span> <span class="n">rho_cruise</span><span class="p">)</span> <span class="c1"># kts, equivalent airspeed</span>
 
+<span class="c1"># some other speeds</span>
+<span class="n">Va_pos</span> <span class="o">=</span> <span class="n">VS</span> <span class="o">*</span> <span class="n">nplus</span><span class="o">**</span><span class="mf">0.5</span> <span class="c1"># kts, equivalent airspeed</span>
+<span class="n">Va_neg</span> <span class="o">=</span> <span class="n">VS_neg</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">nminus</span><span class="p">)</span><span class="o">**</span><span class="mf">0.5</span> <span class="c1"># kts, equivalent airspeed</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Positive stall speed: </span><span class="si">{</span><span class="n">VS</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2"> kts&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Negative stall speed: </span><span class="si">{</span><span class="n">VS_neg</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2"> kts&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Corner speed (positive): </span><span class="si">{</span><span class="n">Va_pos</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2"> kts&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Corner speed (negative): </span><span class="si">{</span><span class="n">Va_neg</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2"> kts&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Design cruise speed: </span><span class="si">{</span><span class="n">VC</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2"> kts&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Max speed at cruising altitude: </span><span class="si">{</span><span class="n">VH</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2"> kts&quot;</span><span class="p">)</span>
-
-<span class="c1"># Compute equivalent air speed</span>
-<span class="n">compute_Ve</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="p">(</span><span class="n">rho_cruise</span><span class="o">/</span><span class="n">rho_sealevel</span><span class="p">)</span><span class="o">**</span><span class="mf">0.5</span> <span class="o">*</span> <span class="n">x</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Design dive speed: </span><span class="si">{</span><span class="n">VD</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2"> kts&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Max speed at cruising altitude: 205 kts
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Positive stall speed: 94 kts
+Negative stall speed: 110 kts
+
+Corner speed (positive): 179 kts
+Corner speed (negative): 132 kts
+
+Design cruise speed: 177 kts
+Max speed at cruising altitude: 191 kts
+Design dive speed: 240 kts
 </pre></div>
 </div>
 </div>
 </div>
-<section id="load-factor">
-<h2>Load factor<a class="headerlink" href="#load-factor" title="Link to this heading">#</a></h2>
+<p>Note that the design cruise speed is less than corner speed (positive). This implies that the airplane will stall first before reaching the limit load at cruise speed. This may not be true always.</p>
+</section>
+<section id="stall-lines">
+<h2>Stall lines<a class="headerlink" href="#stall-lines" title="Link to this heading">#</a></h2>
+<p>Once stall speed and corner speed are computed, stall lines can be computed. These lines depict the maximum load factor that can be attained at a given speed before airplane stalls. These lines are given by</p>
+<div class="math notranslate nohighlight">
+\[
+    n_+(V) = \frac{1}{2}\rho V^2\frac{C_{L_{max}}}{W/S} \quad \text{and} \quad n_-(V) = \frac{1}{2}\rho V^2\frac{C_{L_{max^-}}}{W/S},
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(\rho\)</span> is the sea-level density and <span class="math notranslate nohighlight">\(V\)</span> should be in ft/s. Below code block computes these lines for a range of airspeeds:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">nplus</span> <span class="o">=</span> <span class="mf">2.1</span> <span class="o">+</span> <span class="mi">24000</span> <span class="o">/</span> <span class="p">(</span><span class="n">MTOW</span> <span class="o">+</span> <span class="mi">10000</span><span class="p">)</span>
-<span class="n">nminus</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.4</span><span class="o">*</span><span class="n">nplus</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># function for computing the stall line</span>
+<span class="n">stall_line</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">V</span><span class="p">,</span> <span class="n">CLmax</span><span class="p">:</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">rho_sealevel</span> <span class="o">*</span> <span class="n">V</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="n">CLmax</span> <span class="o">/</span> <span class="n">wing_loading</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="n">nplus</span><span class="p">,</span><span class="n">nminus</span><span class="p">)</span>
+<span class="c1"># Positive stall line</span>
+<span class="n">V_stall_line_pos</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">VS</span><span class="p">,</span> <span class="n">Va_pos</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span> <span class="c1"># kts, equivalent airspeed</span>
+<span class="n">stall_line_pos</span> <span class="o">=</span> <span class="n">stall_line</span><span class="p">(</span><span class="n">V_stall_line_pos</span><span class="o">*</span><span class="mf">1.688</span><span class="p">,</span> <span class="n">CLmax</span><span class="p">)</span>
+
+<span class="c1"># Negative stall line</span>
+<span class="n">V_stall_line_neg</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">VS_neg</span><span class="p">,</span> <span class="n">Va_neg</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span> <span class="c1"># kts, equivalent airspeed</span>
+<span class="n">stall_line_neg</span> <span class="o">=</span> <span class="n">stall_line</span><span class="p">(</span><span class="n">V_stall_line_neg</span><span class="o">*</span><span class="mf">1.688</span><span class="p">,</span> <span class="n">CLmax_neg</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>3.5655205772716245 -1.42620823090865
-</pre></div>
 </div>
-</div>
-</div>
+</section>
+<section id="initial-plot">
+<h2>Initial plot<a class="headerlink" href="#initial-plot" title="Link to this heading">#</a></h2>
+<p>Below code block creates V-n diagram for the example airplane. Note that the following diagram does not account for gust speeds.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">stall_line</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">V</span><span class="p">,</span> <span class="n">CLmax</span><span class="p">:</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">rho_cruise</span> <span class="o">*</span> <span class="n">V</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="n">CLmax</span> <span class="o">/</span> <span class="n">wing_loading</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fs</span> <span class="o">=</span> <span class="mi">12</span>
 
-<span class="n">Vstall</span> <span class="o">=</span> <span class="p">(</span><span class="n">wing_loading</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">/</span> <span class="n">rho_cruise</span> <span class="o">/</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">CLmax</span> <span class="p">)</span><span class="o">**</span><span class="mf">0.5</span> <span class="c1"># ft/s</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="n">Vstall</span><span class="o">/</span><span class="mf">1.688</span><span class="p">)</span>
-
-<span class="n">Va_pos</span> <span class="o">=</span> <span class="n">Vstall</span> <span class="o">*</span> <span class="n">nplus</span><span class="o">**</span><span class="mf">0.5</span> <span class="c1"># ft/s</span>
-
-<span class="n">V_pos_stall_line</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">Va_pos</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span> 
-
-<span class="n">pos_stall_line</span> <span class="o">=</span> <span class="n">stall_line</span><span class="p">(</span><span class="n">V_pos_stall_line</span><span class="p">,</span> <span class="n">CLmax</span><span class="p">)</span> <span class="c1"># ft/s</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="n">Va_pos</span><span class="o">/</span><span class="mf">1.688</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>107.1443206662328
-202.31618598316567
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Vc</span> <span class="o">=</span> <span class="p">(</span> <span class="p">(</span><span class="mf">28.6</span><span class="o">-</span><span class="mi">33</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">wing_loading</span> <span class="o">-</span> <span class="mi">20</span><span class="p">)</span><span class="o">/</span><span class="mi">80</span>  <span class="o">+</span> <span class="mi">33</span><span class="p">)</span> <span class="o">*</span> <span class="n">wing_loading</span><span class="o">**</span><span class="mf">0.5</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="n">Vc</span><span class="o">/</span><span class="mf">1.688</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>124.49131914509368
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Vd</span> <span class="o">=</span> <span class="p">(</span> <span class="p">(</span><span class="mf">1.35</span><span class="o">-</span><span class="mf">1.4</span><span class="p">)</span><span class="o">/</span><span class="mi">80</span> <span class="o">*</span> <span class="p">(</span><span class="n">wing_loading</span> <span class="o">-</span> <span class="mi">20</span><span class="p">)</span> <span class="o">+</span> <span class="mf">1.4</span> <span class="p">)</span> <span class="o">*</span> <span class="n">Vc</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="n">Vd</span><span class="o">/</span><span class="mf">1.688</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>172.42047701595473
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
-
-<span class="n">fs</span> <span class="o">=</span> <span class="mi">12</span>
-
-<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">nplus</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">nminus</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;-&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.4</span><span class="p">)</span>
 
-<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">compute_Ve</span><span class="p">(</span><span class="n">V_pos_stall_line</span><span class="p">)</span><span class="o">/</span><span class="mf">1.688</span><span class="p">,</span><span class="n">pos_stall_line</span><span class="p">)</span>
+<span class="c1"># Positive load factor</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">VS</span><span class="p">,</span> <span class="n">VS</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="s2">&quot;k&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">V_stall_line_pos</span><span class="p">,</span> <span class="n">stall_line_pos</span><span class="p">,</span> <span class="s2">&quot;k&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">Va_pos</span><span class="p">,</span> <span class="n">VD</span><span class="p">,</span> <span class="n">VD</span><span class="p">],</span> <span class="p">[</span><span class="n">nplus</span><span class="p">,</span> <span class="n">nplus</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="s2">&quot;k&quot;</span><span class="p">)</span>
+
+<span class="c1"># Negative load factor</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">VS_neg</span><span class="p">,</span> <span class="n">VS_neg</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="s2">&quot;k&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">V_stall_line_neg</span><span class="p">,</span> <span class="n">stall_line_neg</span><span class="p">,</span> <span class="s2">&quot;k&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">Va_neg</span><span class="p">,</span> <span class="n">VC</span><span class="p">,</span> <span class="n">VD</span><span class="p">],</span> <span class="p">[</span><span class="n">nminus</span><span class="p">,</span> <span class="n">nminus</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="s2">&quot;k&quot;</span><span class="p">)</span>
 
 <span class="c1"># Annotations</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s2">&quot;$V_{A^+}$&quot;</span><span class="p">,</span> <span class="p">(</span><span class="n">compute_Ve</span><span class="p">(</span><span class="n">Va_pos</span><span class="p">)</span><span class="o">/</span><span class="mf">1.688</span><span class="p">,</span><span class="mi">0</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s2">&quot;$V_{S^+}$&quot;</span><span class="p">,</span> <span class="p">(</span><span class="n">VS</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">fs</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s2">&quot;top&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s2">&quot;$V_{S^-}$&quot;</span><span class="p">,</span> <span class="p">(</span><span class="n">VS_neg</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">fs</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s2">&quot;bottom&quot;</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s2">&quot;$V_{A^+}$&quot;</span><span class="p">,</span> <span class="p">(</span><span class="n">Va_pos</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">fs</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s2">&quot;top&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s2">&quot;$V_{A^-}$&quot;</span><span class="p">,</span> <span class="p">(</span><span class="n">Va_neg</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">fs</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s2">&quot;bottom&quot;</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s2">&quot;$V_C$&quot;</span><span class="p">,</span> <span class="p">(</span><span class="n">VC</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">fs</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s2">&quot;bottom&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s2">&quot;$V_D$&quot;</span><span class="p">,</span> <span class="p">(</span><span class="n">VD</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">fs</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s2">&quot;top&quot;</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s2">&quot;positive limit load&quot;</span><span class="p">,</span> <span class="p">(</span><span class="mi">50</span><span class="p">,</span><span class="n">nplus</span><span class="o">-</span><span class="mf">0.1</span><span class="p">),</span> <span class="n">ha</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s2">&quot;top&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">fs</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s2">&quot;negative limit load&quot;</span><span class="p">,</span> <span class="p">(</span><span class="mi">50</span><span class="p">,</span><span class="n">nminus</span><span class="o">+</span><span class="mf">0.1</span><span class="p">),</span> <span class="n">ha</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s2">&quot;bottom&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">fs</span><span class="p">)</span>
 
 <span class="c1"># Asthetics</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="n">left</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">right</span><span class="o">=</span><span class="mi">250</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Equivalent air speed, $V_e$ (kts)&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">fs</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Load factor, $n$&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">fs</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Without Gusts&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">fs</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, &#39;Load factor, $n$&#39;)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &#39;Without Gusts&#39;)
 </pre></div>
 </div>
-<img alt="../_images/14649d4a0fb5b7df122381b1bda106ddf74d3f1c629c1ada2cf633707241d0d9.png" src="../_images/14649d4a0fb5b7df122381b1bda106ddf74d3f1c629c1ada2cf633707241d0d9.png" />
+<img alt="../_images/39a91d0ec4698a776352ee526a3e72b55a8ee207372ccc33e01a832bf8bd83ae.png" src="../_images/39a91d0ec4698a776352ee526a3e72b55a8ee207372ccc33e01a832bf8bd83ae.png" />
 </div>
 </div>
+</section>
+<section id="gusts">
+<h2>Gusts<a class="headerlink" href="#gusts" title="Link to this heading">#</a></h2>
+<p>For FAR Part 23 airplanes flying below 20,000 ft, the airplane must be able to withstand two different gust loads: <span class="math notranslate nohighlight">\(\pm\)</span> 50 ft/s at <span class="math notranslate nohighlight">\(V_C\)</span> and <span class="math notranslate nohighlight">\(\pm\)</span> 25 ft/s at <span class="math notranslate nohighlight">\(V_D\)</span>. A statistical approach based on gust alleviation factor is used to determine the gust lines in V-n diagram. Refer to lecture notes for more details. Below code block computes gust alleviation factor and gust lines:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Variables</span>
+<span class="n">g</span> <span class="o">=</span> <span class="mf">32.2</span> <span class="c1"># ft/s^2</span>
+<span class="n">CLalpha</span> <span class="o">=</span> <span class="mf">5.1</span> <span class="c1"># 1/rad, computed</span>
+<span class="n">MGC</span> <span class="o">=</span> <span class="mf">3.92</span> <span class="c1"># ft, computed</span>
+
+<span class="c1"># Compute gust alleviation factor</span>
+<span class="n">mu_g</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">wing_loading</span> <span class="o">/</span> <span class="n">rho_sealevel</span> <span class="o">/</span> <span class="n">CLalpha</span> <span class="o">/</span> <span class="n">g</span> <span class="o">/</span> <span class="n">MGC</span>
+<span class="n">Kg</span> <span class="o">=</span> <span class="mf">0.88</span><span class="o">*</span><span class="n">mu_g</span> <span class="o">/</span> <span class="p">(</span><span class="mf">5.3</span> <span class="o">+</span> <span class="n">mu_g</span><span class="p">)</span>
+
+<span class="c1"># Compute gust lines</span>
+<span class="n">compute_gust_line</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">V_gust</span><span class="p">:</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">Kg</span> <span class="o">*</span> <span class="n">V_gust</span> <span class="o">*</span> <span class="n">CLalpha</span> <span class="o">/</span> <span class="mi">498</span> <span class="o">/</span> <span class="n">wing_loading</span> <span class="o">*</span> <span class="n">x</span> <span class="c1"># V_gust should be in ft/s nad x should be in KEAS</span>
+
+<span class="c1"># Vc gust lines</span>
+<span class="n">V_gust_line_VC</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">VC</span><span class="p">,</span><span class="mi">200</span><span class="p">)</span> <span class="c1"># KEAS</span>
+<span class="n">VC_gust_line_pos</span> <span class="o">=</span> <span class="n">compute_gust_line</span><span class="p">(</span><span class="n">V_gust_line_VC</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+<span class="n">VC_gust_line_neg</span> <span class="o">=</span> <span class="n">compute_gust_line</span><span class="p">(</span><span class="n">V_gust_line_VC</span><span class="p">,</span> <span class="o">-</span><span class="mi">50</span><span class="p">)</span>
+
+<span class="c1"># VD gust lines</span>
+<span class="n">V_gust_line_VD</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">VD</span><span class="p">,</span><span class="mi">200</span><span class="p">)</span> <span class="c1"># KEAS</span>
+<span class="n">VD_gust_line_pos</span> <span class="o">=</span> <span class="n">compute_gust_line</span><span class="p">(</span><span class="n">V_gust_line_VD</span><span class="p">,</span> <span class="mi">25</span><span class="p">)</span>
+<span class="n">VD_gust_line_neg</span> <span class="o">=</span> <span class="n">compute_gust_line</span><span class="p">(</span><span class="n">V_gust_line_VD</span><span class="p">,</span> <span class="o">-</span><span class="mi">25</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Below code block plots the V-n diagram with gust lines only:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;-&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.4</span><span class="p">)</span>
+
+<span class="c1"># +-50 ft/s gust lines - VC</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">V_gust_line_VC</span><span class="p">,</span> <span class="n">VC_gust_line_pos</span><span class="p">,</span> <span class="s2">&quot;k-&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">V_gust_line_VC</span><span class="p">,</span> <span class="n">VC_gust_line_neg</span><span class="p">,</span> <span class="s2">&quot;k-&quot;</span><span class="p">)</span>
+
+<span class="c1"># +-25 ft/s gust lines - VD</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">V_gust_line_VD</span><span class="p">,</span> <span class="n">VD_gust_line_pos</span><span class="p">,</span> <span class="s2">&quot;k-.&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">V_gust_line_VD</span><span class="p">,</span> <span class="n">VD_gust_line_neg</span><span class="p">,</span> <span class="s2">&quot;k-.&quot;</span><span class="p">)</span>
+
+<span class="c1"># Close the diagram</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">V_gust_line_VC</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">V_gust_line_VD</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">V_gust_line_VD</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">V_gust_line_VC</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]],</span>
+        <span class="p">[</span><span class="n">VC_gust_line_pos</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">VD_gust_line_pos</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">VD_gust_line_neg</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">VC_gust_line_neg</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]],</span> <span class="s2">&quot;k-&quot;</span><span class="p">)</span>
+
+<span class="c1"># Annotations</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s2">&quot;$V_C$&quot;</span><span class="p">,</span> <span class="p">(</span><span class="n">VC</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">fs</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s2">&quot;top&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s2">&quot;$V_D$&quot;</span><span class="p">,</span> <span class="p">(</span><span class="n">VD</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">fs</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s2">&quot;left&quot;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s2">&quot;top&quot;</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s2">&quot;+25 ft/s at $V_D$&quot;</span><span class="p">,</span> <span class="p">(</span><span class="mi">125</span><span class="p">,</span><span class="mf">1.45</span><span class="p">),</span> <span class="n">ha</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s2">&quot;top&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">fs</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s2">&quot;-25 ft/s at $V_D$&quot;</span><span class="p">,</span> <span class="p">(</span><span class="mi">125</span><span class="p">,</span><span class="mf">0.55</span><span class="p">),</span> <span class="n">ha</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s2">&quot;bottom&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">fs</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s2">&quot;+50 ft/s at $V_C$&quot;</span><span class="p">,</span> <span class="p">(</span><span class="mi">125</span><span class="p">,</span><span class="mf">2.4</span><span class="p">),</span> <span class="n">ha</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s2">&quot;bottom&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">fs</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s2">&quot;-50 ft/s at $V_C$&quot;</span><span class="p">,</span> <span class="p">(</span><span class="mi">125</span><span class="p">,</span><span class="o">-</span><span class="mf">0.5</span><span class="p">),</span> <span class="n">ha</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s2">&quot;bottom&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">fs</span><span class="p">)</span>
+
+<span class="c1"># Asthetics</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="n">left</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">right</span><span class="o">=</span><span class="mi">250</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Equivalent air speed, $V_e$ (kts)&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">fs</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Load factor, $n$&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">fs</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Gust loads only&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">fs</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/b8f38f4c0905183c44175285231f485f4ec8ae02339e6b316aa3d38c4f37cc59.png" src="../_images/b8f38f4c0905183c44175285231f485f4ec8ae02339e6b316aa3d38c4f37cc59.png" />
+</div>
+</div>
+</section>
+<section id="final-plot">
+<h2>Final plot<a class="headerlink" href="#final-plot" title="Link to this heading">#</a></h2>
+<p>Next step is to combine both the maneuver and gust envelopes. One should select the highest load factor between the maneuver and gust envelopes at <span class="math notranslate nohighlight">\(V_C\)</span> and <span class="math notranslate nohighlight">\(V_D\)</span>. Note that the ultimate load factor should be the greatest load factor in V-n. Below code block plots the final V-n diagram</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">nplus</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">nminus</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;-&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.4</span><span class="p">)</span>
+
+<span class="c1"># Positive load factor</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">VS</span><span class="p">,</span> <span class="n">VS</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="s2">&quot;k&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">V_stall_line_pos</span><span class="p">,</span> <span class="n">stall_line_pos</span><span class="p">,</span> <span class="s2">&quot;k&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">Va_pos</span><span class="p">,</span> <span class="n">VD</span><span class="p">,</span> <span class="n">VD</span><span class="p">],</span> <span class="p">[</span><span class="n">nplus</span><span class="p">,</span> <span class="n">nplus</span><span class="p">,</span> <span class="n">VD_gust_line_neg</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]],</span> <span class="s2">&quot;k&quot;</span><span class="p">)</span>
+
+<span class="c1"># Negative load factor</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">VS_neg</span><span class="p">,</span> <span class="n">VS_neg</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="s2">&quot;k&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">V_stall_line_neg</span><span class="p">,</span> <span class="n">stall_line_neg</span><span class="p">,</span> <span class="s2">&quot;k&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">Va_neg</span><span class="p">,</span> <span class="n">VC</span><span class="p">,</span> <span class="n">VD</span><span class="p">],</span> <span class="p">[</span><span class="n">nminus</span><span class="p">,</span> <span class="n">nminus</span><span class="p">,</span> <span class="n">VD_gust_line_neg</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]],</span> <span class="s2">&quot;k&quot;</span><span class="p">)</span>
+
+<span class="c1"># +-50 ft/s gust lines - VC</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">V_gust_line_VC</span><span class="p">,</span> <span class="n">VC_gust_line_pos</span><span class="p">,</span> <span class="s2">&quot;b-.&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;$\pm$ 50ft/s gust line&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">V_gust_line_VC</span><span class="p">,</span> <span class="n">VC_gust_line_neg</span><span class="p">,</span> <span class="s2">&quot;b-.&quot;</span><span class="p">)</span>
+
+<span class="c1"># +-25 ft/s gust lines - VD</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">V_gust_line_VD</span><span class="p">,</span> <span class="n">VD_gust_line_pos</span><span class="p">,</span> <span class="s2">&quot;g-.&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;$\pm$ 25ft/s gust line&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">V_gust_line_VD</span><span class="p">,</span> <span class="n">VD_gust_line_neg</span><span class="p">,</span> <span class="s2">&quot;g-.&quot;</span><span class="p">)</span>
+
+<span class="c1"># Annotations</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s2">&quot;$V_{S^+}$&quot;</span><span class="p">,</span> <span class="p">(</span><span class="n">VS</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">fs</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s2">&quot;top&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s2">&quot;$V_{S^-}$&quot;</span><span class="p">,</span> <span class="p">(</span><span class="n">VS_neg</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">fs</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s2">&quot;bottom&quot;</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s2">&quot;$V_{A^+}$&quot;</span><span class="p">,</span> <span class="p">(</span><span class="n">Va_pos</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">fs</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s2">&quot;top&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s2">&quot;$V_{A^-}$&quot;</span><span class="p">,</span> <span class="p">(</span><span class="n">Va_neg</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">fs</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s2">&quot;bottom&quot;</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s2">&quot;$V_C$&quot;</span><span class="p">,</span> <span class="p">(</span><span class="n">VC</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">fs</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s2">&quot;bottom&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s2">&quot;$V_D$&quot;</span><span class="p">,</span> <span class="p">(</span><span class="n">VD</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">fs</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s2">&quot;left&quot;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s2">&quot;top&quot;</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s2">&quot;positive limit load&quot;</span><span class="p">,</span> <span class="p">(</span><span class="mi">50</span><span class="p">,</span><span class="n">nplus</span><span class="o">-</span><span class="mf">0.1</span><span class="p">),</span> <span class="n">ha</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s2">&quot;top&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">fs</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s2">&quot;negative limit load&quot;</span><span class="p">,</span> <span class="p">(</span><span class="mi">50</span><span class="p">,</span><span class="n">nminus</span><span class="o">+</span><span class="mf">0.1</span><span class="p">),</span> <span class="n">ha</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s2">&quot;bottom&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">fs</span><span class="p">)</span>
+
+<span class="c1"># Asthetics</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="n">fs</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="p">(</span><span class="mf">0.01</span><span class="p">,</span><span class="mf">0.65</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="n">left</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">right</span><span class="o">=</span><span class="mi">250</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Equivalent air speed, $V_e$ (kts)&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">fs</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Load factor, $n$&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">fs</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/89d06ec924c0fc00b5cf6496b562c79a7dd3f21cbcc5752707b175e36e42d93e.png" src="../_images/89d06ec924c0fc00b5cf6496b562c79a7dd3f21cbcc5752707b175e36e42d93e.png" />
+</div>
+</div>
+<p>In this case, the -25 ft/s gust load factor at <span class="math notranslate nohighlight">\(V_D\)</span> exceeds the maneuver load factor. Apart from this, the gust load factors at other <span class="math notranslate nohighlight">\(V_C\)</span> and <span class="math notranslate nohighlight">\(V_D\)</span> points are within the maneuver envelope. Hence, the maneuver envelope will be the final V-n diagram with a small modification at <span class="math notranslate nohighlight">\(V_D\)</span>. Note that this V-n diagram is only for the example airplane, it will not be same for other airplanes.</p>
+<p>This concludes the V-n diagram section.</p>
 </section>
 </section>
 
@@ -682,6 +858,24 @@ document.write(`
                 <footer class="prev-next-footer d-print-none">
                   
 <div class="prev-next-area">
+    <a class="left-prev"
+       href="payload_range.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Payload-Range diagram</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../cost/intro.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Cost analysis</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
 </div>
                 </footer>
               
@@ -699,6 +893,11 @@ document.write(`
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#load-factor">Load factor</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#speeds">Speeds</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#stall-lines">Stall lines</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#initial-plot">Initial plot</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gusts">Gusts</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#final-plot">Final plot</a></li>
 </ul>
   </nav></div>
 
