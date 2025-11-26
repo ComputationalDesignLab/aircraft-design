@@ -66,6 +66,7 @@ chapters:
           - file: trade_study/constraint.ipynb
       - file: trade_study/ar_study.ipynb
   - file: trade_study/payload_range.ipynb
+  - file: trade_study/vn_diagram.ipynb
   - file: cost/intro
     sections:
     - file: cost/unit_cost
